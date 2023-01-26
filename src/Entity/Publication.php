@@ -8,6 +8,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
 #[ORM\Entity(repositoryClass: PublicationRepository::class)]
 #[ApiResource]
 class Publication
@@ -17,29 +19,41 @@ class Publication
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 50)]
+    #[Assert\NotBlank(message: "Le titre de la publication est obligatoire")]
+    #[Assert\Length(min: 10,minMessage: "Le titre de la publication doit être compris entre 10 et 50 caractères")]
+    #[Assert\Length(max: 500,maxMessage: "Le titre de la publication doit être compris entre 10 et 50 caractères")]
     private ?string $title = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 5000)]
+    #[Assert\NotBlank(message: "Le titre de la publication est obligatoire")]
+    #[Assert\Length(min: 50,minMessage: "Le titre de la publication doit être compris entre 50 et 5000 caractères")]
+    #[Assert\Length(max: 5000,maxMessage: "Le titre de la publication doit être compris entre 50 et 5000 caractères")]
     private ?string $description = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: "L'état ( Validée ou non ) de la publication est obligatoire")]
     private ?bool $state_validated = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: "L'état ( Privée ou non ) de la publication est obligatoire")]
     private ?bool $state_private = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: "Le nombre de like de la publication est obligatoire")]
     private ?int $like_number = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: "Le nombre de partage de la publication est obligatoire")]
     private ?int $sharing_number = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: "Le nombre de vues de la publication est obligatoire")]
     private ?int $view_number = null;
 
     #[ORM\ManyToOne(inversedBy: 'publications')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotBlank(message: "La publication doit obligatoirement être liée à un thème")]
     private ?Theme $theme = null;
 
     #[ORM\OneToMany(mappedBy: 'publication', targetEntity: CommentConcernPublication::class, orphanRemoval: true)]
@@ -55,7 +69,10 @@ class Publication
     private Collection $publicationReferencerCategories;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $create_at = null;
+    #[Assert\NotBlank(message: "La date de création de la publication est obligatoire")]
+    private ?\DateTimeImmutable $created_at = null;
+
+    // Gets & Setters
 
     public function __construct()
     {
@@ -286,14 +303,14 @@ class Publication
         return $this;
     }
 
-    public function getCreateAt(): ?\DateTimeImmutable
+    public function getCreatedAt(): ?\DateTimeImmutable
     {
-        return $this->create_at;
+        return $this->created_at;
     }
 
-    public function setCreateAt(\DateTimeImmutable $create_at): self
+    public function setCreatedAt(\DateTimeImmutable $created_at): self
     {
-        $this->create_at = $create_at;
+        $this->created_at = $created_at;
 
         return $this;
     }
