@@ -9,6 +9,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
 #[ORM\Entity(repositoryClass: ThemeRepository::class)]
 #[ApiResource]
 class Theme
@@ -19,6 +21,9 @@ class Theme
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Le titre du thème est obligatoire")]
+    #[Assert\Length(min: 3,minMessage: "Le titre du thème doit être compris entre 3 et 50 caractères")]
+    #[Assert\Length(max: 50,maxMessage: "Le titre du thème doit être compris entre 3 et 50 caractères")]
     private ?string $name = null;
 
     #[ORM\OneToMany(mappedBy: 'theme', targetEntity: Publication::class, orphanRemoval: true)]
