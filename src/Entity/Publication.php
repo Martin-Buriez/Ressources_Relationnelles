@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\PublicationRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PublicationRepository::class)]
@@ -39,6 +41,14 @@ class Publication
     #[ORM\ManyToOne(inversedBy: 'publications')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Theme $theme = null;
+
+    #[ORM\OneToMany(mappedBy: 'publication', targetEntity: CommentConcernPublication::class, orphanRemoval: true)]
+    private Collection $commentConcernPublications;
+
+    public function __construct()
+    {
+        $this->commentConcernPublications = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -137,6 +147,36 @@ class Publication
     public function setTheme(?Theme $theme): self
     {
         $this->theme = $theme;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CommentConcernPublication>
+     */
+    public function getCommentConcernPublications(): Collection
+    {
+        return $this->commentConcernPublications;
+    }
+
+    public function addCommentConcernPublication(CommentConcernPublication $commentConcernPublication): self
+    {
+        if (!$this->commentConcernPublications->contains($commentConcernPublication)) {
+            $this->commentConcernPublications->add($commentConcernPublication);
+            $commentConcernPublication->setPublication($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommentConcernPublication(CommentConcernPublication $commentConcernPublication): self
+    {
+        if ($this->commentConcernPublications->removeElement($commentConcernPublication)) {
+            // set the owning side to null (unless already changed)
+            if ($commentConcernPublication->getPublication() === $this) {
+                $commentConcernPublication->setPublication(null);
+            }
+        }
 
         return $this;
     }

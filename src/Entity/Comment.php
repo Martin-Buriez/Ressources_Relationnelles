@@ -31,9 +31,13 @@ class Comment
     #[ORM\OneToMany(mappedBy: 'comment', targetEntity: UserEditComment::class, orphanRemoval: true)]
     private Collection $userEditComments;
 
+    #[ORM\OneToMany(mappedBy: 'comment', targetEntity: CommentConcernPublication::class, orphanRemoval: true)]
+    private Collection $commentConcernPublications;
+
     public function __construct()
     {
         $this->userEditComments = new ArrayCollection();
+        $this->commentConcernPublications = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -113,6 +117,36 @@ class Comment
             // set the owning side to null (unless already changed)
             if ($userEditComment->getComment() === $this) {
                 $userEditComment->setComment(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CommentConcernPublication>
+     */
+    public function getCommentConcernPublications(): Collection
+    {
+        return $this->commentConcernPublications;
+    }
+
+    public function addCommentConcernPublication(CommentConcernPublication $commentConcernPublication): self
+    {
+        if (!$this->commentConcernPublications->contains($commentConcernPublication)) {
+            $this->commentConcernPublications->add($commentConcernPublication);
+            $commentConcernPublication->setComment($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommentConcernPublication(CommentConcernPublication $commentConcernPublication): self
+    {
+        if ($this->commentConcernPublications->removeElement($commentConcernPublication)) {
+            // set the owning side to null (unless already changed)
+            if ($commentConcernPublication->getComment() === $this) {
+                $commentConcernPublication->setComment(null);
             }
         }
 
