@@ -87,6 +87,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'userSendMessage', targetEntity: UserCommunicateGroup::class, orphanRemoval: true)]
     private Collection $userCommunicateGroups;
 
+    #[ORM\OneToMany(mappedBy: 'userSender', targetEntity: UserRelationship::class, orphanRemoval: true)]
+    private Collection $userRelationships;
+
+    #[ORM\OneToMany(mappedBy: 'userSender', targetEntity: CommunicateUser::class, orphanRemoval: true)]
+    private Collection $communicateUsers;
+
     public function __construct()
     {
         $this->userManageEvents = new ArrayCollection();
@@ -95,6 +101,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->userCreateFilters = new ArrayCollection();
         $this->userBelongGroups = new ArrayCollection();
         $this->userCommunicateGroups = new ArrayCollection();
+        $this->userRelationships = new ArrayCollection();
+        $this->communicateUsers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -497,6 +505,66 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($userCommunicateGroup->getUserSendMessage() === $this) {
                 $userCommunicateGroup->setUserSendMessage(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, UserRelationship>
+     */
+    public function getUserRelationships(): Collection
+    {
+        return $this->userRelationships;
+    }
+
+    public function addUserRelationship(UserRelationship $userRelationship): self
+    {
+        if (!$this->userRelationships->contains($userRelationship)) {
+            $this->userRelationships->add($userRelationship);
+            $userRelationship->setUserSender($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserRelationship(UserRelationship $userRelationship): self
+    {
+        if ($this->userRelationships->removeElement($userRelationship)) {
+            // set the owning side to null (unless already changed)
+            if ($userRelationship->getUserSender() === $this) {
+                $userRelationship->setUserSender(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CommunicateUser>
+     */
+    public function getCommunicateUsers(): Collection
+    {
+        return $this->communicateUsers;
+    }
+
+    public function addCommunicateUser(CommunicateUser $communicateUser): self
+    {
+        if (!$this->communicateUsers->contains($communicateUser)) {
+            $this->communicateUsers->add($communicateUser);
+            $communicateUser->setUserSender($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommunicateUser(CommunicateUser $communicateUser): self
+    {
+        if ($this->communicateUsers->removeElement($communicateUser)) {
+            // set the owning side to null (unless already changed)
+            if ($communicateUser->getUserSender() === $this) {
+                $communicateUser->setUserSender(null);
             }
         }
 
