@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\EventRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -32,6 +34,14 @@ class Event
     #[ORM\ManyToOne(inversedBy: 'events')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Theme $theme = null;
+
+    #[ORM\OneToMany(mappedBy: 'event', targetEntity: UserManageEvent::class, orphanRemoval: true)]
+    private Collection $userManageEvents;
+
+    public function __construct()
+    {
+        $this->userManageEvents = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -106,6 +116,36 @@ class Event
     public function setTheme(?Theme $theme): self
     {
         $this->theme = $theme;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, UserManageEvent>
+     */
+    public function getUserManageEvents(): Collection
+    {
+        return $this->userManageEvents;
+    }
+
+    public function addUserManageEvent(UserManageEvent $userManageEvent): self
+    {
+        if (!$this->userManageEvents->contains($userManageEvent)) {
+            $this->userManageEvents->add($userManageEvent);
+            $userManageEvent->setEvent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserManageEvent(UserManageEvent $userManageEvent): self
+    {
+        if ($this->userManageEvents->removeElement($userManageEvent)) {
+            // set the owning side to null (unless already changed)
+            if ($userManageEvent->getEvent() === $this) {
+                $userManageEvent->setEvent(null);
+            }
+        }
 
         return $this;
     }
