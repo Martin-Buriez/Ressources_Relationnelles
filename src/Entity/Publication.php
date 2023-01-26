@@ -48,10 +48,14 @@ class Publication
     #[ORM\OneToMany(mappedBy: 'publication', targetEntity: UserCreatePublication::class, orphanRemoval: true)]
     private Collection $userCreatePublications;
 
+    #[ORM\OneToMany(mappedBy: 'publication', targetEntity: PublicationIncludeImage::class, orphanRemoval: true)]
+    private Collection $publicationIncludeImages;
+
     public function __construct()
     {
         $this->commentConcernPublications = new ArrayCollection();
         $this->userCreatePublications = new ArrayCollection();
+        $this->publicationIncludeImages = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -209,6 +213,36 @@ class Publication
             // set the owning side to null (unless already changed)
             if ($userCreatePublication->getPublication() === $this) {
                 $userCreatePublication->setPublication(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PublicationIncludeImage>
+     */
+    public function getPublicationIncludeImages(): Collection
+    {
+        return $this->publicationIncludeImages;
+    }
+
+    public function addPublicationIncludeImage(PublicationIncludeImage $publicationIncludeImage): self
+    {
+        if (!$this->publicationIncludeImages->contains($publicationIncludeImage)) {
+            $this->publicationIncludeImages->add($publicationIncludeImage);
+            $publicationIncludeImage->setPublication($this);
+        }
+
+        return $this;
+    }
+
+    public function removePublicationIncludeImage(PublicationIncludeImage $publicationIncludeImage): self
+    {
+        if ($this->publicationIncludeImages->removeElement($publicationIncludeImage)) {
+            // set the owning side to null (unless already changed)
+            if ($publicationIncludeImage->getPublication() === $this) {
+                $publicationIncludeImage->setPublication(null);
             }
         }
 
