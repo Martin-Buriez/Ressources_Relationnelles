@@ -51,11 +51,15 @@ class Publication
     #[ORM\OneToMany(mappedBy: 'publication', targetEntity: PublicationIncludeImage::class, orphanRemoval: true)]
     private Collection $publicationIncludeImages;
 
+    #[ORM\OneToMany(mappedBy: 'publication', targetEntity: PublicationReferencerCategory::class, orphanRemoval: true)]
+    private Collection $publicationReferencerCategories;
+
     public function __construct()
     {
         $this->commentConcernPublications = new ArrayCollection();
         $this->userCreatePublications = new ArrayCollection();
         $this->publicationIncludeImages = new ArrayCollection();
+        $this->publicationReferencerCategories = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -243,6 +247,36 @@ class Publication
             // set the owning side to null (unless already changed)
             if ($publicationIncludeImage->getPublication() === $this) {
                 $publicationIncludeImage->setPublication(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PublicationReferencerCategory>
+     */
+    public function getPublicationReferencerCategories(): Collection
+    {
+        return $this->publicationReferencerCategories;
+    }
+
+    public function addPublicationReferencerCategory(PublicationReferencerCategory $publicationReferencerCategory): self
+    {
+        if (!$this->publicationReferencerCategories->contains($publicationReferencerCategory)) {
+            $this->publicationReferencerCategories->add($publicationReferencerCategory);
+            $publicationReferencerCategory->setPublication($this);
+        }
+
+        return $this;
+    }
+
+    public function removePublicationReferencerCategory(PublicationReferencerCategory $publicationReferencerCategory): self
+    {
+        if ($this->publicationReferencerCategories->removeElement($publicationReferencerCategory)) {
+            // set the owning side to null (unless already changed)
+            if ($publicationReferencerCategory->getPublication() === $this) {
+                $publicationReferencerCategory->setPublication(null);
             }
         }
 
