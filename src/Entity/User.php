@@ -81,12 +81,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: UserCreateFilter::class, orphanRemoval: true)]
     private Collection $userCreateFilters;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: UserBelongGroup::class, orphanRemoval: true)]
+    private Collection $userBelongGroups;
+
+    #[ORM\OneToMany(mappedBy: 'userSendMessage', targetEntity: UserCommunicateGroup::class, orphanRemoval: true)]
+    private Collection $userCommunicateGroups;
+
     public function __construct()
     {
         $this->userManageEvents = new ArrayCollection();
         $this->userEditComments = new ArrayCollection();
         $this->userCreatePublications = new ArrayCollection();
         $this->userCreateFilters = new ArrayCollection();
+        $this->userBelongGroups = new ArrayCollection();
+        $this->userCommunicateGroups = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -429,6 +437,66 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($userCreateFilter->getUser() === $this) {
                 $userCreateFilter->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, UserBelongGroup>
+     */
+    public function getUserBelongGroups(): Collection
+    {
+        return $this->userBelongGroups;
+    }
+
+    public function addUserBelongGroup(UserBelongGroup $userBelongGroup): self
+    {
+        if (!$this->userBelongGroups->contains($userBelongGroup)) {
+            $this->userBelongGroups->add($userBelongGroup);
+            $userBelongGroup->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserBelongGroup(UserBelongGroup $userBelongGroup): self
+    {
+        if ($this->userBelongGroups->removeElement($userBelongGroup)) {
+            // set the owning side to null (unless already changed)
+            if ($userBelongGroup->getUser() === $this) {
+                $userBelongGroup->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, UserCommunicateGroup>
+     */
+    public function getUserCommunicateGroups(): Collection
+    {
+        return $this->userCommunicateGroups;
+    }
+
+    public function addUserCommunicateGroup(UserCommunicateGroup $userCommunicateGroup): self
+    {
+        if (!$this->userCommunicateGroups->contains($userCommunicateGroup)) {
+            $this->userCommunicateGroups->add($userCommunicateGroup);
+            $userCommunicateGroup->setUserSendMessage($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserCommunicateGroup(UserCommunicateGroup $userCommunicateGroup): self
+    {
+        if ($this->userCommunicateGroups->removeElement($userCommunicateGroup)) {
+            // set the owning side to null (unless already changed)
+            if ($userCommunicateGroup->getUserSendMessage() === $this) {
+                $userCommunicateGroup->setUserSendMessage(null);
             }
         }
 
