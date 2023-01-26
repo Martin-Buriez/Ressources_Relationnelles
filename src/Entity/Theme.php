@@ -23,9 +23,13 @@ class Theme
     #[ORM\OneToMany(mappedBy: 'theme', targetEntity: Publication::class, orphanRemoval: true)]
     private Collection $publications;
 
+    #[ORM\OneToMany(mappedBy: 'theme', targetEntity: Event::class, orphanRemoval: true)]
+    private Collection $events;
+
     public function __construct()
     {
         $this->publications = new ArrayCollection();
+        $this->events = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -69,6 +73,36 @@ class Theme
             // set the owning side to null (unless already changed)
             if ($publication->getTheme() === $this) {
                 $publication->setTheme(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Event>
+     */
+    public function getEvents(): Collection
+    {
+        return $this->events;
+    }
+
+    public function addEvent(Event $event): self
+    {
+        if (!$this->events->contains($event)) {
+            $this->events->add($event);
+            $event->setTheme($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEvent(Event $event): self
+    {
+        if ($this->events->removeElement($event)) {
+            // set the owning side to null (unless already changed)
+            if ($event->getTheme() === $this) {
+                $event->setTheme(null);
             }
         }
 
