@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contact - Ressources Relationnelles{% endblock %}
+
+{% block body %}
+    <div class="flex justify-center items-center w-screen pt-12 bg-main-white dark:bg-main-dark">
+        <div class="container mx-auto my-4 px-4 lg:px-20">
+            <div class="w-screen p-8 my-4 md:px-12 lg:w-9/12 lg:pl-20 lg:pr-40 mr-auto rounded-2xl shadow-2xl">
+                <div class="flex">
+                    <h1 class="font-bold text-main-blue dark:text-main-white uppercase text-5xl">Envoyez nous un<br /> message</h1>
+                </div>
+                <div class="grid grid-cols-1 gap-5 md:grid-cols-2 mt-5">
+                    <input class="w-full bg-grey1 text-grey4 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
+                           type="text" placeholder="Prénom*" />
+                    <input class="w-full bg-grey1 text-grey4 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
+                           type="text" placeholder="Nom*" />
+                    <input class="w-full bg-grey1 text-grey4 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
+                           type="email" placeholder="Email*" />
+                    <input class="w-full bg-grey1 text-grey4 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
+                           type="number" placeholder="Téléphone*" />
+                </div>
+                <div class="my-4">
+                    <textarea placeholder="Message*" class="w-full h-32 bg-grey1 text-grey4 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"></textarea>
+                </div>
+                <div class="my-2 w-1/2 lg:w-1/4">
+                    <button class="uppercase text-sm font-bold tracking-wide bg-blue1 text-gray-100 p-3 rounded-lg w-full
+                      focus:outline-none focus:shadow-outline">
+                        Envoyer message
+                    </button>
+                </div>
+            </div>
+            <div
+                class="w-full lg:-mt-96 lg:w-2/6 px-8 py-12 ml-auto bg-main-blue rounded-2xl">
+                <div class="flex flex-col text-grey3">
+                    <h1 class="font-bold uppercase text-4xl my-4">On garde le contact</h1>
+                    <p>
+                        Vous pouvez prendre contact avec nos équipes pour toute demande, que ce soit un souci technique ou autre n'hésitez pas. Nous vous apporterons une réponse dans les plus brefs délais
+                    </p>
+                    <div class="flex my-4 w-2/3 lg:w-1/2">
+                        <div class="flex flex-col">
+                            <i class="fas fa-map pt-2 pr-2"></i>
+                        </div>
+                        <div class="flex flex-col">
+                            <h2 class="text-2xl">Ressources Relationnelles</h2>
+                            <p>59000 Lille, Boulevard de Paris, Hauts de France</p>
+                        </div>
+                    </div>
+                    <div class="flex my-4 w-2/3 lg:w-1/2">
+                        <div class="flex flex-col">
+                            <i class="fas fa-phone-alt pt-2 pr-2"></i>
+                        </div>
+                        <div class="flex flex-col">
+                            <h2 class="text-2xl">Appelez nous</h2>
+                            <p>Tel: 0890909090</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
