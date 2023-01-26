@@ -78,11 +78,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: UserCreatePublication::class, orphanRemoval: true)]
     private Collection $userCreatePublications;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: UserCreateFilter::class, orphanRemoval: true)]
+    private Collection $userCreateFilters;
+
     public function __construct()
     {
         $this->userManageEvents = new ArrayCollection();
         $this->userEditComments = new ArrayCollection();
         $this->userCreatePublications = new ArrayCollection();
+        $this->userCreateFilters = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -395,6 +399,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($userCreatePublication->getUser() === $this) {
                 $userCreatePublication->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, UserCreateFilter>
+     */
+    public function getUserCreateFilters(): Collection
+    {
+        return $this->userCreateFilters;
+    }
+
+    public function addUserCreateFilter(UserCreateFilter $userCreateFilter): self
+    {
+        if (!$this->userCreateFilters->contains($userCreateFilter)) {
+            $this->userCreateFilters->add($userCreateFilter);
+            $userCreateFilter->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserCreateFilter(UserCreateFilter $userCreateFilter): self
+    {
+        if ($this->userCreateFilters->removeElement($userCreateFilter)) {
+            // set the owning side to null (unless already changed)
+            if ($userCreateFilter->getUser() === $this) {
+                $userCreateFilter->setUser(null);
             }
         }
 

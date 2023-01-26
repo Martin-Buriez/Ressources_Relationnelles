@@ -24,9 +24,13 @@ class Category
     #[ORM\OneToMany(mappedBy: 'Category', targetEntity: PublicationReferencerCategory::class, orphanRemoval: true)]
     private Collection $publicationReferencerCategories;
 
+    #[ORM\OneToMany(mappedBy: 'category', targetEntity: FilterConcernCategory::class, orphanRemoval: true)]
+    private Collection $filterConcernCategories;
+
     public function __construct()
     {
         $this->publicationReferencerCategories = new ArrayCollection();
+        $this->filterConcernCategories = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -82,6 +86,36 @@ class Category
             // set the owning side to null (unless already changed)
             if ($publicationReferencerCategory->getCategory() === $this) {
                 $publicationReferencerCategory->setCategory(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, FilterConcernCategory>
+     */
+    public function getFilterConcernCategories(): Collection
+    {
+        return $this->filterConcernCategories;
+    }
+
+    public function addFilterConcernCategory(FilterConcernCategory $filterConcernCategory): self
+    {
+        if (!$this->filterConcernCategories->contains($filterConcernCategory)) {
+            $this->filterConcernCategories->add($filterConcernCategory);
+            $filterConcernCategory->setCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFilterConcernCategory(FilterConcernCategory $filterConcernCategory): self
+    {
+        if ($this->filterConcernCategories->removeElement($filterConcernCategory)) {
+            // set the owning side to null (unless already changed)
+            if ($filterConcernCategory->getCategory() === $this) {
+                $filterConcernCategory->setCategory(null);
             }
         }
 
