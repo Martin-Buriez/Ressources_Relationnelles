@@ -72,9 +72,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'User', targetEntity: UserManageEvent::class, orphanRemoval: true)]
     private Collection $userManageEvents;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: UserEditComment::class, orphanRemoval: true)]
+    private Collection $userEditComments;
+
     public function __construct()
     {
         $this->userManageEvents = new ArrayCollection();
+        $this->userEditComments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -327,6 +331,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($userManageEvent->getUser() === $this) {
                 $userManageEvent->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, UserEditComment>
+     */
+    public function getUserEditComments(): Collection
+    {
+        return $this->userEditComments;
+    }
+
+    public function addUserEditComment(UserEditComment $userEditComment): self
+    {
+        if (!$this->userEditComments->contains($userEditComment)) {
+            $this->userEditComments->add($userEditComment);
+            $userEditComment->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserEditComment(UserEditComment $userEditComment): self
+    {
+        if ($this->userEditComments->removeElement($userEditComment)) {
+            // set the owning side to null (unless already changed)
+            if ($userEditComment->getUser() === $this) {
+                $userEditComment->setUser(null);
             }
         }
 
