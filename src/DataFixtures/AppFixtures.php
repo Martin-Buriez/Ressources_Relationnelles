@@ -29,6 +29,7 @@ class AppFixtures extends Fixture
                     ->setViewNumber($faker->randomNumber(1))
                     ->setStatePrivate($faker->boolean(50))
                     ->setStateValidated($faker->boolean(50))
+                    ->setCreatedAt($faker->dateTime())
                     ->setTheme($theme);
 
                 $manager->persist($publication);
