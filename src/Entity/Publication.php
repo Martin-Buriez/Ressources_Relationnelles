@@ -54,6 +54,9 @@ class Publication
     #[ORM\OneToMany(mappedBy: 'publication', targetEntity: PublicationReferencerCategory::class, orphanRemoval: true)]
     private Collection $publicationReferencerCategories;
 
+    #[ORM\Column]
+    private ?\DateTimeImmutable $create_at = null;
+
     public function __construct()
     {
         $this->commentConcernPublications = new ArrayCollection();
@@ -279,6 +282,18 @@ class Publication
                 $publicationReferencerCategory->setPublication(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCreateAt(): ?\DateTimeImmutable
+    {
+        return $this->create_at;
+    }
+
+    public function setCreateAt(\DateTimeImmutable $create_at): self
+    {
+        $this->create_at = $create_at;
 
         return $this;
     }
