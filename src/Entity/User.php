@@ -75,10 +75,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: UserEditComment::class, orphanRemoval: true)]
     private Collection $userEditComments;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: UserCreatePublication::class, orphanRemoval: true)]
+    private Collection $userCreatePublications;
+
     public function __construct()
     {
         $this->userManageEvents = new ArrayCollection();
         $this->userEditComments = new ArrayCollection();
+        $this->userCreatePublications = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -361,6 +365,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($userEditComment->getUser() === $this) {
                 $userEditComment->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, UserCreatePublication>
+     */
+    public function getUserCreatePublications(): Collection
+    {
+        return $this->userCreatePublications;
+    }
+
+    public function addUserCreatePublication(UserCreatePublication $userCreatePublication): self
+    {
+        if (!$this->userCreatePublications->contains($userCreatePublication)) {
+            $this->userCreatePublications->add($userCreatePublication);
+            $userCreatePublication->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserCreatePublication(UserCreatePublication $userCreatePublication): self
+    {
+        if ($this->userCreatePublications->removeElement($userCreatePublication)) {
+            // set the owning side to null (unless already changed)
+            if ($userCreatePublication->getUser() === $this) {
+                $userCreatePublication->setUser(null);
             }
         }
 

@@ -45,9 +45,13 @@ class Publication
     #[ORM\OneToMany(mappedBy: 'publication', targetEntity: CommentConcernPublication::class, orphanRemoval: true)]
     private Collection $commentConcernPublications;
 
+    #[ORM\OneToMany(mappedBy: 'publication', targetEntity: UserCreatePublication::class, orphanRemoval: true)]
+    private Collection $userCreatePublications;
+
     public function __construct()
     {
         $this->commentConcernPublications = new ArrayCollection();
+        $this->userCreatePublications = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -175,6 +179,36 @@ class Publication
             // set the owning side to null (unless already changed)
             if ($commentConcernPublication->getPublication() === $this) {
                 $commentConcernPublication->setPublication(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, UserCreatePublication>
+     */
+    public function getUserCreatePublications(): Collection
+    {
+        return $this->userCreatePublications;
+    }
+
+    public function addUserCreatePublication(UserCreatePublication $userCreatePublication): self
+    {
+        if (!$this->userCreatePublications->contains($userCreatePublication)) {
+            $this->userCreatePublications->add($userCreatePublication);
+            $userCreatePublication->setPublication($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserCreatePublication(UserCreatePublication $userCreatePublication): self
+    {
+        if ($this->userCreatePublications->removeElement($userCreatePublication)) {
+            // set the owning side to null (unless already changed)
+            if ($userCreatePublication->getPublication() === $this) {
+                $userCreatePublication->setPublication(null);
             }
         }
 
