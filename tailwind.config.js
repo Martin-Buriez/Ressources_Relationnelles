@@ -8,15 +8,20 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily : {
+        'font1' : ['serif', 'Arial'], 
+        'font2' : ['serif', 'Calibri'], 
+      }, 
       colors: {
-        'main-white' : '#f0edee',
-        'main-black' : '#08080c',
-        'main-blue' : '#106b9f',
-        'main-green' : '#7fb353',
-        'main-orange' : '#ef8354',
-        'main-red' : '#d2384d',
-        'main-light-blue' : '#8ecae6',
-        'admin-blue' : '#023047',
+        'blue1' : '#355689', 
+        'blue2' : '#D8E5F8', 
+        'pink'  : "#A41C66", 
+        'grey1' : '#424242', 
+        'grey2' : '#5B5B5B', 
+        'grey3' : '#686868', 
+        'grey4' : '#EBEBEB', 
+        'grey5' : '#F0F0F0', 
+        "white" : '#FFFFFF',
       }
     },
   },
