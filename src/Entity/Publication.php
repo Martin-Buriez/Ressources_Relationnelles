@@ -51,16 +51,26 @@ class Publication
     #[Assert\NotBlank(message: "Le nombre de vues de la publication est obligatoire")]
     private ?int $view_number = null;
 
+    #[ORM\Column]
+    #[Assert\NotBlank(message: "La date de création de la publication est obligatoire")]
+    private ?\DateTime $created_at = null;
+
+    // Relations
+
+    #[ORM\ManyToOne(inversedBy: 'publications')]
+    #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotBlank(message: "La publication doit obligatoirement posséder un créateur")]
+    private ?User $created_by = null;
+
     #[ORM\ManyToOne(inversedBy: 'publications')]
     #[ORM\JoinColumn(nullable: false)]
     #[Assert\NotBlank(message: "La publication doit obligatoirement être liée à un thème")]
     private ?Theme $theme = null;
 
+    // To do
+
     #[ORM\OneToMany(mappedBy: 'publication', targetEntity: CommentConcernPublication::class, orphanRemoval: true)]
     private Collection $commentConcernPublications;
-
-    #[ORM\OneToMany(mappedBy: 'publication', targetEntity: UserCreatePublication::class, orphanRemoval: true)]
-    private Collection $userCreatePublications;
 
     #[ORM\OneToMany(mappedBy: 'publication', targetEntity: PublicationIncludeImage::class, orphanRemoval: true)]
     private Collection $publicationIncludeImages;
@@ -68,16 +78,11 @@ class Publication
     #[ORM\OneToMany(mappedBy: 'publication', targetEntity: PublicationReferencerCategory::class, orphanRemoval: true)]
     private Collection $publicationReferencerCategories;
 
-    #[ORM\Column]
-    #[Assert\NotBlank(message: "La date de création de la publication est obligatoire")]
-    private ?\DateTime $created_at = null;
-
     // Gets & Setters
 
     public function __construct()
     {
         $this->commentConcernPublications = new ArrayCollection();
-        $this->userCreatePublications = new ArrayCollection();
         $this->publicationIncludeImages = new ArrayCollection();
         $this->publicationReferencerCategories = new ArrayCollection();
     }
@@ -311,6 +316,18 @@ class Publication
     public function setCreatedAt(\DateTime $created_at): self
     {
         $this->created_at = $created_at;
+
+        return $this;
+    }
+
+    public function getCreatedBy(): ?User
+    {
+        return $this->created_by;
+    }
+
+    public function setCreatedBy(?User $created_by): self
+    {
+        $this->created_by = $created_by;
 
         return $this;
     }

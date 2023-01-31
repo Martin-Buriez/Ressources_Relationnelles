@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Publication;
 use App\Entity\Theme;
+use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
@@ -14,28 +15,59 @@ class AppFixtures extends Fixture
     {
         $faker = Factory::create('fr_FR');
 
-        for($a = 0; $a < 10; $a++) {
+        for($c = 0; $c < 5; $c++) {
+
+            // Creation for 5 Themes
+
             $theme = new Theme();
             $theme->setName($faker->sentence(1, false));
 
             $manager->persist($theme);
 
-            for($b = 0; $b < mt_rand(1,3); $b++) {
-                $publication = new Publication();
-                $publication->setTitle($faker->sentence(1))
-                    ->setDescription($faker->sentence(10))
-                    ->setLikeNumber($faker->randomNumber(1))
-                    ->setSharingNumber($faker->randomNumber(1))
-                    ->setViewNumber($faker->randomNumber(1))
-                    ->setStatePrivate($faker->boolean(50))
-                    ->setStateValidated($faker->boolean(50))
-                    ->setCreatedAt($faker->dateTime())
-                    ->setTheme($theme);
+            for($a = 0; $a < mt_rand(0, 2); $a++) {
 
-                $manager->persist($publication);
+                // Each Theme will create between 0 and 2 Users
+
+                $user = new User();
+                $user->setEmail($faker->email())
+                    ->setPassword("password")
+                    ->setUsername($faker->sentence(1))
+                    ->setFirstName($faker->firstName())
+                    ->setLastName($faker->lastName())
+                    ->setPostalCode($faker->postcode())
+                    ->setCity($faker->city())
+                    ->setPhoneNumber($faker->phoneNumber())
+                    ->setBirthday(($faker->dateTime()))
+                    ->setCreatedAt(($faker->dateTime()))
+                    ->setStateValidated($faker->boolean(50))
+                    ->setStateSuspended($faker->boolean(50))
+                    ->setIdentityCardLocation($faker->sentence(1))
+                    ->setIdentityCardValidated($faker->boolean(50))
+                    ->setProfilePicture($faker->sentence(1));
+
+                $manager->persist($user);
+
+                // Each User own between 0 and 4 publications
+
+                for ($b = 0; $b < mt_rand(0, 4); $b++) {
+                    $publication = new Publication();
+                    $publication->setTitle($faker->sentence(1))
+                        ->setDescription($faker->sentence(10))
+                        ->setLikeNumber($faker->randomNumber(1))
+                        ->setSharingNumber($faker->randomNumber(1))
+                        ->setViewNumber($faker->randomNumber(1))
+                        ->setStatePrivate($faker->boolean(50))
+                        ->setStateValidated($faker->boolean(50))
+                        ->setCreatedAt($faker->dateTime())
+                        ->setCreatedBy($user)
+                        ->setTheme($theme);
+
+                    $manager->persist($publication);
+                }
             }
         }
 
         $manager->flush();
+
     }
 }

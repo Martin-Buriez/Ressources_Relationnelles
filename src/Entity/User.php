@@ -40,19 +40,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $last_name = null;
 
     #[ORM\Column]
-    private ?int $postal_code = null;
+    private ?string $postal_code = null;
 
     #[ORM\Column(length: 255)]
     private ?string $city = null;
 
     #[ORM\Column]
-    private ?int $phone_number = null;
-
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $birthday = null;
+    private ?string $phone_number = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $created_at = null;
+    private ?\DateTime $birthday = null;
+
+    #[ORM\Column]
+    private ?\DateTime $created_at = null;
 
     #[ORM\Column]
     private ?bool $state_validated = null;
@@ -69,14 +69,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $profile_picture = null;
 
+    // Relations
+
+    #[ORM\OneToMany(mappedBy: 'created_by', targetEntity: Publication::class, orphanRemoval: true)]
+    private Collection $publications;
+
+    // To do
+
     #[ORM\OneToMany(mappedBy: 'User', targetEntity: UserManageEvent::class, orphanRemoval: true)]
     private Collection $userManageEvents;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: UserEditComment::class, orphanRemoval: true)]
     private Collection $userEditComments;
-
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: UserCreatePublication::class, orphanRemoval: true)]
-    private Collection $userCreatePublications;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: UserCreateFilter::class, orphanRemoval: true)]
     private Collection $userCreateFilters;
@@ -97,12 +101,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->userManageEvents = new ArrayCollection();
         $this->userEditComments = new ArrayCollection();
-        $this->userCreatePublications = new ArrayCollection();
         $this->userCreateFilters = new ArrayCollection();
         $this->userBelongGroups = new ArrayCollection();
         $this->userCommunicateGroups = new ArrayCollection();
         $this->userRelationships = new ArrayCollection();
         $this->communicateUsers = new ArrayCollection();
+        $this->publications = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -211,12 +215,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getPostalCode(): ?int
+    public function getPostalCode(): ?string
     {
         return $this->postal_code;
     }
 
-    public function setPostalCode(int $postal_code): self
+    public function setPostalCode(string $postal_code): self
     {
         $this->postal_code = $postal_code;
 
@@ -235,36 +239,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getPhoneNumber(): ?int
+    public function getPhoneNumber(): ?string
     {
         return $this->phone_number;
     }
 
-    public function setPhoneNumber(int $phone_number): self
+    public function setPhoneNumber(string $phone_number): self
     {
         $this->phone_number = $phone_number;
 
         return $this;
     }
 
-    public function getBirthday(): ?\DateTimeInterface
+    public function getBirthday(): ?\DateTime
     {
         return $this->birthday;
     }
 
-    public function setBirthday(\DateTimeInterface $birthday): self
+    public function setBirthday(\DateTime $birthday): self
     {
         $this->birthday = $birthday;
 
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getCreatedAt(): ?\DateTime
     {
         return $this->created_at;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $created_at): self
+    public function setCreatedAt(\DateTime $created_at): self
     {
         $this->created_at = $created_at;
 
@@ -385,36 +389,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($userEditComment->getUser() === $this) {
                 $userEditComment->setUser(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, UserCreatePublication>
-     */
-    public function getUserCreatePublications(): Collection
-    {
-        return $this->userCreatePublications;
-    }
-
-    public function addUserCreatePublication(UserCreatePublication $userCreatePublication): self
-    {
-        if (!$this->userCreatePublications->contains($userCreatePublication)) {
-            $this->userCreatePublications->add($userCreatePublication);
-            $userCreatePublication->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeUserCreatePublication(UserCreatePublication $userCreatePublication): self
-    {
-        if ($this->userCreatePublications->removeElement($userCreatePublication)) {
-            // set the owning side to null (unless already changed)
-            if ($userCreatePublication->getUser() === $this) {
-                $userCreatePublication->setUser(null);
             }
         }
 
@@ -565,6 +539,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($communicateUser->getUserSender() === $this) {
                 $communicateUser->setUserSender(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Publication>
+     */
+    public function getPublications(): Collection
+    {
+        return $this->publications;
+    }
+
+    public function addPublication(Publication $publication): self
+    {
+        if (!$this->publications->contains($publication)) {
+            $this->publications->add($publication);
+            $publication->setCreatedBy($this);
+        }
+
+        return $this;
+    }
+
+    public function removePublication(Publication $publication): self
+    {
+        if ($this->publications->removeElement($publication)) {
+            // set the owning side to null (unless already changed)
+            if ($publication->getCreatedBy() === $this) {
+                $publication->setCreatedBy(null);
             }
         }
 
