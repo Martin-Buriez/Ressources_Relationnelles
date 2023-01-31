@@ -17,7 +17,7 @@ class AppFixtures extends Fixture
 
         for($c = 0; $c < 5; $c++) {
 
-            // Creation for 5 Themes
+            // Creation of 5 Themes
 
             $theme = new Theme();
             $theme->setName($faker->sentence(1, false));
@@ -26,7 +26,7 @@ class AppFixtures extends Fixture
 
             for($a = 0; $a < mt_rand(0, 2); $a++) {
 
-                // Each Theme will create between 0 and 2 Users
+                // After creating a Theme, we will create between 0 and 2 Users
 
                 $user = new User();
                 $user->setEmail($faker->email())
