@@ -1,9 +1,15 @@
-<div class="inline-block float-left">
-    Ajouter ici l'icône de la république française
-</div>
-
-<div class="inline-block float-right">
-    Ajouter ici une barre de navigation
-</div>
-
-<br/>
+<header class="h-40 w-full flex content-center bg-white">
+    <div class="w-6/12">
+        <img 
+            src="{{ asset('assets/media/LogoHeader.png') }}"
+            class="max-h-40 ml-24 fixed" 
+            alt="Logo du header"
+        >
+    </div>
+    <div class="w-6/12">
+        <div class="w-auto text-right top-1/3 relative">
+            <input type="text" class="w-2/5 h-14 border border-black rounded-3xl pl-1.5" placeholder="Rechercher">
+            <button class=" w-1/12 h-14 mr-4 border border-black rounded-3xl bg-blue1 text-white" type="button" id="">Search</button>
+        </div>
+    </div>
+</header>
