@@ -7,73 +7,141 @@
 <div class="relative min-h-screen flex">
 
     <div class="flex flex-col sm:flex-row items-center md:items-start sm:justify-center md:justify-start flex-auto min-w-0 bg-main-white">
-        <div class="sm:w-1/2 xl:w-2/5 h-full hidden md:flex flex-auto items-center justify-start overflow-hidden bg-main-blue text-white bg-no-repeat bg-cover relative" style="background-image: url('{{ asset('assets/media/old_man_phone.jpg') }}')";>
-            <div class="absolute bg-gradient-to-b from-main-blue to-main-light-blue opacity-75 inset-0 z-0"></div>
-            <div class="absolute triangle  min-h-screen right-0 w-16" style=""></div>
-            <ul class="circles">
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-            </ul>
-        </div>
-        <div class="md:flex md:items-center md:justify-center w-full sm:w-auto md:h-full xl:w-2/5 p-8  md:p-10 lg:p-14 sm:rounded-lg md:rounded-none bg-main-white ">
+        <div class="md:flex md:mt-10 md:justify-center w-full sm:w-auto md:h-full xl:w-2/5 sm:rounded-lg md:rounded-none bg-main-white ">
             <div class="max-w-md w-full space-y-8">
                 <div class="text-center">
-                    <h2 class="mt-6 text-3xl font-bold text-gray-900"> Bienvenue ! </h2>
+                    <h2 class="mt-6 text-3xl font-bold text-gray-900"> Formulaire d'inscription </h2>
                     <p class="mt-2 text-sm text-gray-500"> Veuillez saisir vos informations </p>
-                </div>
-                <div class="flex items-center justify-center space-x-2">
-                    <span class="h-px w-16 bg-gray-500"></span>
-                    <span class="text-gray-700 font-normal">Vos informations</span>
-                    <span class="h-px w-16 bg-gray-500"></span>
                 </div>
                 {% if notification != null %}
                     <p class="text-main-red text-center">L'email saisit est déjà enregistré sur le site !</p>
                 {% endif %}
                 {{ form_start(registerForm) }}
-                <div>
-                    {{ form_row(registerForm.username) }}
+
+                <div id="identity_form">
+
+                    <div class="flex items-center justify-center space-x-2">
+                        <span class="h-px w-16 bg-gray-500"></span>
+                        <span class="text-gray-700 font-normal">Votre identité</span>
+                        <span class="h-px w-16 bg-gray-500"></span>
+                    </div>
+
+                    <div class="mt-5">
+                        {{ form_row(registerForm.username) }}
+                    </div>
+                    <div>
+                        {{ form_row(registerForm.first_name) }}
+                    </div>
+                    <div>
+                        {{ form_row(registerForm.last_name) }}
+                    </div>
+                    <div>
+                        {{ form_row(registerForm.birthday) }}
+                    </div>
+                    <div>
+                        {{ form_row(registerForm.profile_picture) }}
+                    </div>
+
+                    <div class="inline-flex justify-around mt-6 w-full">
+                        <a class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l" disabled>
+                            Retour
+                        </a>
+                        <a id="identity_next_button" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r">
+                            Suivant
+                        </a>
+                    </div>
+
                 </div>
-                <div>
-                    {{ form_row(registerForm.first_name) }}
+
+                <div id="coordinates_form" class="hidden">
+
+                    <div class="flex items-center justify-center space-x-2">
+                        <span class="h-px w-16 bg-gray-500"></span>
+                        <span class="text-gray-700 font-normal">Vos coordonnées</span>
+                        <span class="h-px w-16 bg-gray-500"></span>
+                    </div>
+
+                    <div class="mt-5">
+                        {{ form_row(registerForm.postal_code) }}
+                    </div>
+                    <div>
+                        {{ form_row(registerForm.city) }}
+                    </div>
+                    <div>
+                        {{ form_row(registerForm.phone_number) }}
+                    </div>
+
+                    <div class="inline-flex justify-around mt-6 w-full">
+                        <a id="coordinates_return_button" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l" disabled>
+                            Retour
+                        </a>
+                        <a id="coordinates_next_button" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r">
+                            Suivant
+                        </a>
+                    </div>
+
                 </div>
-                <div>
-                    {{ form_row(registerForm.last_name) }}
-                </div>
-                <div>
-                    {{ form_row(registerForm.email) }}
-                </div>
-                <div>
-                    {{ form_row(registerForm.password) }}
-                </div>
-                <div>
-                    {{ form_row(registerForm.postal_code) }}
-                </div>
-                <div>
-                    {{ form_row(registerForm.city) }}
-                </div>
-                <div>
-                    {{ form_row(registerForm.phone_number) }}
-                </div>
-                <div>
-                    {{ form_row(registerForm.birthday) }}
-                </div>
-                <div>
-                    {{ form_row(registerForm.profile_picture) }}
-                </div>
-                <div class="mt-5">
-                    {{ form_row(registerForm.submit) }}
+
+                <div id="security_form" class="hidden">
+
+                    <div class="flex items-center justify-center space-x-2">
+                        <span class="h-px w-16 bg-gray-500"></span>
+                        <span class="text-gray-700 font-normal">Vos informations de sécurité</span>
+                        <span class="h-px w-16 bg-gray-500"></span>
+                    </div>
+
+                    <div class="mt-5">
+                        {{ form_row(registerForm.email) }}
+                    </div>
+                    <div>
+                        {{ form_row(registerForm.password) }}
+                    </div>
+                    <div>
+                        {{ form_row(registerForm.submit) }}
+                    </div>
+
+                    <div class="inline-flex justify-around mt-6 w-full">
+                        <a id="security_return_button" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l" disabled>
+                            Retour
+                        </a>
+                        <a class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r" disabled="">
+                            Suivant
+                        </a>
+                    </div>
+
                 </div>
                 {{ form_end(registerForm) }}
             </div>
         </div>
+        <div class="sm:w-1/2 xl:w-2/5 h-full hidden md:flex flex-auto items-center justify-start overflow-hidden bg-main-blue bg-no-repeat bg-cover relative" style="background-image: url('{{ asset('assets/media/old_man_phone.jpg') }}')";>
+            <div class="absolute bg-gradient-to-b from-main-blue to-main-light-blue opacity-75 inset-0 z-0"></div>
+            <div class="absolute triangle  min-h-screen right-0 w-16" style=""></div>
+        </div>
     </div>
 </div>
+
+    <script>
+        document.querySelector("#identity_next_button").addEventListener("click", function () {
+            document.querySelector("#identity_form").style.display = "none";
+            document.querySelector("#coordinates_form").style.display = "block";
+        })
+
+        document.querySelector("#coordinates_return_button").addEventListener("click", function() {
+            document.querySelector("#coordinates_form").style.display = "none";
+            document.querySelector("#identity_form").style.display = "block";
+        })
+
+        document.querySelector("#coordinates_next_button").addEventListener("click", function() {
+            document.querySelector("#coordinates_form").style.display = "none";
+            document.querySelector("#security_form").style.display = "block";
+        })
+
+        document.querySelector("#security_return_button").addEventListener("click", function() {
+            document.querySelector("#security_form").style.display = "none";
+            document.querySelector("#coordinates_form").style.display = "block";
+        })
+    </script>
+
 {% endblock %}
+
+
