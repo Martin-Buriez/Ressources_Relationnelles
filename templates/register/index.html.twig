@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription - Ressources Relationnelles{% endblock %}
+
+{% block body %}
+    <div>
+        {{ form_start(registerForm) }}
+        <div>
+            {{ form_row(registerForm.username) }}
+        </div>
+        <div>
+            {{ form_row(registerForm.first_name) }}
+        </div>
+        <div>
+            {{ form_row(registerForm.last_name) }}
+        </div>
+        <div>
+            {{ form_row(registerForm.email) }}
+        </div>
+        <div>
+            {{ form_row(registerForm.password) }}
+        </div>
+        <div>
+            {{ form_row(registerForm.postal_code) }}
+        </div>
+        <div>
+            {{ form_row(registerForm.city) }}
+        </div>
+        <div>
+            {{ form_row(registerForm.phone_number) }}
+        </div>
+        <div>
+            {{ form_row(registerForm.birthday) }}
+        </div>
+        <div>
+            {{ form_row(registerForm.profile_picture) }}
+        </div>
+        <div class="mt-5">
+            {{ form_row(registerForm.submit) }}
+        </div>
+        {{ form_end(registerForm) }}
+    </div>
+
+{% endblock %}
