@@ -1,0 +1,46 @@
+{% extends 'Admin/admin_base.html.twig' %}
+
+{% block title %}Les Catégories{% endblock %}
+
+{% block body %}
+    <div class="mt-12 lg:mt-20 xl:mt-24 mx-4">
+        <div class="w-full overflow-hidden rounded-lg shadow-xs">
+            <div class="w-full overflow-x-auto">
+                <table class="w-full ">
+                    <thead>
+                        <tr class="font-extrabold tracking-wide text-left uppercase border-b bg-blue1 text-black dark:text-white">
+                            <th class="px-4 py-3">ID de la Catégorie</th>
+                            <th class="px-4 py-3">Title</th>
+                            <th class="px-4 py-3">Type</th>
+                            <th class="px-4 py-3">Nombre de ressources concernées</th>
+                            <th class="px-4 py-3">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-700 bg-gray-800">
+                    {% for category in categorys %}
+                        <tr class="hover:bg-white bg-blue2 text-black">
+                            <td class="px-4 py-3">
+                                <a target="_blank" rel="noreferrer noopener" href="#">
+                                    {{ category.id }}
+                                </a>
+                            </td>
+                            <td class="px-4 py-3">
+                                {{ category.title }}
+                            </td>
+                            <td class="px-4 py-3">
+                                {{ category.type }}
+                            </td>
+                            <td class="px-4 py-3 text-black">
+                                {{ category.publicationReferencerCategories|length }} Article(s)
+                            </td>
+                            <td class="px-4 py-3 text-black">
+                                <a onclick="confirm('Supprimer le blog et tout ses articles ?')" class="ml-8" href="#"><i class="text-orange-300 fas fa-trash mr-1"></i>Supprimer</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            </div>
+        </div>
+{% endblock %}
