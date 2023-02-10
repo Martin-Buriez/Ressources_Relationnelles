@@ -18,8 +18,8 @@ class Category
     #[ORM\Column(length: 255)]
     private ?string $title = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $Type = null;
+    // #[ORM\Column(length: 255)]
+    // private ?string $Type = null;
 
     #[ORM\OneToMany(mappedBy: 'Category', targetEntity: PublicationReferencerCategory::class, orphanRemoval: true)]
     private Collection $publicationReferencerCategories;
@@ -50,17 +50,17 @@ class Category
         return $this;
     }
 
-    public function getType(): ?string
-    {
-        return $this->Type;
-    }
+    // public function getType(): ?string
+    // {
+    //     return $this->Type;
+    // }
 
-    public function setType(string $Type): self
-    {
-        $this->Type = $Type;
+    // public function setType(string $Type): self
+    // {
+    //     $this->Type = $Type;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     /**
      * @return Collection<int, PublicationReferencerCategory>

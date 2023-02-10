@@ -3,6 +3,22 @@
 {% block title %}Les Catégories{% endblock %}
 
 {% block body %}
+    <div class="w-6/12 overflow-x-auto text-black">
+        {{ form_start(categoryForm) }}
+        <div class="mb-4 mt-5">
+            <div class="mb-4 md:mb-0 ">
+                <label class="block mb-2 font-bold text-main-grey" for="blog">
+                    {{ form_row(categoryForm.title) }}
+                </label>
+            </div>
+        </div>
+        <div class="w-full">
+            <div class="mb-6 text-center ">
+                {{ form_row(categoryForm.submit) }}
+            </div>
+        </div>
+        {{ form_end(categoryForm) }}
+    </div>
     <div class="mt-12 lg:mt-20 xl:mt-24 mx-4">
         <div class="w-full overflow-hidden rounded-lg shadow-xs">
             <div class="w-full overflow-x-auto">
@@ -10,7 +26,7 @@
                     <thead>
                         <tr class="font-extrabold tracking-wide text-left uppercase border-b bg-blue1 text-black dark:text-white">
                             <th class="px-4 py-3">ID de la Catégorie</th>
-                            <th class="px-4 py-3">Title</th>
+                            <th class="px-4 py-3">Titre</th>
                             <th class="px-4 py-3">Type</th>
                             <th class="px-4 py-3">Nombre de ressources concernées</th>
                             <th class="px-4 py-3">Actions</th>
@@ -27,9 +43,6 @@
                             <td class="px-4 py-3">
                                 {{ category.title }}
                             </td>
-                            <td class="px-4 py-3">
-                                {{ category.type }}
-                            </td>
                             <td class="px-4 py-3 text-black">
                                 {{ category.publicationReferencerCategories|length }} Article(s)
                             </td>
@@ -41,6 +54,6 @@
                     </tbody>
                 </table>
             </div>
-            </div>
         </div>
+    </div>
 {% endblock %}
