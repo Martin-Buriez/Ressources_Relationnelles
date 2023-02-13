@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon espace !{% endblock %}
+
+{% block body %}
+{% include '/partials/navbarProfile.html.twig' %}
+    <div class="flex justify-between w-full">
+        <div class="hidden lg:flex lg:w-1/2 lg:justify-center mt-12">
+            {% if app.user.ProfilePicture %}
+                <img
+                        src="{{ asset('uploads/user/avatar/' ~ app.user.ProfilePicture) }}" alt="{{ app.user.username }}"
+                        class="w-[28rem] h-[28rem] flex-shrink-0 object-cover xl:w-[34rem] xl:h-[34rem] rounded-full border border-black"/>
+            {% else %}
+                <img
+                        src="{{ asset('assets/media/user.svg') }}" alt="Avatar de {{ app.user.username }}"
+                        class="w-[28rem] h-[28rem] flex-shrink-0 object-cover xl:w-[34rem] xl:h-[34rem] rounded-full border border-black"/>
+            {% endif %}
+        </div>
+        <div class="hidden lg:flex lg:w-1/2 lg:justify-center mt-12">
+            <div class="hidden lg:flex lg:w-1/2 lg:justify-center mt-12">
+                <ul style="list-style-type: none" class="text-left">
+                    <li class="text-2xl font-semibold text-gray-700 capitalize dark:text-white my-4">Nombre de ressources crées : {{ app.user.FirstName }}</li>
+                    <li class="text-2xl font-semibold text-gray-700 capitalize dark:text-white my-4">Votre thèmes préférés : {{ app.user.LastName }}</li>
+                </ul>
+            </div>
+            <div class="hidden lg:flex lg:w-1/2 lg:justify-left mt-12">
+                <ul style="list-style-type: none" class="text-left">
+                    <li class="text-2xl font-semibold text-gray-700 capitalize dark:text-white my-4 ">Votre pseudo :  {{ app.user.username }} </li>
+                    <li class="text-2xl font-semibold text-gray-700 capitalize dark:text-white my-4">Prénom :  {{ app.user.FirstName }} </li>
+                    <li class="text-2xl font-semibold text-gray-700 capitalize dark:text-white my-4">Nom : {{ app.user.LastName }}</li>
+                    <li class="text-2xl font-semibold text-gray-700 capitalize dark:text-white my-4">Adresse électronique : {{ app.user.email }}</li>
+                    <li class="text-2xl font-semibold text-gray-700 capitalize dark:text-white my-4">Téléphone : {{ app.user.phonenumber }}</li>
+                    <li class="text-2xl font-semibold text-gray-700 capitalize dark:text-white my-4">Adresse : {{ app.user.address }}</li>
+                    <li class="text-2xl font-semibold text-gray-700 capitalize dark:text-white my-4">Ville : {{ app.user.city }}</li>
+                    <li class="text-2xl font-semibold text-gray-700 capitalize dark:text-white my-4">Code postale : {{ app.user.postalcode }}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}

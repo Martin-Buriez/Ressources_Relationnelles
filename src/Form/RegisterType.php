@@ -10,9 +10,11 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Image;
 
 class RegisterType extends AbstractType
 {
@@ -81,6 +83,12 @@ class RegisterType extends AbstractType
                     'placeholder' => 'Veuillez saisir votre ville',
                     'class' => 'block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40'
                 ]])
+            ->add('address', TextType::class, [
+                'label' => 'Votre adresse',
+                'attr' => [
+                    'placeholder' => 'Veuillez saisir votre adresse',
+                    'class' => 'block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40'
+                ]])
             ->add('phone_number', TextType::class, [
                 'label' => 'Votre numéro de téléphone',
                 'attr' => [
@@ -95,11 +103,20 @@ class RegisterType extends AbstractType
                     'placeholder' => 'Veuillez saisir votre date de naissance',
                     'class' => 'block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40'
                 ]])
-            ->add('profile_picture', TextType::class, [
-                'label' => 'Votre avatar',
+            ->add('profile_picture', FileType::class, [
+                'required' => true,
+                'mapped' => false,
+                'label' => 'Votre photo de profil',
                 'attr' => [
-                    'placeholder' => 'Merci de saisir votre avatar',
-                    'class' => 'block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40'
+                    'class' => 'block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40',
+                    'placeholder' => 'Importer une image pour votre profil',
+                ],
+                'constraints' => [
+                    new Image([
+                        'maxSize' => '2048k',
+                        'mimeTypes' => ["image/png", "image/jpeg", "image/pjpeg", "image/svg+xml"],
+                        'mimeTypesMessage' => "Formats d'image supportés : .jpg, .png, .jpeg, .svg, .mp4"
+                    ])
                 ]
             ])
             ->add('submit', SubmitType::class, [

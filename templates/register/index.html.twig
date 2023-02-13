@@ -62,10 +62,13 @@
                     </div>
 
                     <div class="mt-5">
-                        {{ form_row(registerForm.postal_code) }}
+                        {{ form_row(registerForm.address) }}
                     </div>
                     <div>
                         {{ form_row(registerForm.city) }}
+                    </div>
+                    <div>
+                        {{ form_row(registerForm.postal_code) }}
                     </div>
                     <div>
                         {{ form_row(registerForm.phone_number) }}
@@ -103,9 +106,6 @@
                     <div class="inline-flex justify-around mt-6 w-full">
                         <a id="security_return_button" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l" disabled>
                             Retour
-                        </a>
-                        <a class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r" disabled="">
-                            Suivant
                         </a>
                     </div>
 

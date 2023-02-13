@@ -7,6 +7,7 @@ use App\Form\RegisterType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class RegisterController extends AbstractController
 {
     #[Route('/inscription', name: 'app_register')]
-    public function index(UserPasswordHasherInterface $encorder, EntityManagerInterface $entityManager, Request $request): Response
+    public function index(UserPasswordHasherInterface $encorder, EntityManagerInterface $entityManager, Request $request, string $userAvatarDir): Response
     {
         $notification = null;
         $user = new User();
@@ -35,6 +36,17 @@ class RegisterController extends AbstractController
                 // On ajoute la date de création
                 $date = new \DateTime('now');
                 $user->setCreatedAt($date);
+
+                // On upload l'avatar si il y en a un
+                if($avatar = $userForm['profile_picture']->getData()){
+                    $avatarFilename = bin2hex(random_bytes(6)).'.'.$avatar->guessExtension();
+                    try {
+                        $avatar->move($userAvatarDir, $avatarFilename);
+                    } catch (FileException $e){
+                        $this->addFlash('error_upload_avatar', 'Une erreur est survenue lors de l\'upload de l\'image');
+                    }
+                    $user->setProfilePicture($avatarFilename);
+                }
 
                 //On ajoute la validation du compte (Booléen)
                 $user->setStateValidated(false);

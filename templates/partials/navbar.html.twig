@@ -11,7 +11,7 @@
                 </div>
                 <div class="flex justify-end items-center space-x-2 w-1/4">
                     {% if app.user %}
-                        <a class="hover:text-main-white bg-main-light-blue rounded-md px-6 py-3 hover:bg-main-blue text-main-blue transition-all duration-500 border border-main-blue hover:border-main-white" href="{{ path('homepage') }}">Mon espace</a>
+                        <a class="hover:text-main-white bg-main-light-blue rounded-md px-6 py-3 hover:bg-main-blue text-main-blue transition-all duration-500 border border-main-blue hover:border-main-white" href="{{ path('profile') }}">Mon espace</a>
                         <a class="text-main-white bg-main-blue rounded-md px-6 py-3 hover:bg-main-light-blue hover:text-main-blue transition-all duration-500 border border-main-white hover:border-main-blue" href="{{ path('app_logout') }}">Me déconnecter</a>
                     {% else %}
                         <a class="text-main-white bg-main-blue rounded-md px-6 py-3 hover:bg-main-light-blue hover:text-main-blue transition-all duration-500 border border-main-white hover:border-main-blue" href="{{ path('app_register') }}">M'inscrire</a>
