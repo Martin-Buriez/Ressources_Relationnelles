@@ -38,6 +38,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $last_name = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $address = null;
+
     #[ORM\Column]
     private ?string $postal_code = null;
 
@@ -95,9 +98,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\OneToMany(mappedBy: 'userSender', targetEntity: CommunicateUser::class, orphanRemoval: true)]
     private Collection $communicateUsers;
-
-    #[ORM\Column(length: 255)]
-    private ?string $address = null;
 
     public function __construct()
     {

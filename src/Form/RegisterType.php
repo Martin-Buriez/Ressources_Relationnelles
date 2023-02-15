@@ -104,7 +104,7 @@ class RegisterType extends AbstractType
                     'class' => 'block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40'
                 ]])
             ->add('profile_picture', FileType::class, [
-                'required' => true,
+                'required' => false,
                 'mapped' => false,
                 'label' => 'Votre photo de profil',
                 'attr' => [
