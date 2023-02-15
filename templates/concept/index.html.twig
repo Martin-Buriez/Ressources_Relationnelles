@@ -1,108 +1,154 @@
 {% extends 'base.html.twig' %}
 {% block title %}Notre concept{% endblock %}
 {% block body %}
-    <section class="bg-white dark:bg-main-black w-full md:w-11/12 lg:w-10/12 xl:w-9/12 mx-auto mt-12 ">
-        <!-- component -->
-        <div class="w-full my-20 rounded-3xl px-6 bg-blue2 dark:bg-main-black shadow-lg">
-            {#  #}
-            <div class="sm:px-4 py-16  sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
-                <div class="flex flex-col max-w-screen-lg overflow-hidden bg-white border rounded-3xl shadow-sm lg:flex-row sm:mx-auto">
-                    <div class="relative lg:w-4/12 text-center my-auto">
-                        <p class="mb-3 text-3xl text-blue1 font-extrabold leading-none sm:text-4xl underline">
-                            Notre Concept
-                        </p>
-                        </br>
-                    </div>
-                    <div class="relative lg:w-8/12 text-center p-8">
-                        <p>
-                            Le projet <b>(RE)Sources Relationnelles</b> est un projet caractérisé par la création d’un moyen <b>d’échange de sources et de ressources</b> entre <b>les citoyens</b>.</br> 
-                        </p>
-                        </br> 
-                        <p>
-                            Ce projet est proposé par <b>le Ministère des Solidarités</b> et de la Santé à destination des citoyens afin de proposer des ressources et des outils numériques permettant de créer, <b>renforcer</b> et <b>établir</b> des liens entre <b>les personnes</b>. </br>
-                        </p>
-                        </br> 
-                        <p>
-                            <b>L’objectif principal</b> de ce projet est donc de proposer <b>une ou des solutions</b> afin d’améliorer la qualité des liens <b>relationnelles</b> que peuvent tisser les citoyens à travers l’utilisation des moyens numériques, dans le but d’améliorer leur qualité de vie.
-                        </p>
-                    </div>
+
+    <section class="bg-white w-full">
+
+        <div class="w-full h-1/5 bg-blue1 shadow-lg py-16">
+            <h1 class="text-center font-bold text-5xl text-white">Notre Concept</h1>
+            <div class="mx-auto h-px w-40 bg-white mt-8"></div>
+        </div>
+
+        <div class="w-full px-36 mt-10">
+
+            <div class="w-full h-1/3 flex border border-blue1 shadow-lg">
+                <div class="w-3/5 h-full px-20 mt-10">
+                    <h1 class="text-center font-bold text-2xl text-blue1">Qu'est ce que Ressources Relationnelles ?</h1>
+
+                    <p class="font-medium mt-6">Découvrez Ressources Relationnelles !</p>
+                    <p class="font-medium">C'est le projet innovant proposé par le Ministère des Solidarités et de la Santé pour les citoyens </p>
+                    <br/>
+                    <p class="font-medium">Ce projet permet la création d'un moyen d'échange de sources et de ressources pour favoriser l'établissement, le renforcement et la création de liens entre les personnes. </p>
+                    <p class="font-medium">L'objectif principal est d'améliorer la qualité des liens relationnels en proposant une ou des solutions numériques pour améliorer la qualité de vie des citoyens.</p>
+                    <p class="font-medium">Avec (RE)Sources Relationnelles, vous pourrez découvrir des ressources et des outils numériques pour créer des liens solides et durables avec d'autres personnes.</p>
+                    <br/>
+                    <p class="font-medium">Rejoignez-nous dès maintenant pour profiter de cette plateforme qui vous permettra d'élargir votre réseau et de trouver des solutions pour améliorer votre vie sociale !</p>
                 </div>
-                {#  #}
-                <div class="flex flex-col max-w-screen-lg overflow-hidden bg-white border rounded-3xl shadow-sm lg:flex-row sm:mx-auto mt-12">
-                    <div class="relative lg:w-4/12 text-center my-auto">
-                        <p class="mb-3 text-3xl text-blue1 font-extrabold leading-none sm:text-4xl underline">
-                            Comment ça marche ?
-                        </p>
-                        </br>
-                    </div>
-                    <div class="relative lg:w-8/12 text-center p-8">
-                        <h2 class="font-sans text-3xl font-bold tracking-tight text-blue1 sm:text-4xl sm:leading-none max-w-lg mb-6">
-                            Étape 1 : Je créé mon compte
-                        </h2>
-                        <p class="text-black text-base md:text-lg"> 
-                            Afin de pouvoir créer votre première ressource gratuitement, vous devez vous inscrire sur la plateforme.
-                        </p>
-                        <div class="flex items-center mt-4">
-                            <a
-                                href="{{ path('app_register') }}"
-                                class="mx-auto w-1/2 cursor-pointer flex object-cover object-top items-center text-main-blue border border-2 border-blue1 font-extrabold transition-all duration-500 justify-center text-blue1 hover:border-white hover:text-white hover:bg-blue1 w-full  py-4 leading-6 bg-white rounded-lg"
-                            >
-                                Je m'inscris
-                            </a>
-                        </div>
-                        {#  #}
-                        </br>
-                        <h2 class="font-sans text-3xl font-bold tracking-tight text-blue1 sm:text-4xl sm:leading-none max-w-lg mb-6">
-                            Étape 2 : Je crée ma première ressource
-                        </h2>
-                        <p class="text-black text-base md:text-lg"> 
-                            Après la création de votre compte, vous pouvez créer votre première ressource dans votre espace.
-                        </p>
-                        <div class="flex items-center mt-4">
-                            <a
-                                href="{{ path('profile') }}"
-                                class="mx-auto w-1/2 cursor-pointer flex object-cover object-top items-center text-main-blue border border-2 border-blue1 font-extrabold transition-all duration-500 justify-center text-blue1 hover:border-white hover:text-white hover:bg-blue1 w-full  py-4 leading-6 bg-white rounded-lg"
-                            >
-                                Mon profil
-                            </a>
-                        </div>
-                        {#  #}
-                        </br>
-                        <h2 class="font-sans text-3xl font-bold tracking-tight text-blue1 sm:text-4xl sm:leading-none max-w-lg mb-6">
-                            Étape 3 : Je partage ma ressource
-                        </h2>
-                        <p class="text-black text-base md:text-lg"> 
-                            Maintenant que vous avez créé votre ressource, celle-ci va passer en contrôle par un modérateur.</br>
-                            Après validation, les autres utilisateurs pourront intéragir avec votre ressource.
-                        </p>
-                    </div>
+                <div class="w-2/5 h-full">
+                    <img src={{ asset('assets/media/girl_phone.jpg') }}>
                 </div>
             </div>
-            {#  #}
-            <div class="sm:px-4 py-4 sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-8">
-                <div class="flex flex-col max-w-screen-lg overflow-hidden bg-white border rounded-3xl shadow-sm lg:flex-row sm:mx-auto">
-                    <div class="relative lg:w-1/2">
-                        <img
-                                width="50"
-                                height="50"
-                                src="{{ asset('assets/media/contact.webp') }}"
-                                alt="mobile app"
-                                class="object-cover w-full lg:absolute h-80 lg:h-full"
-                        />
-                        <svg class="absolute top-0 right-0 hidden h-full text-black lg:inline-block" viewBox="0 0 20 104" fill="#f0edee">
-                            <polygon points="17.3036738 5.68434189e-14 20 5.68434189e-14 20 104 0.824555778 104" />
-                        </svg>
+
+            <div class="w-full h-1/3 flex border border-blue1 mt-10 shadow-lg">
+
+                <div class="w-2/5 h-full">
+                    <img src={{ asset('assets/media/painter.jpg') }}>
+                </div>
+
+                <div class="w-3/5 h-full px-20 mt-10">
+                    <h1 class="text-center font-bold text-2xl text-blue1">Comment ça marche ?</h1>
+
+                    <p class="font-medium mt-6">Prêt à faire le premier pas ?</p>
+                    <p class="font-medium">Ici, vous pouvez accéder à un grand nombre de ressources numériques à travers différentes thématiques pour satisfaire votre curiosité et vos passions.  </p>
+                    <br/>
+                    <p class="font-medium">Créez votre compte et participez à la vie de la plateforme en partageant vos propres contenus et en interagissant avec d'autres membres. Vous pourrez également correspondre avec vos amis, discuter avec des créateurs inspirants et partager vos intérêts communs. </p>
+                    <p class="font-medium">Notre plateforme vous permettra de découvrir de nouvelles personnes, d'échanger avec elles et de tisser des liens durables autour de vos centres d'intérêt. </p>
+                    <br/>
+                    <p class="font-medium">Alors n'hésitez plus, rejoignez notre communauté dès maintenant et partagez vos passions avec le monde entier !</p>
+                </div>
+            </div>
+
+            <div class="w-full h-3/5 flex border border-blue1 mt-10 shadow-lg mb-10">
+
+                <div class="w-full h-full px-20 mt-10 mb-10">
+                    <h1 class="text-center font-bold text-2xl text-blue1">Les étapes à suivre :</h1>
+
+                    <p class="font-bold mt-6 text-center">Étape 1 : Je crée mon compte</p>
+                    <p class="font-medium text-center"> Afin de pouvoir créer votre première ressource gratuitement, vous devez vous inscrire sur la plateforme. </p>
+
+                    <div class="flex items-center mt-6">
+                        <a href="{{ path('app_register') }}" class="mx-auto w-1/2 cursor-pointer flex object-cover object-top items-center text-main-blue border border-2 border-blue1 font-extrabold transition-all duration-500 justify-center text-blue1 hover:border-white hover:text-white hover:bg-blue1 w-full  py-4 leading-6 bg-white rounded-lg"> Inscription </a>
                     </div>
-                    <div class="flex flex-col justify-center p-8 bg-white lg:p-16 lg:pl-10 lg:w-1/2">
-                        <h5 class="mb-3 text-3xl text-blue1 font-extrabold leading-none sm:text-4xl">
-                            Besoin d'aide !
-                        </h5>
-                        <p class="mb-8 text-main-black">
-                            Nos équipes se feront un plaisir de répondre à vos questions.
-                        </p>
+
+                    <p class="font-bold mt-6 text-center">Étape 2 : Je crée ma première ressource</p>
+                    <p class="font-medium text-center"> Après la création de votre compte, vous pouvez créer votre première ressource dans votre espace utilisateur.</p>
+
+                    <div class="flex items-center mt-6">
+                        <a href="{{ path('profile') }}" class="mx-auto w-1/2 cursor-pointer flex object-cover object-top items-center text-main-blue border border-2 border-blue1 font-extrabold transition-all duration-500 justify-center text-blue1 hover:border-white hover:text-white hover:bg-blue1 w-full  py-4 leading-6 bg-white rounded-lg"> Profil </a>
                     </div>
+
+                    <p class="font-bold mt-6 text-center">Étape 3 : Je partage ma première ressource</p>
+                    <p class="font-medium text-center"> Maintenant que vous avez créé votre ressource, celle-ci va passer en contrôle par un modérateur.<p>
+                    <p class="font-medium text-center">Après validation, les autres utilisateurs pourront interagir avec votre ressource.</p>
+                    <br/>
+                    <p class="font-medium text-center">Besoins d'aide ? Nos administrateurs se feront un plaisir de répondre à vos questions !</p>
+                </div>
+            </div>
+
+        </div>
+
+
+
+
+
+    </section>
+
+
+    <!-- <section class="bg-white dark:bg-main-black w-full md:w-11/12 lg:w-10/12 xl:w-9/12 mx-auto mt-12 ">
+                <div class="relative lg:w-8/12 text-center p-8">
+                    <h2 class="font-sans text-3xl font-bold tracking-tight text-blue1 sm:text-4xl sm:leading-none max-w-lg mb-6">
+                        Étape 1 : Je créé mon compte
+                    </h2>
+                    <p class="text-black text-base md:text-lg">
+                        Afin de pouvoir créer votre première ressource gratuitement, vous devez vous inscrire sur la plateforme.
+                    </p>
+
+                    {#  #}
+                    </br>
+                    <h2 class="font-sans text-3xl font-bold tracking-tight text-blue1 sm:text-4xl sm:leading-none max-w-lg mb-6">
+                        Étape 2 : Je crée ma première ressource
+                    </h2>
+                    <p class="text-black text-base md:text-lg">
+                        Après la création de votre compte, vous pouvez créer votre première ressource dans votre espace.
+                    </p>
+                    <div class="flex items-center mt-4">
+                        <a
+                                href="{{ path('profile') }}"
+                                class="mx-auto w-1/2 cursor-pointer flex object-cover object-top items-center text-main-blue border border-2 border-blue1 font-extrabold transition-all duration-500 justify-center text-blue1 hover:border-white hover:text-white hover:bg-blue1 w-full  py-4 leading-6 bg-white rounded-lg"
+                        >
+                            Mon profil
+                        </a>
+                    </div>
+                    {#  #}
+                    </br>
+                    <h2 class="font-sans text-3xl font-bold tracking-tight text-blue1 sm:text-4xl sm:leading-none max-w-lg mb-6">
+                        Étape 3 : Je partage ma ressource
+                    </h2>
+                    <p class="text-black text-base md:text-lg">
+                        Maintenant que vous avez créé votre ressource, celle-ci va passer en contrôle par un modérateur.</br>
+                        Après validation, les autres utilisateurs pourront intéragir avec votre ressource.
+                    </p>
                 </div>
             </div>
         </div>
-    </section>
+        {#  #}
+        <div class="sm:px-4 py-4 sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-8">
+            <div class="flex flex-col max-w-screen-lg overflow-hidden bg-white border rounded-3xl shadow-sm lg:flex-row sm:mx-auto">
+                <div class="relative lg:w-1/2">
+                    <img
+                            width="50"
+                            height="50"
+                            src="{{ asset('assets/media/contact.webp') }}"
+                            alt="mobile app"
+                            class="object-cover w-full lg:absolute h-80 lg:h-full"
+                    />
+                    <svg class="absolute top-0 right-0 hidden h-full text-black lg:inline-block" viewBox="0 0 20 104" fill="#f0edee">
+                        <polygon points="17.3036738 5.68434189e-14 20 5.68434189e-14 20 104 0.824555778 104" />
+                    </svg>
+                </div>
+                <div class="flex flex-col justify-center p-8 bg-white lg:p-16 lg:pl-10 lg:w-1/2">
+                    <h5 class="mb-3 text-3xl text-blue1 font-extrabold leading-none sm:text-4xl">
+                        Besoin d'aide !
+                    </h5>
+                    <p class="mb-8 text-main-black">
+                        Nos équipes se feront un plaisir de répondre à vos questions.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    </section> -->
+
+
+
 {% endblock %}
