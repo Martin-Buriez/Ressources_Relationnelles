@@ -3,21 +3,118 @@
 {% block title %}Contact{% endblock %}
 
 {% block body %}
-    <div class="flex justify-center items-center w-full pt-12 bg-main-white dark:bg-main-dark">
+
+    <section class="bg-white w-full">
+
+        <div class="w-full h-1/5 bg-blue1 shadow-lg py-16">
+            <h1 class="text-center font-bold text-5xl text-white">Contactez-nous</h1>
+            <div class="mx-auto h-px w-40 bg-white mt-8"></div>
+        </div>
+
+        <div class="w-full px-36 mt-10">
+
+            <div class="w-full flex border border-blue1 shadow-lg py-10">
+                <div class="h-full w-2/3 w-full px-20">
+
+                    <h1 class="font-bold text-2xl text-blue1">Nos coordonnées</h1>
+
+                    <div class="mt-10 w-full flex align-middle">
+                        <div>
+                            <img width="50" height="50" src={{ asset('assets/media/marker_icon.png') }}>
+                        </div>
+                        <div class="px-8 w-full">
+                            <p class="text-gray-800">Pour vous rendre sur place :</p>
+                            <p class="font-bold text-xl">14 Av. Duquesne, 75350 Paris</p>
+                        </div>
+                    </div>
+
+                    <div class="mt-10 w-full flex align-middle">
+                        <div>
+                            <img width="50" height="50" src={{ asset('assets/media/letter_icon.png') }}>
+                        </div>
+                        <div class="px-8 w-full">
+                            <p class="text-gray-800">Pour nous écrire :</p>
+                            <p class="font-bold text-xl">Ministère des Solidarités et de la Santé, Monsieur Olivier Veran, Ministre de la Santé et des Solidarités, 14,rue Duquesne, 75350 Paris</p>
+                        </div>
+                    </div>
+
+                    <div class="mt-10 w-full flex align-middle">
+                        <div>
+                            <img width="50" height="50" src={{ asset('assets/media/letter_icon.png') }}>
+                        </div>
+                        <div class="px-8 w-full">
+                            <p class="text-gray-800">Pour contacter le standard téléphonique :</p>
+                            <p class="font-bold text-xl">Si vous souhaitez joindre un correspondant : +33 (0)1 40 15 80 00</p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="w-1/3 h-full flex justify-center">
+                    <img class="mt-10" width="300" height="300" src={{ asset('assets/media/lost_man.png') }}>
+                </div>
+
+            </div>
+
+            <div class="w-full bg-blue1 h-px mt-10">
+            </div>
+
+
+            <div class="w-full py-10 px-36">
+                <h1 class="font-bold text-2xl text-blue1 text-center">Notre formulaire de contact</h1>
+
+                <div class="w-full flex justify-center">
+                    <div class="w-1/6 bg-blue1 h-px mt-10">
+                    </div>
+                </div>
+
+                <div class="bg-blue1 w-full mt-10 px-20 rounded-2xl shadow-lg py-12">
+
+                    <div class="w-full flex justify-around ">
+                        <label for="first_name" class="w-1/3 text-white">Votre prénom :</label>
+                        <label for="last_name" class="w-3/5 text-white">Votre nom :</label>
+                    </div>
+                    <div class="w-full flex justify-around">
+                        <input id="first_name" class="w-1/3 text-grey4 mt-2 p-3 rounded-lg" type="text"/>
+                        <input id="last_name" class="w-3/5 text-grey4 mt-2 p-3 rounded-lg" type="text"/>
+                    </div>
+
+                    <div class="w-full flex justify-around mt-5">
+                        <label for="email" class="w-3/5 text-white">Votre adresse email :</label>
+                        <label for="phone_number" class="w-1/3 text-white">Votre numéro de téléphone :</label>
+                    </div>
+                    <div class="w-full flex justify-around">
+                        <input id="email" class="w-3/5 text-grey4 mt-2 p-3 rounded-lg" type="email"/>
+                        <input id="phone_number" class="w-1/3 text-grey4 mt-2 p-3 rounded-lg" type="tel"/>
+                    </div>
+
+                    <div class="w-full mx-5 mt-5">
+                        <label for="message" class="w-full text-white">Votre message :</label>
+                    </div>
+                    <div class="w-full mx-5">
+                        <textarea id="message" rows="10" class="w-full mt-2 rounded-lg px-5 py-5"></textarea>
+                    </div>
+
+                    <div class="mt-10 flex w-full justify-center ">
+                        <button class="w-1/3 uppercase text-sm font-bold tracking-wide bg-white p-3 rounded-lg w-full text-blue1"> Envoyer </button>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+  <!--  <div class="flex justify-center items-center w-full pt-12 bg-main-white dark:bg-main-dark">
         <div class="container mx-auto my-4 px-4 lg:px-20">
             <div class="w-full p-8 my-4 md:px-12 lg:w-9/12 lg:pl-20 lg:pr-40 mr-auto rounded-2xl shadow-2xl">
                 <div class="flex">
                     <h1 class="font-bold text-main-blue dark:text-main-white uppercase text-5xl">Envoyez nous un<br /> message</h1>
                 </div>
-                <div class="grid grid-cols-1 gap-5 md:grid-cols-2 mt-5">
-                    <input class="w-full bg-grey1 text-grey4 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
-                        type="text" placeholder="Prénom*" />
-                    <input class="w-full bg-grey1 text-grey4 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
-                        type="text" placeholder="Nom*" />
-                    <input class="w-full bg-grey1 text-grey4 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
-                        type="email" placeholder="Email*" />
-                    <input class="w-full bg-grey1 text-grey4 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
-                        type="number" placeholder="Téléphone*" />
+
                 </div>
                 <div class="my-4">
                     <textarea placeholder="Message*" class="w-full h-32 bg-grey1 text-grey4 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"></textarea>
@@ -57,6 +154,6 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
 {% endblock %}
