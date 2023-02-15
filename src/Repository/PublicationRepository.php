@@ -39,6 +39,20 @@ class PublicationRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * Permet de compte le nombre de blogs
+     * @return void
+     */
+    public function getTotalBlogs()
+    {
+        $query = $this->createQueryBuilder('b')
+            ->select('COUNT(b.id)');
+        try {
+            return $query->getQuery()->getSingleScalarResult();
+        } catch (NoResultException|NonUniqueResultException $e) {
+        }
+    }
+
 //    /**
 //     * @return Publication[] Returns an array of Publication objects
 //     */
