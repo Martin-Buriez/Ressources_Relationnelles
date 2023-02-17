@@ -32,34 +32,27 @@ class Publication
     private ?string $description = null;
 
     #[ORM\Column]
-    #[Assert\NotBlank(message: "L'état ( Validée ou non ) de la publication est obligatoire")]
     private ?bool $state_validated = null;
 
     #[ORM\Column]
-    #[Assert\NotBlank(message: "L'état ( Privée ou non ) de la publication est obligatoire")]
     private ?bool $state_private = null;
 
     #[ORM\Column]
-    #[Assert\NotBlank(message: "Le nombre de like de la publication est obligatoire")]
     private ?int $like_number = null;
 
     #[ORM\Column]
-    #[Assert\NotBlank(message: "Le nombre de partage de la publication est obligatoire")]
     private ?int $sharing_number = null;
 
     #[ORM\Column]
-    #[Assert\NotBlank(message: "Le nombre de vues de la publication est obligatoire")]
     private ?int $view_number = null;
 
     #[ORM\Column]
-    #[Assert\NotBlank(message: "La date de création de la publication est obligatoire")]
     private ?\DateTime $created_at = null;
 
     // Relations
 
     #[ORM\ManyToOne(inversedBy: 'publications')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Assert\NotBlank(message: "La publication doit obligatoirement posséder un créateur")]
     private ?User $created_by = null;
 
     #[ORM\ManyToOne(inversedBy: 'publications')]
@@ -218,35 +211,35 @@ class Publication
         return $this;
     }
 
-    /**
-     * @return Collection<int, UserCreatePublication>
-     */
-    public function getUserCreatePublications(): Collection
-    {
-        return $this->userCreatePublications;
-    }
+    // /**
+    //  * @return Collection<int, UserCreatePublication>
+    //  */
+    // public function getUserCreatePublications(): Collection
+    // {
+    //     return $this->userCreatePublications;
+    // }
 
-    public function addUserCreatePublication(UserCreatePublication $userCreatePublication): self
-    {
-        if (!$this->userCreatePublications->contains($userCreatePublication)) {
-            $this->userCreatePublications->add($userCreatePublication);
-            $userCreatePublication->setPublication($this);
-        }
+    // public function addUserCreatePublication(UserCreatePublication $userCreatePublication): self
+    // {
+    //     if (!$this->userCreatePublications->contains($userCreatePublication)) {
+    //         $this->userCreatePublications->add($userCreatePublication);
+    //         $userCreatePublication->setPublication($this);
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function removeUserCreatePublication(UserCreatePublication $userCreatePublication): self
-    {
-        if ($this->userCreatePublications->removeElement($userCreatePublication)) {
-            // set the owning side to null (unless already changed)
-            if ($userCreatePublication->getPublication() === $this) {
-                $userCreatePublication->setPublication(null);
-            }
-        }
+    // public function removeUserCreatePublication(UserCreatePublication $userCreatePublication): self
+    // {
+    //     if ($this->userCreatePublications->removeElement($userCreatePublication)) {
+    //         // set the owning side to null (unless already changed)
+    //         if ($userCreatePublication->getPublication() === $this) {
+    //             $userCreatePublication->setPublication(null);
+    //         }
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     /**
      * @return Collection<int, PublicationIncludeImage>

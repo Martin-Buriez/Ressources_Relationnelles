@@ -2,7 +2,6 @@
 
 namespace App\Form;
 
-use App\Entity\Image;
 use App\Entity\Publication;
 use App\Entity\Theme;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -20,8 +19,15 @@ class PublicationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            ->add('theme', EntityType::class, [
+                'label' => 'Thème de la ressource',
+                'class' => Theme::class,
+                'choice_label' => 'name',
+                'choice_value' => 'id',
+            ])
             ->add('title', TextType::class, [
                 'label' => 'Le nom de votre ressource',
+                'required' => true,
                 'attr' => [
                     'placeholder' => 'Merci de saisir le nom de votre ressource',
                     'class' => 'form-input block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40'
@@ -36,17 +42,13 @@ class PublicationType extends AbstractType
             ])
             ->add('state_private', CheckboxType::class, [
                 'label' => 'Privée ?',
+                'required' => false,
                 'attr' => [
                     'placeholder' => 'Saisir le status de la ressource',
                     'class' => 'form-input block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40'
                 ]
             ])
-            ->add('theme', EntityType::class, [
-                'label' => 'Thème de la ressource',
-                'class' => Theme::class,
-                'choice_label' => 'name',
-            ])
-            ->add('name', FileType::class,[
+            ->add('images', FileType::class,[
                 'label' => 'Importer des images pour cet article',
                 'multiple' => true,
                 'mapped' => false,
@@ -62,7 +64,7 @@ class PublicationType extends AbstractType
             ->add('submit', SubmitType::class, [
                 'label' => 'Enregistrer',
                 'attr' => [
-                    'class' => 'my-8 w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-main-blue rounded-md hover:text-main-blue hover:bg-main-light-blue focus:outline-none focus:bg-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-50'
+                    'class' => 'my-8 w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-blue1 rounded-md hover:text-main-blue hover:bg-main-light-blue focus:outline-none focus:bg-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-50'
                 ]
             ])
         ;
