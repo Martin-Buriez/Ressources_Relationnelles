@@ -1,20 +1,61 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello UserPublicationController!{% endblock %}
+{% block title %}Mes Publications !{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/cypri/Documents/GitHub/Ressources_Relationnelles/src/Controller/UserPublicationController.php'|file_link(0) }}">src/Controller/UserPublicationController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/cypri/Documents/GitHub/Ressources_Relationnelles/templates/user_publication/index.html.twig'|file_link(0) }}">templates/user_publication/index.html.twig</a></code></li>
-    </ul>
-</div>
+    <div class=" flex justify-center relative bg-white dark:bg-black w-full p-4 mt-2">
+        <div class="w-8/12 flex justify-center items-center bg-blue2 h-96">
+            {% if app.user.publications|length == 0 %}
+                <div>
+                    <h2 class="text-lg text-center md:text-xl xl:text-2xl text-main-blue">Il est temps de créer votre premier Blog sur TailBlog</h2>
+                    <p class="text-center md:text-lg xl:text-xl mt-5 text-main-black">
+                        Il semblerait que vous n'ayez encore créé aucune ressource.<br/>
+                    </p>
+                </div>
+            {% else %}
+                <div>
+                    <h2 class="text-lg text-center md:text-xl xl:text-2xl text-main-blue underline">Bienvenue dans votre espace de gestion de vos ressources</h2>
+                    <p class="text-center md:text-lg xl:text-xl mt-5 text-main-black">
+                        Il semblerait que vous ayez déjà créé au moins une ressource.<br/>
+                    </p>
+                    <h3 class="text-center md:text-lg xl:text-xl mt-5 text-main-black">Liste de vos ressources</h3>
+                    <hr class="my-3 md:my-5 w-1/4 mx-auto border-blue1"/>
+                    <table class="w-full">
+                        <thead>
+                            <tr class="font-extrabold tracking-wide text-left uppercase border-b bg-blue1 text-black dark:text-white">
+                                <th class="px-4 py-3">ID de la ressource</th>
+                                <th class="px-4 py-3">Titre</th>
+                                <th class="px-4 py-3">Nombre d'interaction</th>
+                                <th class="px-4 py-3">Validée</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-700 bg-gray-800">
+                        {% for publication in app.user.publications %}
+                            <tr class="bg-blue2 text-black">
+                                <td class="px-4 py-3">
+                                    <a target="_blank" rel="noreferrer noopener" href="#">
+                                        {{ publication.id }}
+                                    </a>
+                                </td>
+                                <td class="px-4 py-3">
+                                    {{ publication.title }}
+                                </td>
+                                <td class="px-4 py-3 text-black">
+                                    {{ publication.likeNumber}} J'aime(s)
+                                </td>
+                                    <td class="px-4 py-3 text-black">
+                                    {% if publication.stateValidated  %}
+                                        <a  class="ml-8" href="#"><i class="text-black fas fa-check mr-1"></i></a>
+                                    {% else %}
+                                        <a class="ml-8" href="#"><i class="text-black fas fa-times mr-1"></i></a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% endif %}
+        </div>
+    </div>
 {% endblock %}
