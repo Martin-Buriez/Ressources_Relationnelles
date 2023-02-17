@@ -3,48 +3,59 @@
 {% block title %}Ajouter une publication !{% endblock %}
 
 {% block body %}
-    <div class="w-6/12 overflow-x-auto text-black">
-        {{ form_start(publicationForm) }}
-        <div class="mb-4 mt-5">
-            <div class="mb-4 md:mb-0 ">
-                <label class="block mb-2 font-bold text-grey1" for="blog">
-                    {{ form_row(publicationForm.title) }}
-                </label>
+<div class="w-10/12 h-full flex border border-blue1 shadow-lg py-10 mt-16 bg-blue2 mx-auto rounded-xl">
+    <div class="h-8/12 w-full px-20 bg-blue2">
+        <div class="w-full overflow-x-auto text-black mx-auto">
+            {{ form_start(publicationForm) }}
+            <div class="mb-4 mt-5">
+                <div class="mb-4 md:mb-0">
+                    <label class="block mb-2 font-bold text-grey2 text-xl" for="publication">
+                        {{ form_row(publicationForm.title) }}
+                    </label>
+                </div>
             </div>
-        </div>
-        <div class="mb-4 mt-5">
-            <div class="mb-4 md:mb-0 ">
-                <label class="block mb-2 font-bold text-grey1" for="blog">
-                    {{ form_row(publicationForm.description) }}
-                </label>
+            <div class="mb-4 mt-5">
+                <div class="mb-4 md:mb-0 ">
+                    <label class="block mb-2 font-bold text-grey2 text-xl py-4" for="publication">
+                        {{ form_row(publicationForm.theme) }}
+                    </label>
+                </div>
             </div>
-        </div>
-        <div class="mb-4 mt-5">
-            <div class="mb-4 md:mb-0 ">
-                <label class="block mb-2 font-bold text-grey1" for="blog">
-                    {{ form_row(publicationForm.state_private) }}
-                </label>
+            <div class="mb-4 mt-5 h-">
+                <div class="mb-4 md:mb-0 ">
+                    <label class="block mb-2 font-bold text-grey2 text-xl" for="publication">
+                        {{ form_row(publicationForm.description) }}
+                    </label>
+                </div>
             </div>
-        </div>
-        <div class="mb-4 mt-5">
-            <div class="mb-4 md:mb-0 ">
-                <label class="block mb-2 font-bold text-grey1" for="blog">
-                    {{ form_row(publicationForm.theme) }}
-                </label>
+            <div class="mb-4 mt-5">
+                <div class="mb-4 md:mb-0 ">
+                    <label class="block mb-2 font-bold text-grey2 text-xl" for="publication">
+                        {{ form_row(publicationForm.state_private) }}
+                    </label>
+                </div>
             </div>
-        </div>
-        <div class="mb-4 mt-5">
-            <div class="mb-4 md:mb-0 ">
-                <label class="block mb-2 font-bold text-grey1" for="blog">
-                    {{ form_row(publicationForm.images) }}
-                </label>
+            <div class="mb-4 mt-5 w-full bg-white">
+                <div class="mb-4 md:mb-0 ">
+                    <label class="block mb-2 font-bold text-grey2 text-xl" for="publication">
+                        {{ form_row(publicationForm.images) }}
+                    </label>
+                </div>
             </div>
-        </div>
-        <div class="w-full">
-            <div class="mb-6 text-center ">
-                {{ form_row(publicationForm.submit) }}
+            <div class="flex bg-white justify-center space-x-4">
+                <div class="w-5/12">
+                    <div class="text-center">
+                        <button class= 'my-8 w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-blue1 rounded-md hover:text-main-blue hover:bg-main-light-blue focus:outline-none focus:bg-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-50'>Annuler</button>
+                    </div>
+                </div>
+                <div class="w-5/12">
+                    <div class="text-center">
+                        {{ form_row(publicationForm.submit) }}
+                    </div>
+                </div>
             </div>
+            {{ form_end(publicationForm) }}
         </div>
-        {{ form_end(publicationForm) }}
     </div>
+</div>
 {% endblock %}

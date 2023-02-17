@@ -24,6 +24,9 @@ class PublicationType extends AbstractType
                 'class' => Theme::class,
                 'choice_label' => 'name',
                 'choice_value' => 'id',
+                'attr' => [
+                    'class' => 'form-input block w-3/12 px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40'
+                ]
             ])
             ->add('title', TextType::class, [
                 'label' => 'Le nom de votre ressource',
@@ -45,11 +48,11 @@ class PublicationType extends AbstractType
                 'required' => false,
                 'attr' => [
                     'placeholder' => 'Saisir le status de la ressource',
-                    'class' => 'form-input block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40'
+                    'class' => 'px-4 py-2 mt-2 ml-4'
                 ]
             ])
             ->add('images', FileType::class,[
-                'label' => 'Importer des images pour cet article',
+                'label' => 'Importer des images pour cette ressource',
                 'multiple' => true,
                 'mapped' => false,
                 'required' => false,
@@ -57,7 +60,7 @@ class PublicationType extends AbstractType
                     'class' => 'text-main-blue text-lg lg:text-xl mb-5'
                 ],
                 'attr' => [
-                    'placeholder' => 'Importer les images de l\'article',
+                    'placeholder' => 'Importer les images de la ressource',
                     'class' => 'py-4 border text-main-white mt-1 rounded px-4 w-full bg-gray-50'
                 ],
             ])
@@ -69,7 +72,6 @@ class PublicationType extends AbstractType
             ])
         ;
     }
-
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

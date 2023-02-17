@@ -68,7 +68,7 @@ class UserAddPublicationController extends AbstractController
                 'publication_create_success',
                 'Votre article a bien été ajouté !'
             );
-            return $this->redirectToRoute('add_publication');
+            return $this->redirectToRoute('user_publication');
         }
 
         return $this->render('user_add_publication/index.html.twig', [
