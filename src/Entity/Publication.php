@@ -7,10 +7,12 @@ use App\Repository\PublicationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: PublicationRepository::class)]
+#[UniqueEntity('title', 'Une autre ressource porte déjà ce titre')]
 #[ApiResource]
 class Publication
 {
@@ -70,12 +72,25 @@ class Publication
     #[ORM\JoinColumn(nullable: false)]
     private ?Category $category = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $slug = null;
+
     // Gets & Setters
 
     public function __construct()
     {
         $this->commentConcernPublications = new ArrayCollection();
         $this->publicationIncludeImages = new ArrayCollection();
+    }
+    public function computeSlug(SluggerInterface $slugger){
+        if(!$this->slug || '-' === $this->slug){
+            $this->slug = (string) $slugger->slug((string) $this)->lower();
+        }
+    }
+
+    public function __toString(): string
+    {
+        return (string) $this->getTitle();
     }
 
     public function getId(): ?int
@@ -272,6 +287,18 @@ class Publication
     public function setCategory(?category $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
 
         return $this;
     }

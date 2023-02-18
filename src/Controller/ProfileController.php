@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Publication;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,6 +21,15 @@ class ProfileController extends AbstractController
          * @var User $user
          */
         $user = $this->getUser();
+        $userId = $user->getId();
+
+        /**
+         * Retourne le nombre de ressource créé par l'utilisateur
+         */
+        $query = $entityManager->createQuery(
+            'SELECT COUNT(p.id) FROM App\Entity\Publication p WHERE p.created_by = :user'
+        )->setParameter('user', $user);
+        $NbrRessource = $query->getSingleScalarResult();
 
         $userCardForm = $this->createForm(UserIdentityCardType::class, $user);
         $userCardForm->handleRequest($request);
@@ -47,6 +57,7 @@ class ProfileController extends AbstractController
             'controller_name' => 'ProfileController',
             'user'=> $user,
             'userCardForm' => $userCardForm,
+            'NbrRessource' => $NbrRessource,
         ]);
     }
 }
