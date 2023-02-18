@@ -12,10 +12,10 @@
             </h1>
             <div class="flex w-full mt-4 mx-auto">
                 {% for item in publication.publicationIncludeImages %}
-                    <img class="lg:h-48 md:h-36 w-6/12 object-cover object-center" src="{{ asset('uploads/ressource/images/'~item.image.name) }}" alt="blog cover"/>
+                    <img class="lg:h-48 md:h-36 w-6/12 object-cover object-center" src="{{ asset('uploads/ressource/images/'~item.image.name) }}" alt="Ressource(s) cover"/>
                 {% endfor %}
             </div>
-            <p class="mt-6 text-xl md:text-2xl text-main-white">{{ publication.description|capitalize }}</p>
+            <p class="mt-6 text-xl md:text-2xl text-white">{{ publication.description|capitalize }}</p>
         </div>
     </div>
 
