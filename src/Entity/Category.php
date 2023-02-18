@@ -18,19 +18,16 @@ class Category
     #[ORM\Column(length: 255)]
     private ?string $title = null;
 
-    // #[ORM\Column(length: 255)]
-    // private ?string $Type = null;
-
-    #[ORM\OneToMany(mappedBy: 'Category', targetEntity: PublicationReferencerCategory::class, orphanRemoval: true)]
-    private Collection $publicationReferencerCategories;
-
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: FilterConcernCategory::class, orphanRemoval: true)]
     private Collection $filterConcernCategories;
 
+    #[ORM\OneToMany(mappedBy: 'category', targetEntity: Publication::class, orphanRemoval: true)]
+    private Collection $publications;
+
     public function __construct()
     {
-        $this->publicationReferencerCategories = new ArrayCollection();
         $this->filterConcernCategories = new ArrayCollection();
+        $this->publications = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -46,48 +43,6 @@ class Category
     public function setTitle(string $title): self
     {
         $this->title = $title;
-
-        return $this;
-    }
-
-    // public function getType(): ?string
-    // {
-    //     return $this->Type;
-    // }
-
-    // public function setType(string $Type): self
-    // {
-    //     $this->Type = $Type;
-
-    //     return $this;
-    // }
-
-    /**
-     * @return Collection<int, PublicationReferencerCategory>
-     */
-    public function getPublicationReferencerCategories(): Collection
-    {
-        return $this->publicationReferencerCategories;
-    }
-
-    public function addPublicationReferencerCategory(PublicationReferencerCategory $publicationReferencerCategory): self
-    {
-        if (!$this->publicationReferencerCategories->contains($publicationReferencerCategory)) {
-            $this->publicationReferencerCategories->add($publicationReferencerCategory);
-            $publicationReferencerCategory->setCategory($this);
-        }
-
-        return $this;
-    }
-
-    public function removePublicationReferencerCategory(PublicationReferencerCategory $publicationReferencerCategory): self
-    {
-        if ($this->publicationReferencerCategories->removeElement($publicationReferencerCategory)) {
-            // set the owning side to null (unless already changed)
-            if ($publicationReferencerCategory->getCategory() === $this) {
-                $publicationReferencerCategory->setCategory(null);
-            }
-        }
 
         return $this;
     }
@@ -116,6 +71,36 @@ class Category
             // set the owning side to null (unless already changed)
             if ($filterConcernCategory->getCategory() === $this) {
                 $filterConcernCategory->setCategory(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Publication>
+     */
+    public function getPublications(): Collection
+    {
+        return $this->publications;
+    }
+
+    public function addPublication(Publication $publication): self
+    {
+        if (!$this->publications->contains($publication)) {
+            $this->publications->add($publication);
+            $publication->setCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removePublication(Publication $publication): self
+    {
+        if ($this->publications->removeElement($publication)) {
+            // set the owning side to null (unless already changed)
+            if ($publication->getCategory() === $this) {
+                $publication->setCategory(null);
             }
         }
 

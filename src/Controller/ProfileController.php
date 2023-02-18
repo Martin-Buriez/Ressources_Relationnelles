@@ -17,11 +17,6 @@ class ProfileController extends AbstractController
          * @var User $user
          */
         $user = $this->getUser();
-        // if($user){ 
-        //     $articles = $entityManager->getRepository(Articles::class)->findUserArticles($user);
-        // }else{
-        //     return $this->redirectToRoute('app_login');
-        // }
 
         return $this->render('profile/index.html.twig', [
             'controller_name' => 'ProfileController',

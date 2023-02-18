@@ -8,7 +8,6 @@ use App\Entity\PublicationIncludeImage;
 use App\Form\PublicationType;
 use DateTimeZone;
 use Doctrine\ORM\EntityManagerInterface;
-use phpDocumentor\Reflection\PseudoTypes\False_;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,8 +24,10 @@ class UserAddPublicationController extends AbstractController
         $publicationForm->handleRequest($request);
 
         if($publicationForm->isSubmitted() && $publicationForm->isValid()){
+            //On traite les thèmes
             $publicationTheme = $publicationForm->get('theme')->getData();
             $publication->setTheme($publicationTheme);
+
             // On traite les images
             $publicationImages = $publicationForm->get('images')->getData();
             foreach ($publicationImages as $publicationImage){
@@ -44,6 +45,7 @@ class UserAddPublicationController extends AbstractController
                 $imgIncludePublication->setPublication($publication);
                 $entityManager->persist($imgIncludePublication); // Ajout de l'entité PublicationIncludeImage à la base de données
             }
+
             // On traite les valeurs par défauts
             $publicationStatePrivate = $publicationForm->get('state_private')->getData();
             if ($publicationStatePrivate = false){
@@ -56,8 +58,16 @@ class UserAddPublicationController extends AbstractController
             $publication->setSharingNumber(0);
             $publication->setViewNumber(0);
 
+            //On traite la categorie de la ressource
+            // $publicationCategory = $publicationForm->get('category')->getData();
+            // $publicationReferencerCategory = new PublicationReferencerCategory();
+            // $publicationReferencerCategory->setCategory($publicationCategory);
+            // $publicationReferencerCategory->setPublication($publication);
+
+            //Set Id du créateur
             $publication->setCreatedBy($this->getUser());
 
+            //Set date de création
             $dateTimeZone = new DateTimeZone('Europe/Paris');
             $date = new \DateTime('now', $dateTimeZone);
             $publication->setCreatedAt($date);

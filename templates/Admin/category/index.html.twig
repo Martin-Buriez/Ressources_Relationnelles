@@ -3,7 +3,7 @@
 {% block title %}Les Catégories{% endblock %}
 
 {% block body %}
-    <div class="w-6/12 overflow-x-auto text-black">
+    <div class="w-5/12 overflow-x-auto text-black">
         {{ form_start(categoryForm) }}
         <div class="mb-4 mt-5">
             <div class="mb-4 md:mb-0 ">
@@ -27,7 +27,6 @@
                         <tr class="font-extrabold tracking-wide text-left uppercase border-b bg-blue1 text-black dark:text-white">
                             <th class="px-4 py-3">ID de la Catégorie</th>
                             <th class="px-4 py-3">Titre</th>
-                            <th class="px-4 py-3">Nombre de ressources concernées</th>
                             <th class="px-4 py-3">Action</th>
                         </tr>
                     </thead>
@@ -41,9 +40,6 @@
                             </td>
                             <td class="px-4 py-3">
                                 {{ category.title }}
-                            </td>
-                            <td class="px-4 py-3 text-black">
-                                {{ category.publicationReferencerCategories|length }} Article(s)
                             </td>
                             <td class="px-4 py-3 text-black">
                                 <a onclick="confirm('Supprimer la catégorie et tout ses articles ?')" class="ml-8" href="#"><i class="text-orange-300 fas fa-trash mr-1"></i>Supprimer</a>
