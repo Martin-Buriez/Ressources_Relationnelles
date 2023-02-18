@@ -53,4 +53,33 @@
             </div>
         </div>
     </div>
+    <div class="text-center bg-blue2 mt-4 w-8/12 mx-auto rounded-lg">
+        <h1 class="underline">Afin d'obtenir le statut validé :</h1> 
+        <p class="font-bold italic">Veuilliez à déposer un justificatif permettant de vérifier votre nom prénom et votre adresse</br> (Les documents acceptés sont carte d'identité, permis, passeport).</p>
+        <div class="flex justify-center w-full mb-2">
+            <div class="w-5/12 left-0 mb-2">
+                {% if app.user.identityCardLocation is empty %}
+                    <p>Déposer un justificatif permettant de confirmer votre identité</p>
+                    {{ form_start(userCardForm) }}
+                        <div class="mb-4 mt-5">
+                            <div class="mb-4 md:mb-0 ">
+                                <label class="block mb-2 font-bold text-main-grey" for="blog">
+                                    {{ form_label(userCardForm.identityCardLocation) }}
+                                </label>
+                            </div>
+                        </div>
+                    {{ form_end(userCardForm) }}
+                {% else %}
+                    <p>Votre justificatif est en cours d'examination</p>
+                {% endif %}
+            </div>
+            <div class="w-5/12 right-0 mb-2">
+                {% if app.user.identityCardValidated is same as(false) %}
+                    <a class="ml-8" href="#"><i class="text-black fas fa-times mr-1"></i></a>
+                {% else %}
+                    <a  class="ml-8" href="#"><i class="text-black fas fa-check mr-1"></i></a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
 {% endblock %}

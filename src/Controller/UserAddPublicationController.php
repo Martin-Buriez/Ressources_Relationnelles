@@ -58,12 +58,6 @@ class UserAddPublicationController extends AbstractController
             $publication->setSharingNumber(0);
             $publication->setViewNumber(0);
 
-            //On traite la categorie de la ressource
-            // $publicationCategory = $publicationForm->get('category')->getData();
-            // $publicationReferencerCategory = new PublicationReferencerCategory();
-            // $publicationReferencerCategory->setCategory($publicationCategory);
-            // $publicationReferencerCategory->setPublication($publication);
-
             //Set Id du créateur
             $publication->setCreatedBy($this->getUser());
 
