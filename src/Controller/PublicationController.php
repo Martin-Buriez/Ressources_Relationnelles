@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Image;
 use App\Entity\Publication;
 use App\Entity\PublicationIncludeImage;
+use App\Entity\User;
 use App\Services\PaginationServices;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,7 +24,6 @@ class PublicationController extends AbstractController
             ->setEntityClass(Publication::class)
             ->setCriteria([]);
         $paginatePublications = $pagination->getData();
-
         return $this->render('publication/index.html.twig', [
             'publications' => $paginatePublications,
             'pages' => $pagination->getPages(),

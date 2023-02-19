@@ -15,27 +15,28 @@
                     <img class="lg:h-48 md:h-36 w-6/12 object-cover object-center" src="{{ asset('uploads/ressource/images/'~item.image.name) }}" alt="Ressource(s) cover"/>
                 {% endfor %}
             </div>
-            <p class="mt-6 text-xl md:text-2xl text-white">{{ publication.description|capitalize }}</p>
+            <p class="mt-6 text-xl md:text-2xl text-black">{{ publication.description|capitalize }}</p>
         </div>
     </div>
 
     <!--Autheur -->
     <div class="flex w-full mt-8 items-center font-sans p-8 md:p-24">
-        {% if app.user.ProfilePicture %}
+        {% if publication.createdBy.ProfilePicture %}
             <img
-                src="{{ asset('uploads/user/avatar/' ~ app.user.ProfilePicture) }}" alt="{{ app.user.username }}"
+                src="{{ asset('uploads/user/avatar/' ~ publication.createdBy.ProfilePicture) }}" alt="{{ publication.createdBy.username }}"
                 class="w-10 h-10 rounded-full overflow-hidden"/>
         {% else %}
             <img
-                src="{{ asset('assets/media/img/user.svg') }}" alt="Avatar de {{ app.user.username }}"
+                src="{{ asset('assets/media/img/user.svg') }}" alt="Avatar de {{ publication.createdBy.username }}"
                 class="w-10 h-10 rounded-full overflow-hidden"/>
         {% endif %}
         <div class="px-3 flex-1">
-            <p class="text-base font-bold text-base md:text-xl leading-none">{{ app.user.username }}</p>
+            <p class="text-base font-bold text-base md:text-xl leading-none">{{ publication.createdBy.username }}</p>
             <p class="text-gray-600 text-xs md:text-base">Ce blog a été créé le {{ publication.createdAt|date('d-m-Y')}}
         </div>
         <div class="justify-end">
-            <a href="#" class="bg-transparent border border-main-blue dark:border-white text-xs text-main-blue hover:bg-main-blue hover:text-main-white font-bold py-2 px-4 rounded-full">Voir le profil</a>
+            <a href="{{ path('profile_view', {'username': publication.createdBy.username }) }}" class="bg-transparent border border-main-blue dark:border-white text-xs text-main-blue hover:bg-main-blue hover:text-main-white font-bold py-2 px-4 rounded-full">Voir le profil</a>
         </div>
     </div>
 {% endblock %}
+

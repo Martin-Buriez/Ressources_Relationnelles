@@ -1,7 +1,5 @@
 {% extends 'base.html.twig' %}
-
 {% block title %}Les publications !{% endblock %}
-
 {% block body %}
     <section class="bg-main-white dark:bg-main-black w-full md:w-11/12 lg:w-10/12 xl:w-9/12 mx-auto mt-12">
         <!-- component -->
@@ -15,13 +13,13 @@
                                 <div class="w-full">
                                     <div class="w-full flex p-2">
                                         <div class="p-2 ">
-                                            {% if app.user.ProfilePicture %}
+                                            {% if publication.createdBy.ProfilePicture %}
                                                 <img
-                                                    src="{{ asset('uploads/user/avatar/' ~ app.user.ProfilePicture) }}" alt="{{ app.user.username }}"
+                                                    src="{{ asset('uploads/user/avatar/' ~ publication.createdBy.ProfilePicture) }}" alt="{{ publication.createdBy.username }}"
                                                     class="w-10 h-10 rounded-full overflow-hidden"/>
                                             {% else %}
                                                 <img
-                                                    src="{{ asset('assets/media/img/user.svg') }}" alt="Avatar de {{ app.user.username }}"
+                                                    src="{{ asset('assets/media/img/user.svg') }}" alt="Avatar de {{ publication.createdBy.username }}"
                                                     class="w-10 h-10 rounded-full overflow-hidden"/>
                                             {% endif %}
                                         </div>

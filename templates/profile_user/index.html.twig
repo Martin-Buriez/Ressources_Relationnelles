@@ -1,0 +1,60 @@
+{% extends 'baseProfile.html.twig' %}
+
+{% block title %}Profil de {{userProfile.username}} !{% endblock %}
+
+{% block body %}
+<div class='bg-gradient-to-b from-blue2 to-white min-h-max'>
+    <div class="container px-5 py-24 mx-auto" style="cursor: auto;">
+        <div class="lg:w-4/5 mx-auto flex flex-wrap">
+            {% if userProfile.ProfilePicture %}
+                <img
+                    src="{{ asset('uploads/user/avatar/' ~ userProfile.ProfilePicture) }}" alt="{{ userProfile.username }}"
+                    class="w-[28rem] h-[28rem] flex-shrink-0 object-cover xl:w-[34rem] xl:h-[34rem] rounded-full border border-black"/>
+            {% else %}
+                <img
+                    src="{{ asset('assets/media/img/user.svg') }}" alt="Avatar de {{ userProfile.username }}"
+                    class="w-[28rem] h-[28rem] flex-shrink-0 object-cover xl:w-[34rem] xl:h-[34rem] rounded-full border border-black"/>
+            {% endif %}
+            <div class="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0" style="cursor: auto;">
+                <h1 class="text-gray-900 text-3xl title-font font-medium mb-1 underline" style="cursor: auto;">{{userProfile.username}}</h1>
+                <div class="flex mb-4">
+                    <span class="flex ml-3 pl-3 py-2 space-x-2s">
+                        <a href="#" class="text-black px-4" ><i class="fas fa-user-plus"></i></a>
+                        <a href="#" class="text-black px-4" ><i class="fas fa-comment-alt"></i></a>
+                    </span>
+                </div>
+                <p class="text-black text-2xl title-font font-medium my-2 italic" style="cursor: auto;">{{userProfile.lastname}} {{userProfile.firstname}}</p>
+                <p class="text-black text-2xl title-font font-medium my-2 italic" style="cursor: auto;">Membre depuis : {{userProfile.createdAt|date('d/m/Y')}}</p>
+                <p class="text-black text-2xl title-font font-medium my-2 italic" style="cursor: auto;">Date d'anniversaire : {{userProfile.birthday|date('d/m/Y')}}</p>
+                <div class="flex my-8 items-center border-b-2 border-gray-100 ">
+                </div>
+                <div class="flex">
+                    <table class="w-full">
+                        <thead>
+                            <tr class="font-extrabold tracking-wide text-left uppercase border-b bg-blue1 text-black dark:text-white">
+                                <th class="px-4 py-3">Titre :</th>
+                                <th class="px-4 py-3">Créé le :</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-700 bg-gray-800">
+                        {% for publication in userProfile.publications %}
+                            {% if publication.stateValidated %}
+                                <tr class="bg-blue2 text-black">
+                                    <td class="px-4 py-3">
+                                        <a href="{{ path('publication_show', {'slug': publication.slug}) }}" class="text-black  md:mb-2 lg:mb-0">{{ publication.title }}</a>
+                                    </td>
+                                    <td class="px-4 py-3 text-black">
+                                        {{ publication.createdAt|date('d/m/Y') }}
+                                    </td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{# {{dump(userProfile.publications[0].stateValidated)}} #}
