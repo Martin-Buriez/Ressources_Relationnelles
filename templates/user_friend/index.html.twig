@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Amis !{% endblock %}
+
+{% block body %}
+    <div class="flex w-full mt-20">
+        {% include "partials/siderbar.html.twig" %}
+        {% for item in user %}
+            <ul>
+                {% for relationship in item.userRelationships %}
+                    {% if relationship.userSender.id == app.user.id %}
+                        <li>{{relationship.userReceive.username}}</li>
+                        {% if relationship.state is same as(false) %}
+                            <li>En attente</li>
+                        {% else %}
+                            <li>Validé</li>
+                        {% endif %}
+                        <li>{{relationship.createdAt|date('Y-m-d')}}</li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        {% endfor %}
+    </div>
+{% endblock %}

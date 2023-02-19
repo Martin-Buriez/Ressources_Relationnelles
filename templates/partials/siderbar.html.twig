@@ -1,0 +1,32 @@
+<div class="ml-8 w-1/6 bg-blue2 min-h-full z-10 rounded-lg">
+    <div class="overflow-y-auto overflow-x-hidden flex flex-col justify-between flex-grow">
+        <h2 class="mx-auto text-4xl underline italic">Actions</h2>
+        <ul class="flex flex-col py-4 space-y-1 mt-12">
+            <li class="mt-3 hover:bg-blue1">
+                <a href="{{path('user_friend')}}" class="text-3xl ml-4 mt-8 ">
+                    <i class="fas fa-user-plus border-r-2 border-black pr-4"></i>
+                    <span class="ml-2 text-xl tracking-wide my-auto">Invitations</span>
+                </a>
+            </li>
+            <li class="mt-3 hover:bg-blue1">
+                <a href="#" class="text-3xl ml-4 mt-8">
+                    <i class="fas fa-users border-r-2 border-black pr-4"></i>
+                    <span class="ml-2 text-xl tracking-wide my-auto">Discussions</span>
+                </a>
+            </li>
+            <li class="mt-3 hover:bg-blue1">
+                <a href="{{ path('add_publication') }}" class="text-3xl ml-4 mt-8">
+                    <i class="far fa-plus-square border-r-2 border-black pr-4"></i>
+                    <span class="ml-2 text-xl tracking-wide my-auto">Ajouter une ressource</span>
+                </a>
+            </li>
+            <li class="mt-3 hover:bg-blue1">
+                <a href="{{ path('user_publication') }}" class="text-3xl ml-4 mt-8">
+                    <i class="far fa-folder-open border-r-2 border-black pr-4"></i>
+                    <span class="ml-2 text-xl tracking-wide my-auto">Mes ressources</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+<!-- ./Sidebar -->

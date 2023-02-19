@@ -21,8 +21,7 @@ class ProfileController extends AbstractController
          * @var User $user
          */
         $user = $this->getUser();
-        $userId = $user->getId();
-
+        
         /**
          * Retourne le nombre de ressource créé par l'utilisateur
          */
