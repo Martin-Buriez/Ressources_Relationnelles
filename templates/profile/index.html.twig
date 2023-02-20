@@ -30,7 +30,11 @@
 
         <div class="flex justify-end pt-2 px-2">
             <div class="w-4/5">
-                <p class="text-xl text-gray-800">Ceci est la description de votre profil utilisateur ! <a href="#" class="italic text-base">Modifier ma description</a>  </p>
+                {% if app.user.description %}
+                <p class="text-xl text-gray-800">{{ app.user.description }} <a href="#" class="italic text-base">Modifier ma description</a></p>
+                {% else %}
+                <p class="text-xl text-gray-800">Ceci est la description de votre nouveau profil utilisateur ! <a href="#" class="italic text-base">Modifier ma description</a></p>
+                {% endif %}
             </div>
         </div>
 
