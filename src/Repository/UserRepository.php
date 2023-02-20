@@ -24,6 +24,21 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         parent::__construct($registry, User::class);
     }
 
+    /**
+     * @param string $search
+     * @return User[] Returns an array of User objects
+     */
+    public function findBySearch(string $search)
+    {
+        return $this->createQueryBuilder('u')
+            ->where('u.last_name LIKE :search')
+            ->orWhere('u.first_name LIKE :search')
+            ->orWhere('u.username LIKE :search')
+            ->setParameter('search', '%'.$search.'%')
+            ->getQuery()
+            ->getResult();
+    }
+
     public function save(User $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
