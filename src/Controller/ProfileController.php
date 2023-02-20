@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\User;
-use App\Form\UserIdentityCardType;
+use App\Form\IdentityCardType;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -30,7 +30,7 @@ class ProfileController extends AbstractController
         )->setParameter('user', $user);
         $NbrRessource = $query->getSingleScalarResult();
 
-        $userCardForm = $this->createForm(UserIdentityCardType::class, $user);
+        $userCardForm = $this->createForm(IdentityCardType::class, $user);
         $userCardForm->handleRequest($request);
 
         if ($userCardForm->isSubmitted() && $userCardForm->isValid()) {

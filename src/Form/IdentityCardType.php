@@ -9,22 +9,18 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class UserIdentityCardType extends AbstractType
+class IdentityCardType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('identityCardLocation', FileType::class,[
-                'label' => 'Importer votre justificatif',
+                'label' => false,
                 'multiple' => true,
                 'mapped' => false,
-                'required' => false,
-                'label_attr' => [
-                    'class' => 'text-main-blue text-lg lg:text-xl mb-5'
-                ],
+                'required' => true,
                 'attr' => [
-                    'placeholder' => 'Importer votre justificatif',
-                    'class' => 'py-4 border text-main-white mt-1 rounded px-4 w-full bg-gray-50'
+                    'class' => 'border px-4 w-1/3 bg-gray-50'
                 ],
             ])
             ->add('submit', SubmitType::class, [
