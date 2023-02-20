@@ -2,7 +2,10 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Category;
+use App\Entity\Image;
 use App\Entity\Publication;
+use App\Entity\PublicationIncludeImage;
 use App\Entity\Theme;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -23,6 +26,13 @@ class AppFixtures extends Fixture
             $theme->setName($faker->sentence(1, false));
 
             $manager->persist($theme);
+
+            // Creation of 5 Categories
+
+            $category = new Category();
+            $category->setTitle($faker->sentence(1,false));
+
+            $manager->persist($category);
 
             for($a = 0; $a < mt_rand(0, 2); $a++) {
 
@@ -61,9 +71,28 @@ class AppFixtures extends Fixture
                         ->setStateValidated($faker->boolean(50))
                         ->setCreatedAt($faker->dateTime())
                         ->setCreatedBy($user)
-                        ->setTheme($theme);
+                        ->setTheme($theme)
+                        ->setCategory($category);
 
                     $manager->persist($publication);
+
+                    // Creation of the Image
+
+                    $imageId = $faker->numberBetween(0,7);
+
+                    $image = new Image();
+                    $image->setName("fixture" . $imageId . ".jpg");
+
+                    $manager->persist($image);
+
+                    // Add image to the publication
+
+                    $imageForPublication = new PublicationIncludeImage();
+                    $imageForPublication->setPublication($publication)
+                        ->setImage($image);
+
+                    $manager->persist($imageForPublication);
+
                 }
             }
         }
@@ -71,4 +100,7 @@ class AppFixtures extends Fixture
         $manager->flush();
 
     }
+
+
+
 }
