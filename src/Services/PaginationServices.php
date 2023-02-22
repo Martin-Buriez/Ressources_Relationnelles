@@ -9,106 +9,62 @@ use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
+
+// Service permettant la pagination d'une entité
 class PaginationServices
 {
-    // Service permettant la pagination d'une entité
 
-    /**
-     * Le nom de l'entité sur laquelle on veut effectuer une pagination
-     *
-     * @var string
-     */
+    // Le nom de l'entité sur laquelle on veut effectuer une pagination
     private string $entityClass;
 
-    /**
-     * Les critères sur la requete
-     *
-     * @var array
-     */
+
+    //Les critères sur la request
     private array $criteria;
 
-    /**
-     * @return array
-     */
     public function getCriteria(): array
     {
         return $this->criteria;
     }
 
-    /**
-     * @param array $criteria
-     * @return PaginationServices
-     */
     public function setCriteria(array $criteria): PaginationServices
     {
         $this->criteria = $criteria;
         return $this;
     }
 
-    /**
-     * représente le orderby de la requête
-     * @var array
-     */
     private array $orderBy;
 
-    /**
-     * @return array
-     */
     public function getOrderBy(): array
     {
         return $this->orderBy;
     }
 
-    /**
-     * @param array $orderBy
-     * @return PaginationServices
-     */
     public function setOrderBy(array $orderBy): PaginationServices
     {
         $this->orderBy = $orderBy;
         return $this;
     }
 
-    /**
-     * Le nombre d'enregistrement à récupérer
-     *
-     * @var int
-     */
+    // La limite de publication par page
     private int $limit;
 
-    /**
-     * La page sur laquelle on se trouve actuellement
-     *
-     * @var int
-     */
+    // La page où l'on se trouve actuellement
     private int $currentPage = 1;
 
-    /**
-     * Le nom de l'entité sur laquelle on veut effectuer une pagination
-     *
-     * @var string
-     */
+
+    // Le nom de l'entité sur laquelle on veut effectuer une pagination
     private $entityManager;
 
-    /**
-     * Le moteur de template Twig qui va permettre de générer le rendu de la pagination
-     *
-     * @var Environment
-     */
+
+    // Le moteur de template Twig qui va permettre de générer le rendu de la pagination
     private $twig;
 
-    /**
-     * Le nom de la route que l'on veut utiliser pour les boutons de la navigation
-     *
-     * @var string
-     */
+
+    // Le nom de la route que l'on veut utiliser pour les boutons de la navigation
     private $route;
 
-    /**
-     * Le chemin vers le template qui contient la pagination
-     *
-     * @var string
-     */
+
+    // Le chemin vers le template qui contient la pagination
     private string $templatePath;
 
     /**
@@ -146,7 +102,7 @@ class PaginationServices
             paginer. Utilisez la méthode setEntityClass() de votre objet PaginationService !");
         }
 
-        // On calcule l'offest
+        // On calcule l'offset
         $offset = $this->currentPage * $this->limit - $this->limit;
         // Connaitre le total des enregistrements de la table
         $repo = $this->entityManager->getRepository($this->entityClass);

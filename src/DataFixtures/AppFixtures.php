@@ -63,7 +63,7 @@ class AppFixtures extends Fixture
                 for ($b = 0; $b < mt_rand(0, 4); $b++) {
                     $publication = new Publication();
                     $publication->setTitle($faker->sentence(1))
-                        ->setDescription($faker->sentence(10))
+                        ->setDescription($faker->sentence(500))
                         ->setLikeNumber($faker->randomNumber(1))
                         ->setSharingNumber($faker->randomNumber(1))
                         ->setViewNumber($faker->randomNumber(1))

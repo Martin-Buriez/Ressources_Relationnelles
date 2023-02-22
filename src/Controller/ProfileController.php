@@ -17,18 +17,16 @@ class ProfileController extends AbstractController
     #[Route('/mon-profil', name: 'profile')]
     public function index(EntityManagerInterface $entityManager, Request $request, string $userIdentityCardDir): Response
     {
-        /**
-         * @var User $user
-         */
         $user = $this->getUser();
-        
-        /**
-         * Retourne le nombre de ressource créé par l'utilisateur
-         */
+
+        // Retourne le nombre de ressources créé par l'utilisateur
+
         $query = $entityManager->createQuery(
             'SELECT COUNT(p.id) FROM App\Entity\Publication p WHERE p.created_by = :user'
         )->setParameter('user', $user);
         $NbrRessource = $query->getSingleScalarResult();
+
+        // Traitement lors du remplissage du formulaire pour envoyer un document d'identité
 
         $userCardForm = $this->createForm(IdentityCardType::class, $user);
         $userCardForm->handleRequest($request);
@@ -50,11 +48,17 @@ class ProfileController extends AbstractController
                 'justificatif_create_success',
                 'Votre justificatif a bien été ajouté !'
             );
-        }   
+        }
+
+        // Récupération des 4 dernières ressources créées
+
+        $userID = $user->getId();
+        $publications = $entityManager->getRepository(Publication::class)->findBy(['created_by' => $userID]);
 
         return $this->render('profile/index.html.twig', [
             'controller_name' => 'ProfileController',
             'user'=> $user,
+            'publications'=>$publications,
             'userCardForm' => $userCardForm,
             'NbrRessource' => $NbrRessource,
         ]);
