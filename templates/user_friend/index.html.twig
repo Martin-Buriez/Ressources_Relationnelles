@@ -22,6 +22,7 @@
                 </ul>
             {% endfor %}
         </div>
+        {{app.user.id}}
         <div class="w-4/12 bg-blue2 mx-auto">
             <h1 class="text-3xl underline font-bold text-left">Retrouver des amis !</h1>
             <form action="{{ path('user_friend') }}" method="get" class="w-full">
@@ -60,7 +61,7 @@
                             {{ item.username }}
                         </td>
                         <td class="px-4 py-3 text-black">
-                            <a onclick="confirm('Ajouter cet utilisateur à vos amis ?')" class="ml-8" href="#"><i class="fas fa-user-plus pr-4"></i></a>
+                            <a onclick="confirm('Ajouter cet utilisateur à vos amis ?')" class="ml-8" href="{{ path('user_add_friend', {'idUserReceive': item.id, 'idUserSender': app.user.id}) }}"><i class="fas fa-user-plus pr-4"></i></a>
                         </td>
                     </tr>
                 {% endfor %}
