@@ -37,26 +37,56 @@ class UserFriendController extends AbstractController
     #[Route('/mon-profil/friends', name: 'user_add_friend')]
     public function userAddFriend(Request $request, EntityManagerInterface $entityManager, Security $security, $idUserReceive, $idUserSender): RedirectResponse
     {
+        // Récuperer le profil de l'utilisateur
         $userSender = $entityManager->getRepository(User::class)->find($idUserSender);
+        $userReceive = $entityManager->getRepository(User::class)->find($idUserReceive);
 
-        $userRepository = $entityManager->getRepository(User::class);
-        $userReceive = $userRepository->find($idUserReceive);
+        // Vérifier si la relation d'amitié n'existe pas déjà
+        $Relationship = $entityManager->getRepository(UserRelationship::class);
+        $userRelationship = $Relationship->findUserRelationship($userSender, $userReceive);
 
-        // Créer une nouvelle entité "Amis"
-        $friend = new UserRelationship();
-        $friend->setUserSender($userSender);
-        $friend->setUserReceive($userReceive);
-        $friend->setState(False);
+        if(!$userRelationship){
+            // Créer une nouvelle entité "Amis"
+            $friend = new UserRelationship();
+            $friend->setUserSender($userSender);
+            $friend->setUserReceive($userReceive);
+            $friend->setState(False);
 
-        $dateTimeZone = new DateTimeZone('Europe/Paris');
-        $date = new \DateTimeImmutable('now', $dateTimeZone);
-        $friend->setCreatedAt($date);
-        
-        // Enregistrer l'entité dans la base de données
-        $entityManager->persist($friend);
-        $entityManager->flush();
+            $dateTimeZone = new DateTimeZone('Europe/Paris');
+            $date = new \DateTimeImmutable('now', $dateTimeZone);
+            $friend->setCreatedAt($date);
+            
+            // Enregistrer l'entité dans la base de données
+            $entityManager->persist($friend);
+            $entityManager->flush();
+        }else{
+            $this->addFlash('Erreur','Vous avez déja cet utilisateur en ami');
+        }
 
         // Rediriger vers la page d'accueil des amis
         return $this->redirectToRoute('user_friend');
     }
+
+    #[Route('/mon-profil/friends', name: 'user_delete_friend')]
+    public function userDeleteFriend($idRelationShip, EntityManagerInterface $entityManager)
+    {
+        // Récupérer l'entité UserRelationship correspondante
+        $userRelationship = $entityManager->getRepository(UserRelationship::class)->find($idRelationShip);
+    
+        // Vérifier si l'entité existe
+        if (!$userRelationship) {
+            throw $this->createNotFoundException('La relation d\'amitié n\'existe pas.');
+        }
+    
+        // Supprimer l'entité
+        $entityManager->remove($userRelationship);
+        $entityManager->flush();
+    
+        // Ajouter un message flash pour indiquer que la relation a été supprimée
+        $this->addFlash('success', 'La relation d\'amitié a été supprimée avec succès.');
+
+        // Rediriger vers la page d'accueil des amis
+        return $this->redirectToRoute('user_friend');
+    }
+    
 }

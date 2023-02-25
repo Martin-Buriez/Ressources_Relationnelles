@@ -10,3 +10,7 @@ controllers:
 user_add_friend:
     path: /mon-profil/friends/{idUserReceive}/{idUserSender}
     controller: App\Controller\UserFriendController::userAddFriend
+
+user_delete_friend:
+    path: /mon-profil/friends/{idRelationShip}
+    controller: App\Controller\UserFriendController::userDeleteFriend

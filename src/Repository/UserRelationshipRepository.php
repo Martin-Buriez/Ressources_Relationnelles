@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\User;
 use App\Entity\UserRelationship;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -37,6 +38,18 @@ class UserRelationshipRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+
+    public function findUserRelationship(User $userSender, User $userReceive): ?UserRelationship
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.userSender = :userSender')
+            ->setParameter('userSender', $userSender)
+            ->andWhere('u.userReceive = :userReceive')
+            ->setParameter('userReceive', $userReceive)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 
 //    /**
