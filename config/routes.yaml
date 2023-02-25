@@ -8,9 +8,13 @@ controllers:
     type: attribute
 
 user_add_friend:
-    path: /mon-profil/friends/{idUserReceive}/{idUserSender}
+    path: /mon-profil/friends/add/{idUserReceive}/{idUserSender}
     controller: App\Controller\UserFriendController::userAddFriend
 
 user_delete_friend:
-    path: /mon-profil/friends/{idRelationShip}
+    path: /mon-profil/friends/delete/{idRelationShip}
     controller: App\Controller\UserFriendController::userDeleteFriend
+
+user_accepte_friend:
+    path: /mon-profil/friends/accept/{idRelationShip}
+    controller: App\Controller\UserFriendController::acceptFriendRequest

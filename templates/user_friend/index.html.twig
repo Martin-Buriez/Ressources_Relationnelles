@@ -5,55 +5,7 @@
 {% block body %}
     <div class="flex w-full mt-20">
         {% include "partials/siderbar.html.twig" %}
-        <div class="w-5/12 bg-yellow-300 mx-auto">
-            <table class="w-full ">
-                <thead>
-                    <tr class="font-extrabold tracking-wide text-left uppercase border-b bg-blue1 text-black dark:text-white">
-                        <th class="px-4 py-3">Pseudo de vos amis :</th>
-                        <th class="px-4 py-3">State :</th>
-                        <th class="px-4 py-3">Date de création :</th>
-                        <th class="px-4 py-3">Actions :</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-700 bg-gray-800">
-                {% for item in userEntity %}
-                    {% for relationship in item.userRelationships %}
-                        <tr class="hover:bg-white bg-blue2 text-black">
-                        {% if relationship.userSender.id == app.user.id %}
-                            <td class="px-4 py-3">
-                                <a target="_blank" rel="noreferrer noopener" href="#">
-                                    {{relationship.userReceive.username}}
-                                </a>
-                            </td>
-                            <td class="px-4 py-3">
-                                <a target="_blank" rel="noreferrer noopener" href="#">
-                                    {% if relationship.state is same as(false) %}
-                                        <li>En attente</li>
-                                    {% else %}
-                                        <li>Validé</li>
-                                    {% endif %}
-                                </a>
-                            </td>
-                            <td class="px-4 py-3">
-                                <a target="_blank" rel="noreferrer noopener" href="#">
-                                    {{relationship.createdAt|date('Y-m-d')}}
-                                </a>
-                            </td>
-                            <td class="px-4 py-3">
-                                
-                                <a onclick="confirm('Supprimer cet utilisateur à vos amis ?')" class="ml-8" href="{{ path('user_delete_friend', {'idRelationShip': relationship.id}) }}"><i class="fas fa-user-times pr-4"></i></a>
-                            </td>
-                        {% endif %}
-                        </tr>
-                    {% endfor %}
-                {% endfor %}
-                {% for message in app.flashes('success') %}
-                    <div class="alert">
-                        {{ message }}
-                    </div>
-                {% endfor %}
-            </table>
-        </div>
+        {# Tableau de recherche d'utilisateur #}
         <div class="w-4/12 bg-blue2 mx-auto">
             <h1 class="text-3xl underline font-bold text-left">Retrouver des amis !</h1>
             <form action="{{ path('user_friend') }}" method="get" class="w-full">
@@ -81,7 +33,7 @@
                 {% for item in userFilter %}
                     <tr class="hover:bg-white bg-blue2 text-black">
                         <td class="px-4 py-3">
-                            <a target="_blank" rel="noreferrer noopener" href="#">
+                            <a target="_blank" rel="noreferrer noopener" href="{{ path('profile_view', {'username': item.username }) }}">
                                 {{ item.lastname }}
                             </a>
                         </td>
@@ -100,11 +52,93 @@
             {% else %}
                 <p>Aucun utilisateur trouvé.</p>
             {% endif %}
+            {% for message in app.flashes('Erreur') %}
+                <div class="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+        {# Tableau de gestion des demandes #}
+        <div class="w-5/12 bg-blue2 mx-auto">
+            <h1 class="text-3xl underline font-bold text-left">Invitations</h1>
+            <table class="w-full ">
+                <thead>
+                    <tr class="font-extrabold tracking-wide text-left uppercase border-b bg-blue1 text-black dark:text-white">
+                        <th class="px-4 py-3">Cet utilisateur souahite devenir amis avec vous :</th>
+                        <th class="px-4 py-3">Accepter ?</th>
+                        <th class="px-4 py-3">Supprimer ?</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-700 bg-gray-800">
+                {% for item in userEntity %}
+                    {% for relationship in item.userRelationships %}
+                        <tr class="hover:bg-white bg-blue2 text-black">
+                        {% if relationship.userSender.id != app.user.id and relationship.state is same as(false) %}
+                            <td class="px-4 py-3">
+                                <a target="_blank" rel="noreferrer noopener" href="{{ path('profile_view', {'username': relationship.userSender.username }) }}">
+                                    {{relationship.userSender.username}}
+                                </a>
+                            </td>
+                            <td class="px-4 py-3">
+                                <a onclick="confirm('Accepter la demande ?')" class="ml-8" href="{{ path('user_accepte_friend', {'idRelationShip': relationship.id}) }}"><i class="fas fa-user-check pr-4"></i></a>
+                            </td>
+                            <td class="px-4 py-3">
+                                <a onclick="confirm('Supprimer la demande ?')" class="ml-8" href="{{ path('user_delete_friend', {'idRelationShip': relationship.id}) }}"><i class="fas fa-times pr-4"></i></a>
+                            </td>
+                        {% endif %}
+                        </tr>
+                    {% endfor %}
+                {% endfor %}
+                {% for message in app.flashes('success') %}
+                    <div class="alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </table>
         </div>
     </div>
-    {% for message in app.flashes('Erreur') %}
-        <div class="alert">
-            {{ message }}
-        </div>
-    {% endfor %}
+    {# Tableau gestion des amis #}
+    <div class="w-5/12 bg-yellow-300 mx-auto mt-8">
+        <h1 class="text-3xl underline font-bold text-left">Amis !</h1>
+        <table class="w-full ">
+            <thead>
+                <tr class="font-extrabold tracking-wide text-left uppercase border-b bg-blue1 text-black dark:text-white">
+                    <th class="px-4 py-3">Pseudo de vos amis :</th>
+                    <th class="px-4 py-3">State :</th>
+                    <th class="px-4 py-3">Actions :</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-700 bg-gray-800">
+            {% for item in userEntity %}
+                {% for relationship in item.userRelationships %}
+                    <tr class="hover:bg-white bg-blue2 text-black">
+                    {% if relationship.userSender.id == app.user.id or relationship.userSender.id != app.user.id and relationship.state is same as(true) %}
+                        <td class="px-4 py-3">
+                            <a target="_blank" rel="noreferrer noopener" href="{{ path('profile_view', {'username': relationship.userSender.username }) }}">
+                                {{relationship.userReceive.username}}
+                            </a>
+                        </td>
+                        <td class="px-4 py-3">
+                            <a target="_blank" rel="noreferrer noopener" href="#">
+                                {% if relationship.state is same as(false) %}
+                                    <li>En attente</li>
+                                {% else %}
+                                    <li>Validé</li>
+                                {% endif %}
+                            </a>
+                        </td>
+                        <td class="px-4 py-3">
+                            <a onclick="confirm('Supprimer cet utilisateur à vos amis ?')" class="ml-8" href="{{ path('user_delete_friend', {'idRelationShip': relationship.id}) }}"><i class="fas fa-user-times pr-4"></i></a>
+                        </td>
+                    {% endif %}
+                    </tr>
+                {% endfor %}
+            {% endfor %}
+            {% for message in app.flashes('success') %}
+                <div class="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </table>
+    </div>
 {% endblock %}
