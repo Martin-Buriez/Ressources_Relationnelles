@@ -112,25 +112,25 @@
             {% for item in userEntity %}
                 {% for relationship in item.userRelationships %}
                     <tr class="hover:bg-white bg-blue2 text-black">
-                    {% if relationship.userSender.id == app.user.id or relationship.userSender.id != app.user.id and relationship.state is same as(true) %}
-                        <td class="px-4 py-3">
-                            <a target="_blank" rel="noreferrer noopener" href="{{ path('profile_view', {'username': relationship.userSender.username }) }}">
-                                {{relationship.userReceive.username}}
-                            </a>
-                        </td>
-                        <td class="px-4 py-3">
-                            <a target="_blank" rel="noreferrer noopener" href="#">
-                                {% if relationship.state is same as(false) %}
-                                    <li>En attente</li>
-                                {% else %}
-                                    <li>Validé</li>
-                                {% endif %}
-                            </a>
-                        </td>
-                        <td class="px-4 py-3">
-                            <a onclick="confirm('Supprimer cet utilisateur à vos amis ?')" class="ml-8" href="{{ path('user_delete_friend', {'idRelationShip': relationship.id}) }}"><i class="fas fa-user-times pr-4"></i></a>
-                        </td>
-                    {% endif %}
+                        {% if relationship.userSender.id == app.user.id or relationship.userSender.id != app.user.id and relationship.state is same as(true) %}
+                            <td class="px-4 py-3">
+                                <a target="_blank" rel="noreferrer noopener" href="{{ path('profile_view', {'username': relationship.userSender.username }) }}">
+                                    {{relationship.userReceive.username}}
+                                </a>
+                            </td>
+                            <td class="px-4 py-3">
+                                <a target="_blank" rel="noreferrer noopener" href="#">
+                                    {% if relationship.state is same as(false) %}
+                                        <li>En attente</li>
+                                    {% else %}
+                                        <li>Validé</li>
+                                    {% endif %}
+                                </a>
+                            </td>
+                            <td class="px-4 py-3">
+                                <a onclick="confirm('Supprimer cet utilisateur à vos amis ?')" class="ml-8" href="{{ path('user_delete_friend', {'idRelationShip': relationship.id}) }}"><i class="fas fa-user-times pr-4"></i></a>
+                            </td>
+                        {% endif %}
                     </tr>
                 {% endfor %}
             {% endfor %}

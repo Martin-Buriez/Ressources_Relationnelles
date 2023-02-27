@@ -18,3 +18,11 @@ user_delete_friend:
 user_accepte_friend:
     path: /mon-profil/friends/accept/{idRelationShip}
     controller: App\Controller\UserFriendController::acceptFriendRequest
+
+user_show_participant_group:
+    path: /mon-profil/groupes/show/{idGroup}
+    controller: App\Controller\UserManageGroupsController::showParticipantGroup
+
+user_add_participant_group:
+    path: /mon-profil/groupes/show/{idGroup}/addUser/{idUser}
+    controller: App\Controller\UserManageGroupsController::addParticipantInGroup

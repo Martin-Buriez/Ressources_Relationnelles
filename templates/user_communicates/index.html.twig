@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Messenger !{% endblock %}
+
+{% block body %}
+    <div class="flex w-full mt-10 mx-auto">
+        <div class="w-2/12 border ">
+            <table class="mx-auto w-full">
+                <thead>
+                    <tr class="font-extrabold tracking-wide text-left uppercase border-b bg-blue1 text-black dark:text-white">
+                        <th colspan="2" class="px-4 py-3">Discussions</th>
+                        <th>
+                            <a class="px-4 py-3" href="{{path('user_manage_groups')}}"><i class="fas fa-users pr-4"></i></a>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for friends in userFriends %}
+                        <tr>
+                            <td colspan="3">    
+                                {% if friends.userSender.id != app.user.id %}
+                                    {{friends.userSender.username}}
+                                {% elseif friends.userReceive.id != app.user.id %}
+                                    {{friends.userReceive.username}}
+                                {% else %}
+                                    <p>Aucune condition n'est vraie.</p>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="w-8/12 border">
+            <p>coucou</p>
+        </div>
+    </div>
+{% endblock %}
