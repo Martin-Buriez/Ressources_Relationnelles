@@ -34,11 +34,17 @@ class AppFixtures extends Fixture
 
             $manager->persist($category);
 
-            for($a = 0; $a < mt_rand(0, 2); $a++) {
+            for($a = 0; $a < mt_rand(2,5); $a++) {
 
                 // After creating a Theme, we will create between 0 and 2 Users
 
                 $user = new User();
+
+                // Creation of the ProfilePicture
+
+                $ProfilePictureID = $faker->numberBetween(0,5);
+                $ProfilePicture = "ProfilePicture" . $ProfilePictureID . ".jpg";
+
                 $user->setEmail($faker->email())
                     ->setPassword("password")
                     ->setUsername($faker->sentence(1))
@@ -54,7 +60,7 @@ class AppFixtures extends Fixture
                     ->setStateSuspended($faker->boolean(50))
                     ->setIdentityCardLocation($faker->sentence(1))
                     ->setIdentityCardValidated($faker->boolean(50))
-                    ->setProfilePicture($faker->sentence(1));
+                    ->setProfilePicture($ProfilePicture);
 
                 $manager->persist($user);
 
