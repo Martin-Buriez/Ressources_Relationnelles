@@ -7,8 +7,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 #[ORM\Entity(repositoryClass: EventRepository::class)]
+#[UniqueEntity('title', 'Un autre évenement porte déjà ce titre')]
 class Event
 {
     #[ORM\Id]
@@ -38,9 +41,26 @@ class Event
     #[ORM\OneToMany(mappedBy: 'event', targetEntity: UserManageEvent::class, orphanRemoval: true)]
     private Collection $userManageEvents;
 
+    #[ORM\Column]
+    private ?bool $stateValidated = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $slug = null;
+
     public function __construct()
     {
         $this->userManageEvents = new ArrayCollection();
+    }
+
+    public function computeSlug(SluggerInterface $slugger){
+        if(!$this->slug || '-' === $this->slug){
+            $this->slug = (string) $slugger->slug((string) $this)->lower();
+        }
+    }
+
+    public function __toString(): string
+    {
+        return (string) $this->getTitle();
     }
 
     public function getId(): ?int
@@ -146,6 +166,30 @@ class Event
                 $userManageEvent->setEvent(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isStateValidated(): ?bool
+    {
+        return $this->stateValidated;
+    }
+
+    public function setStateValidated(bool $stateValidated): self
+    {
+        $this->stateValidated = $stateValidated;
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
 
         return $this;
     }
