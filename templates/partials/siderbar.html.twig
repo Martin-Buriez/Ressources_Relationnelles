@@ -1,29 +1,52 @@
-<div class="ml-8 w-1/6 bg-blue2 min-h-full z-10 rounded-lg">
-    <div class="overflow-y-auto overflow-x-hidden flex flex-col justify-between flex-grow">
-        <h2 class="mx-auto text-4xl underline italic">Actions</h2>
-        <ul class="flex flex-col py-4 space-y-1 mt-12">
-            <li class="mt-3 hover:bg-blue1">
-                <a href="{{path('user_friend')}}" class="text-3xl ml-4 mt-8 ">
-                    <i class="fas fa-user-plus border-r-2 border-black pr-4"></i>
-                    <span class="ml-2 text-xl tracking-wide my-auto">Gestion des amis</span>
+<div class="bg-blue2">
+    <div class="">
+        <ul>
+            <li class="py-3 hover:bg-blue1 hover:text-white hover:font-bold pl-5">
+                <a href="{{path('profile')}}" class="text-xl flex justify-start">
+                    <i class="w-1/12 py-1 fas fa-user border-r-2 border-black pr-4"></i>
+                    <span class="w-9/12 pl-2">Profil</span>
                 </a>
             </li>
-            <li class="mt-3 hover:bg-blue1">
-                <a href="{{path('user_communicates')}}" class="text-3xl ml-4 mt-8">
-                    <i class="fas fa-users border-r-2 border-black pr-4"></i>
-                    <span class="ml-2 text-xl tracking-wide my-auto">Discussions</span>
+            <li class="py-3 hover:bg-blue1 hover:text-white hover:font-bold pl-5">
+                <a href="{{path('user_friend')}}" class="text-xl flex justify-start" >
+                    <i class="w-1/12 py-1 fas fa-users border-r-2 border-black pr-4"></i>
+                    <span class="w-9/12 pl-2">Gestion des amis</span>
                 </a>
             </li>
-            <li class="mt-3 hover:bg-blue1">
-                <a href="{{ path('add_publication') }}" class="text-3xl ml-4 mt-8">
-                    <i class="far fa-plus-square border-r-2 border-black pr-4"></i>
-                    <span class="ml-2 text-xl tracking-wide my-auto">Ajouter une ressource</span>
+            <li class="py-3 hover:bg-blue1 hover:text-white hover:font-bold pl-5">
+                <a href="" class="text-xl flex justify-start" >
+                    <i class="w-1/12 py-1 fas fa-user-plus border-r-2 border-black pr-4"></i>
+                    <span class="w-9/12 pl-2">Demandes d'amis</span>
+                </a>
+            </li >
+            <li class="py-3 hover:bg-blue1 hover:text-white hover:font-bold pl-5">
+                <a href="" class="text-xl flex justify-start">
+                    <i class="w-1/12 py-1 fas fa-ghost border-r-2 border-black pr-4"></i>
+                    <span class="w-9/12 pl-2">Correspondants bloqués</span>
                 </a>
             </li>
-            <li class="mt-3 hover:bg-blue1">
-                <a href="{{ path('user_publication') }}" class="text-3xl ml-4 mt-8">
-                    <i class="far fa-folder-open border-r-2 border-black pr-4"></i>
-                    <span class="ml-2 text-xl tracking-wide my-auto">Mes ressources</span>
+            <li class="py-3 hover:bg-blue1 hover:text-white hover:font-bold pl-5">
+                <a href="{{path('user_communicates')}}" class="text-xl flex justify-start">
+                    <i class="w-1/12 py-1 fas fa-envelope border-r-2 border-black pr-4"></i>
+                    <span class="w-9/12 pl-2">Discussions</span>
+                </a>
+            </li>
+            <li class="py-3 hover:bg-blue1 hover:text-white hover:font-bold pl-5">
+                <a href="{{ path('user_publication') }}" class="text-xl flex justify-start">
+                    <i class="w-1/12 py-1 fas fa-folder-open border-r-2 border-black pr-4"></i>
+                    <span class="w-9/12 pl-2">Collection de publications</span>
+                </a>
+            </li>
+            <li class="py-3 hover:bg-blue1 hover:text-white hover:font-bold pl-5">
+                <a href="{{ path('add_publication') }}" class="text-xl flex justify-start">
+                    <i class="w-1/12 py-1 fas fa-plus-square border-r-2 border-black pr-4"></i>
+                    <span class="w-9/12 pl-2">Ajouter une publication</span>
+                </a>
+            </li>
+            <li class="py-3 hover:bg-blue1 hover:text-white hover:font-bold pl-5">
+                <a href="{{ path('app_logout') }}" class="text-xl flex justify-start">
+                    <i class="w-1/12 py-1 fas fa-share border-r-2 border-black pr-4"></i>
+                    <span class="w-9/12 pl-2">Déconnexion</span>
                 </a>
             </li>
         </ul>

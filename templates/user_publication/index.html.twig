@@ -3,31 +3,40 @@
 {% block title %}Mes Publications !{% endblock %}
 
 {% block body %}
-    <div class=" flex justify-center relative bg-white dark:bg-black w-full p-4 mt-2">
-        <div class="w-8/12 flex justify-center items-center bg-blue2 h-96">
-            {% if app.user.publications|length == 0 %}
-                <div>
-                    <h2 class="text-lg text-center md:text-xl xl:text-2xl text-main-blue">Il est temps de créer votre première ressouce sur notre platforme</h2>
-                    <p class="text-center md:text-lg xl:text-xl mt-5 text-main-black">
-                        Il semblerait que vous n'ayez encore créé aucune ressource.<br/>
-                    </p>
+
+    <section class="w-full">
+        <div class="w-full h-1/5 bg-blue1 shadow-lg py-16">
+            <h1 class="text-center font-bold text-5xl text-white">Vos publications</h1>
+            <div class="mx-auto h-px w-40 bg-white mt-8"></div>
+        </div>
+
+        <div class="flex">
+
+            <div class="w-3/12 min-h-screen bg-blue2 border-blue1 border-r">
+                <div class="w-full">
+                    {% include "partials/siderbar.html.twig" %}
                 </div>
-            {% else %}
-                <div>
-                    <h2 class="text-lg text-center md:text-xl xl:text-2xl text-main-blue underline">Bienvenue dans votre espace de gestion de vos ressources</h2>
-                    <p class="text-center md:text-lg xl:text-xl mt-5 text-main-black">
-                        Il semblerait que vous ayez déjà créé au moins une ressource.<br/>
-                    </p>
-                    <h3 class="text-center md:text-lg xl:text-xl mt-5 text-main-black">Liste de vos ressources</h3>
+            </div>
+
+            <div class="w-9/12 mx-10">
+                {% if app.user.publications|length == 0 %}
+                    <div>
+                        <h2 class="text-lg text-center md:text-xl xl:text-2xl text-main-blue">Il est temps de créer votre première publication sur notre plateforme</h2>
+                        <p class="text-center md:text-lg xl:text-xl mt-5 text-main-black">
+                            Il semblerait que vous n'ayez encore créé aucune ressource.<br/>
+                        </p>
+                    </div>
+                {% else %}
+                    <h3 class="text-center md:text-lg xl:text-xl mt-5 text-main-black">Liste de vos publications</h3>
                     <hr class="my-3 md:my-5 w-1/4 mx-auto border-blue1"/>
-                    <table class="w-full">
+                    <table class="w-full shadow-lg">
                         <thead>
-                            <tr class="font-extrabold tracking-wide text-left uppercase border-b bg-blue1 text-black dark:text-white">
-                                <th class="px-4 py-3">ID de la ressource</th>
-                                <th class="px-4 py-3">Titre</th>
-                                <th class="px-4 py-3">Nombre d'interaction</th>
-                                <th class="px-4 py-3">Validée</th>
-                            </tr>
+                        <tr class="font-extrabold tracking-wide text-left uppercase border-b bg-blue1 text-black dark:text-white">
+                            <th class="px-4 py-3 text-white">ID de la publication</th>
+                            <th class="px-4 py-3 text-white">Titre</th>
+                            <th class="px-4 py-3 text-white">Nombre d'interaction</th>
+                            <th class="px-4 py-3 text-white">Validée</th>
+                        </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-700 bg-gray-800">
                         {% for publication in app.user.publications %}
@@ -43,7 +52,7 @@
                                 <td class="px-4 py-3 text-black">
                                     {{ publication.likeNumber}} J'aime(s)
                                 </td>
-                                    <td class="px-4 py-3 text-black">
+                                <td class="px-4 py-3 text-black">
                                     {% if publication.stateValidated  %}
                                         <a  class="ml-8" href="#"><i class="text-black fas fa-check mr-1"></i></a>
                                     {% else %}
@@ -54,8 +63,10 @@
                         {% endfor %}
                         </tbody>
                     </table>
-                </div>
-            {% endif %}
+                {% endif %}
+            </div>
+
         </div>
-    </div>
+
+    </section>
 {% endblock %}
