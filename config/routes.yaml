@@ -26,3 +26,7 @@ user_show_participant_group:
 user_add_participant_group:
     path: /mon-profil/groupes/show/{idGroup}/addUser/{idUser}
     controller: App\Controller\UserManageGroupsController::addParticipantInGroup
+
+user_participe_event:
+    path: /evenements/ajout/{idEvent}
+    controller: App\Controller\EventController::addParticipantInEvent
