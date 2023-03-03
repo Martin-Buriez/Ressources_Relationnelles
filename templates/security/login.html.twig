@@ -1,51 +1,63 @@
 {% extends 'base.html.twig' %}
 {% block title %}Connectez-vous !{% endblock %}
 {% block body %}
-    <div class="bg-white dark:bg-blue1">
-        <div class="flex justify-center h-screen">
-            <div class="flex items-center w-full max-w-md px-6 mx-auto lg:w-2/6 ">
-                <div class="flex-1">
+
+    <section class="relative min-h-screen flex">
+
+        <div class="flex flex-col sm:flex-row items-center md:items-start sm:justify-center md:justify-start flex-auto min-w-0 bg-main-white">
+            <div class="md:flex md:mt-10 md:justify-center w-full sm:w-auto md:h-full xl:w-2/5 sm:rounded-lg md:rounded-none bg-main-white ">
+                <div class="max-w-md w-full space-y-8">
                     <div class="text-center">
-                        <h2 class="text-4xl font-bold text-center text-gray-700 dark:text-main-white">Ressources Relationnelles</h2>
-                        <p class="mt-3 text-gray-500 dark:text-gray-300">Connexion à votre compte</p>
-                    </div>
-                    <div class="mt-8">
-                        <form method="post">
-                            {% if error %}
-                                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-                            {% endif %}
-                            {% if app.user %}
-                                <div class="mb-3">
-                                    Vous êtes connecté au compte {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Se déconnecter</a>
+                        <h2 class="mt-6 text-3xl font-bold text-gray-900"> Formulaire de connexion </h2>
+                        <p class="mt-2 text-sm text-gray-500"> Veuillez saisir vos informations </p>
+
+                        <div class="mt-8">
+                            <form method="post">
+
+                                {% if error %}
+                                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                                {% endif %}
+                                {% if app.user %}
+                                    <div class="mb-3">
+                                        Vous êtes connecté au compte {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Se déconnecter</a>
+                                    </div>
+                                {% endif %}
+
+                                <div class="flex items-center justify-center space-x-2">
+                                    <span class="h-px w-16 bg-gray-500"></span>
+                                    <span class="text-gray-700 font-normal">Vos informations</span>
+                                    <span class="h-px w-16 bg-gray-500"></span>
                                 </div>
-                            {% endif %}
-                            <div>
-                                <label for="inputEmail" class="block mb-2 text-sm text-gray-600 dark:text-gray-200">Email</label>
-                                <input type="email" name="email" id="inputEmail" placeholder="example@example.com" required class="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40" />
-                            </div>
-                            <div class="mt-6">
-                                <div class="flex justify-between mb-2">
-                                    <label for="inputPassword" class="text-sm text-gray-600 dark:text-gray-200">Mot de passe</label>
-                                    <a href="/" class="text-sm text-gray-400 focus:text-blue-500 hover:text-blue-500 hover:underline">Mot de passe oublié ?</a>
+
+                                <div class="mt-5">
+                                    <label for="inputEmail" class="block mb-2 text-sm text-gray-600 dark:text-gray-200">Email</label>
+                                    <input type="email" name="email" id="inputEmail" placeholder="example@example.com" required class="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40" />
                                 </div>
-                                <input type="password" name="password" id="inputPassword" placeholder="Votre mot de passe" autocomplete="current-password" required class="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40" />
-                            </div>
-                            <input type="hidden" name="_csrf_token"
-                                value="{{ csrf_token('authenticate') }}"
-                            >
-                            <div class="mt-6">
-                                <button
-                                        type="submit"
-                                        class="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-blue1 rounded-md hover:text-main-blue hover:bg-blue2 focus:outline-none focus:bg-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-50">
-                                    Connexion
-                                </button>
-                            </div>
-                        </form>
-                        <p class="mt-6 text-sm text-center text-gray-400">Vous n'avez pas de compte? <a href="/inscription" class="text-blue-500 focus:outline-none focus:underline hover:underline">Créer son compte</a>.</p>
+                                <div class="mt-6">
+                                    <div class="flex justify-between mb-2">
+                                        <label for="inputPassword" class="text-sm text-gray-600 dark:text-gray-200">Mot de passe</label>
+                                        <a href="/" class="text-sm text-gray-400 focus:text-blue-500 hover:text-blue-500 hover:underline">Mot de passe oublié ?</a>
+                                    </div>
+                                    <input type="password" name="password" id="inputPassword" placeholder="Votre mot de passe" autocomplete="current-password" required class="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40" />
+                                </div>
+                                <input type="hidden" name="_csrf_token"
+                                       value="{{ csrf_token('authenticate') }}"
+                                >
+                                <div class="mt-6">
+                                    <button
+                                            type="submit"
+                                            class="mx-auto w-1/2 flex object-cover object-top items-center text-main-blue border border-2 border-blue1 font-bold transition-all duration-500 justify-center text-blue1 hover:border-white hover:text-white hover:bg-blue1 w-full py-2 leading-6 bg-white rounded-lg">
+                                        Connexion
+                                    </button>
+                                </div>
+                            </form>
+                            <p class="mt-6 text-sm text-center text-gray-400">Vous n'avez pas de compte? <a href="/inscription" class="text-blue-500 focus:outline-none focus:underline hover:underline">Créer votre compte</a>.</p>
+                        </div>
                     </div>
                 </div>
             </div>
+            <div class="sm:w-1/2 xl:w-2/5 h-full hidden md:flex flex-auto items-center justify-start overflow-hidden bg-main-blue bg-no-repeat bg-cover relative" style="background-image: url('{{ asset('assets/media/man_phone2.jpg') }}')";></div>
         </div>
-    </div>
+    </section>
 
 {% endblock %}
