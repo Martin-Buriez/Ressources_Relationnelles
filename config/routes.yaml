@@ -34,3 +34,7 @@ user_delete_participant_group:
 user_participe_event:
     path: /evenements/ajout/{idEvent}
     controller: App\Controller\EventController::addParticipantInEvent
+
+user_send_message:
+    path: /mon-profil/messages/{id}
+    controller: App\Controller\EventController::userSendMessages

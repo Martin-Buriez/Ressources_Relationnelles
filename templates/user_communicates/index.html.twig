@@ -19,11 +19,13 @@
                         <tr>
                             <td colspan="3">    
                                 {% if friends.userSender.id != app.user.id %}
-                                    {{friends.userSender.username}}
+                                    <a class="px-4 py-3" href="{{ path('user_send_message', {'id': friends.userSender.id}) }}">
+                                        {{friends.userSender.username}}
+                                    </a>
                                 {% elseif friends.userReceive.id != app.user.id %}
-                                    {{friends.userReceive.username}}
-                                {% else %}
-                                    <p>Aucune condition n'est vraie.</p>
+                                    <a class="px-4 py-3" href="{{ path('user_send_message', {'id': friends.userReceive.id}) }}">
+                                        {{friends.userReceive.username}}
+                                    </a>
                                 {% endif %}
                             </td>
                         </tr>
@@ -32,7 +34,18 @@
             </table>
         </div>
         <div class="w-8/12 border">
-            <p>coucou</p>
+            <div class="mb-0 w-full">
+                {{ form_start(messageForm) }}
+                <div class="flex">
+                    <div class="w-8/12">
+                        {{ form_row(messageForm.content) }}
+                    </div>
+                    <div class="w-8/12">
+                        {{ form_row(messageForm.submit) }}
+                    </div>
+                </div>
+                {{ form_end(messageForm) }}
+            </div>
         </div>
     </div>
 {% endblock %}

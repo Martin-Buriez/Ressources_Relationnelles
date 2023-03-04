@@ -20,7 +20,7 @@ class EventController extends AbstractController
             ->where('e.stateValidated = true')
             ->getQuery()
             ->getResult();
-        
+
         $user = $this->getUser();
         $userProfile = $entityManager->getRepository(User::class)->findOneById($user);
 
