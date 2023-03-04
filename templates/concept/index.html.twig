@@ -64,7 +64,11 @@
                     <p class="font-medium text-center"> Après la création de votre compte, vous pouvez créer votre première ressource dans votre espace utilisateur.</p>
 
                     <div class="flex items-center mt-6">
-                        <a href="{{ path('profile') }}" class="mx-auto w-1/2 cursor-pointer flex object-cover object-top items-center text-main-blue border border-2 border-blue1 font-extrabold transition-all duration-500 justify-center text-blue1 hover:border-white hover:text-white hover:bg-blue1 w-full  py-4 leading-6 bg-white rounded-lg"> Profil </a>
+                        {% if app.user != null %}
+                            <a href="{{ path('profile') }}" class="mx-auto w-1/2 cursor-pointer flex object-cover object-top items-center text-main-blue border border-2 border-blue1 font-extrabold transition-all duration-500 justify-center text-blue1 hover:border-white hover:text-white hover:bg-blue1 w-full  py-4 leading-6 bg-white rounded-lg"> Profil </a>
+                        {% else %}
+                            <a href="{{ path('app_register') }}" class="mx-auto w-1/2 cursor-pointer flex object-cover object-top items-center text-main-blue border border-2 border-blue1 font-extrabold transition-all duration-500 justify-center text-blue1 hover:border-white hover:text-white hover:bg-blue1 w-full  py-4 leading-6 bg-white rounded-lg"> Création de votre compte ! </a>
+                        {% endif %}
                     </div>
 
                     <p class="font-bold mt-6 text-center">Étape 3 : Je partage ma première ressource</p>
@@ -74,81 +78,6 @@
                     <p class="font-medium text-center">Besoins d'aide ? Nos administrateurs se feront un plaisir de répondre à vos questions !</p>
                 </div>
             </div>
-
         </div>
-
-
-
-
-
     </section>
-
-
-    <!-- <section class="bg-white dark:bg-main-black w-full md:w-11/12 lg:w-10/12 xl:w-9/12 mx-auto mt-12 ">
-                <div class="relative lg:w-8/12 text-center p-8">
-                    <h2 class="font-sans text-3xl font-bold tracking-tight text-blue1 sm:text-4xl sm:leading-none max-w-lg mb-6">
-                        Étape 1 : Je créé mon compte
-                    </h2>
-                    <p class="text-black text-base md:text-lg">
-                        Afin de pouvoir créer votre première ressource gratuitement, vous devez vous inscrire sur la plateforme.
-                    </p>
-
-                    {#  #}
-                    </br>
-                    <h2 class="font-sans text-3xl font-bold tracking-tight text-blue1 sm:text-4xl sm:leading-none max-w-lg mb-6">
-                        Étape 2 : Je crée ma première ressource
-                    </h2>
-                    <p class="text-black text-base md:text-lg">
-                        Après la création de votre compte, vous pouvez créer votre première ressource dans votre espace.
-                    </p>
-                    <div class="flex items-center mt-4">
-                        <a
-                                href="{{ path('profile') }}"
-                                class="mx-auto w-1/2 cursor-pointer flex object-cover object-top items-center text-main-blue border border-2 border-blue1 font-extrabold transition-all duration-500 justify-center text-blue1 hover:border-white hover:text-white hover:bg-blue1 w-full  py-4 leading-6 bg-white rounded-lg"
-                        >
-                            Mon profil
-                        </a>
-                    </div>
-                    {#  #}
-                    </br>
-                    <h2 class="font-sans text-3xl font-bold tracking-tight text-blue1 sm:text-4xl sm:leading-none max-w-lg mb-6">
-                        Étape 3 : Je partage ma ressource
-                    </h2>
-                    <p class="text-black text-base md:text-lg">
-                        Maintenant que vous avez créé votre ressource, celle-ci va passer en contrôle par un modérateur.</br>
-                        Après validation, les autres utilisateurs pourront intéragir avec votre ressource.
-                    </p>
-                </div>
-            </div>
-        </div>
-        {#  #}
-        <div class="sm:px-4 py-4 sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-8">
-            <div class="flex flex-col max-w-screen-lg overflow-hidden bg-white border rounded-3xl shadow-sm lg:flex-row sm:mx-auto">
-                <div class="relative lg:w-1/2">
-                    <img
-                            width="50"
-                            height="50"
-                            src="{{ asset('assets/media/contact.webp') }}"
-                            alt="mobile app"
-                            class="object-cover w-full lg:absolute h-80 lg:h-full"
-                    />
-                    <svg class="absolute top-0 right-0 hidden h-full text-black lg:inline-block" viewBox="0 0 20 104" fill="#f0edee">
-                        <polygon points="17.3036738 5.68434189e-14 20 5.68434189e-14 20 104 0.824555778 104" />
-                    </svg>
-                </div>
-                <div class="flex flex-col justify-center p-8 bg-white lg:p-16 lg:pl-10 lg:w-1/2">
-                    <h5 class="mb-3 text-3xl text-blue1 font-extrabold leading-none sm:text-4xl">
-                        Besoin d'aide !
-                    </h5>
-                    <p class="mb-8 text-main-black">
-                        Nos équipes se feront un plaisir de répondre à vos questions.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-    </section> -->
-
-
-
 {% endblock %}
