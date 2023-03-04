@@ -47,7 +47,7 @@
             <table class="w-full">
                 <thead>
                     <tr class="font-extrabold tracking-wide text-left uppercase border-b bg-blue1 text-black dark:text-white">
-                        <th class="px-4 py-3">
+                        <th class="px-4 py-3" colspan="3">
                             Liste des participants du groupe :
                             {% if groupSelected %}
                                 {{groupSelected.name}}
@@ -58,9 +58,12 @@
                 <tbody class="divide-y divide-gray-700 bg-gray-800">
                     {% for userNoSupervisor in userInGroupe %}
                         <tr class="bg-blue2 text-black">
-                            <td class="px-4 py-3">
-                                <a>
+                            <td class="px-4 py-3" colspan="3" >
+                                <a href="{{ path('user_delete_participant_group', {'idUserBelongGroup': userNoSupervisor.id}) }}">
                                     {{userNoSupervisor.user.username}}
+                                </a>
+                                <a href="{{ path('user_delete_participant_group', {'idUserBelongGroup': userNoSupervisor.id}) }}">
+                                    <i class="fas fa-user-minus"></i>
                                 </a>
                             </td>
                         </tr>
@@ -72,7 +75,7 @@
             <table class="mx-auto w-full">
                 <thead>
                     <tr class="font-extrabold tracking-wide text-left uppercase border-b bg-blue1 text-black dark:text-white">
-                        <th class="px-4 py-3">
+                        <th class="px-4 py-3" colspan="3">
                             Ajouter l'un de vos amis au groupe :
                             {% if groupSelected %}
                                 {{groupSelected.name}}
@@ -83,18 +86,22 @@
                 <tbody class="divide-y divide-gray-700 bg-gray-800">
                     {% for friends in userFriends %}
                         <tr class="bg-blue2 text-black">
-                            <td class="px-4 py-3" colspan="2">
+                            <td class="px-4 py-3" colspan="3">
                                 {% if groupSelected %}   
                                     {% if friends.userSender.id != app.user.id %}
                                         <a href="{{ path('user_add_participant_group', {'idGroup': groupSelected.id, 'idUser': friends.userSender.id}) }}">
                                             {{friends.userSender.username}}
                                         </a>
-                                        {% elseif friends.userReceive.id != app.user.id %}
-                                            <a href="#">
-                                                {{friends.userReceive.username}}
-                                            </a>
-                                        {% else %}
-                                            <p>Aucune condition n'est vraie.</p>
+                                        <a href="{{ path('user_add_participant_group', {'idGroup': groupSelected.id, 'idUser': friends.userSender.id}) }}">
+                                            <i class="fas fa-user-plus"></i>
+                                        </a>
+                                    {% elseif friends.userReceive.id != app.user.id %}
+                                        <a href="{{ path('user_add_participant_group', {'idGroup': groupSelected.id, 'idUser': friends.userSender.id}) }}">
+                                            {{friends.userReceive.username}}
+                                        </a>
+                                        <a href="{{ path('user_add_participant_group', {'idGroup': groupSelected.id, 'idUser': friends.userSender.id}) }}">
+                                            <i class="fas fa-user-plus"></i>
+                                        </a>
                                     {% endif %}
                                 {% endif %}
                             </td>
@@ -104,4 +111,14 @@
             </table>
         </div>
     </div>
+    {% for message in app.flashes('success') %}
+        <div class="alert z-10 bg-green-300 absolute mx-auto">
+            {{ message }}
+        </div>
+    {% endfor %}
+    {% for message in app.flashes('error') %}
+        <div class="alert z-10 bg-red-300 absolute mx-auto">
+            {{ message }}
+        </div>
+    {% endfor %}
 {% endblock %}

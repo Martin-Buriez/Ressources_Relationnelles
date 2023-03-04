@@ -12,11 +12,11 @@
             <!-- Thème et catégorie de la publication  -->
 
             <div class="flex">
-                <div class="w-1/2 text-2xl font-semibold text-blue1">
-                    <p>Thème de la publication à afficher</p>
+                <div class="w-1/2 flex justify-start text-2xl font-semibold text-blue1">
+                    {{ publication.theme.name|capitalize }}
                 </div>
                 <div class="w-1/2 flex justify-end text-2xl font-semibold text-blue1">
-                    <p>Catégorie de la publication à afficher</p>
+                    {{ publication.category.title|capitalize }}
                 </div>
             </div>
             <div class="mx-auto h-px w-5/6 bg-blue1 mt-10"></div>

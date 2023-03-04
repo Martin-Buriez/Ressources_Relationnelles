@@ -138,16 +138,57 @@ class UserManageGroupsController extends AbstractController
         ]);
     }
 
-    #[Route('/mon-profil/groupes/show/{idGroup}/addUser/{idUser}', name: 'user_add_participant_group')]
+    #[Route('/mon-profil/groupes/add/{idGroup}/addUser/{idUser}', name: 'user_add_participant_group')]
     public function addParticipantInGroup(EntityManagerInterface $entityManager, Request $request, $idGroup, $idUser): Response
     {
-        $addGroup = new UserBelongGroup();
-        $addGroup->setUser($idUser);
-        $addGroup->setGroupe($idGroup);
-        $addGroup->setIsSupervisor(False);
-        // Enregistrer l'entité dans la base de données
-        $entityManager->persist($addGroup);
-        $entityManager->flush();
+        $userEntity = $entityManager->getRepository(User::class)->findOneById($idUser);
+        $groupEntity = $entityManager->getRepository(Group::class)->findOneById($idGroup);
+
+        $userGroupEntity = $entityManager->getRepository(UserBelongGroup::class)->findOneBy([
+            'user' => $userEntity,
+            'groupe' => $groupEntity
+        ]);
+        if ($userGroupEntity !== null) {
+            $this->addFlash(
+                'error',
+                'Votre ami est déja dans votre groupe !'
+            );
+        }else{
+            $addGroup = new UserBelongGroup();
+            $addGroup->setUser($userEntity);
+            $addGroup->setGroupe($groupEntity);
+            $addGroup->setIsSupervisor(false);
+            // Enregistrer l'entité dans la base de données
+            $entityManager->persist($addGroup);
+            $entityManager->flush();
+            $this->addFlash(
+                'succes',
+                'Votre ami est ajouté(e) dans votre groupe!'
+            );
+        }
+        // Rediriger vers la page d'accueil des amis
+        return $this->redirectToRoute('user_manage_groups');
+    }
+
+    #[Route('/mon-profil/groupes/delete/{idUserBelongGroup}', name: 'user_delete_participant_group')]
+    public function deleteParticipantInGroup(EntityManagerInterface $entityManager, Request $request, $idUserBelongGroup): Response
+    {
+        $userGroupEntity = $entityManager->getRepository(UserBelongGroup::class)->findOneById($idUserBelongGroup);
+
+        if ($userGroupEntity !== null) {
+            $entityManager->remove($userGroupEntity);
+            $entityManager->flush();
+            $this->addFlash(
+                'succes',
+                'Votre ami est supprimé(e) du groupe !'
+                
+            );
+        }else{
+            $this->addFlash(
+                'error',
+                'Votre ami n\'est pas présent dans votre groupe!'
+            );
+        }
         // Rediriger vers la page d'accueil des amis
         return $this->redirectToRoute('user_manage_groups');
     }
