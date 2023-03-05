@@ -15,11 +15,19 @@ use Symfony\Bundle\SecurityBundle\Security;
 
 class UserFriendController extends AbstractController
 {
-
     #[Route('/mon-profil/invitations', name: 'user_invitations')]
     public function index(EntityManagerInterface $entityManager, Request $request, Security $security ): Response
     {
-        $userEntity = $entityManager->getRepository(User::class)->findAll();
+
+        $user = $this->getUser();
+        $userProfile = $entityManager->getRepository(User::class)->findOneById($user);
+        $userRequest = $entityManager->getRepository(UserRelationship::class)
+            ->createQueryBuilder('r')
+            ->where('r.state = false AND r.userSender != :userProfile') 
+            ->setParameter('userProfile', $userProfile)
+            ->getQuery()
+            ->getResult();
+
         $userFilter = [];
         $search = $request->query->get('search');
         if ($search) {
@@ -28,7 +36,7 @@ class UserFriendController extends AbstractController
         return $this->render('user_invitations/index.html.twig', [
             'controller_name' => 'UserFriendController',
             'userFilter' => $userFilter,
-            'userEntity' => $userEntity,
+            'userRequest' => $userRequest,
         ]);
     }
 
@@ -67,13 +75,13 @@ class UserFriendController extends AbstractController
         $userRelationship = $entityManager->getRepository(UserRelationship::class)->find($idRelationShip);
         // Vérifier si l'entité existe
         if (!$userRelationship) {
-            throw $this->createNotFoundException('La relation d\'amitié n\'existe pas.');
+            $this->addFlash('error', 'La relation d\'amitié n\'existe pas.');
+        } else {
+            // Supprimer l'entité
+            $entityManager->remove($userRelationship);
+            $entityManager->flush();
+            $this->addFlash('success', 'La relation d\'amitié a été supprimée avec succès.');
         }
-        // Supprimer l'entité
-        $entityManager->remove($userRelationship);
-        $entityManager->flush();
-        // Ajouter un message flash pour indiquer que la relation a été supprimée
-        $this->addFlash('success', 'La relation d\'amitié a été supprimée avec succès.');
         // Rediriger vers la page d'accueil des amis
         return $this->redirectToRoute('user_invitations');
     }

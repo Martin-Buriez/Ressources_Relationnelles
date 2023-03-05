@@ -9,84 +9,59 @@
             <h1 class="text-center font-bold text-5xl text-white">Votre liste d'amis</h1>
             <div class="mx-auto h-px w-40 bg-white mt-8"></div>
         </div>
-
         <div class="flex">
-
             <div class="w-3/12 min-h-screen bg-blue2 border-blue1 border-r">
                 <div class="w-full">
                     {% include "partials/siderbar.html.twig" %}
                 </div>
             </div>
-
             <div class="w-full px-20">
-
                 <div class="flex justify-between mt-16">
-
-                    {% for item in userEntity %}
-                        {% for relationship in item.userRelationships %}
-                            {% if relationship.userSender.id == app.user.id and relationship.state is same as(true) or relationship.userSender.id != app.user.id and relationship.state is same as(true) %}
-                                <div class="flex w-4/12 border border-blue1 shadow-lg px-5 py-5">
-                                    <div class="w-1/3">
-                                        <img height="130" width="130" src="{{ asset('assets/media/img/user.svg') }}" class=" object-cover rounded-full shadow-lg">
-                                    </div>
-                                    <div class="w-2/3 pt-2">
-                                        <div class="flex justify-start text-blue1 text-xl font-bold ml-6">
-                                            <a target="_blank" rel="noreferrer noopener" href="{{ path('profile_view', {'username': relationship.userSender.username }) }}">
-                                                {{relationship.userReceive.username}}
-                                            </a>
-                                            <div class="flex justify-start italic text-grey4 text-xl font-bold ">
-                                                <p class="px-1">( {{relationship.userReceive.firstname}}</p>
-                                                <p>{{relationship.userReceive.lastname}} )</p>
-                                            </div>
+                    {% for friend in userFriend %}
+                        {% if friend.userSender.id != app.user.id%}
+                            <div class="flex w-4/12 border border-blue1 shadow-lg px-5 py-5">
+                                <div class="w-1/3">
+                                    <img height="130" width="130" src="{{ asset('assets/media/img/user.svg') }}" class=" object-cover rounded-full shadow-lg">
+                                </div>
+                                <div class="w-2/3 pt-2">
+                                    <div class="flex justify-start text-blue1 text-xl font-bold ml-6">
+                                        <a target="_blank" rel="noreferrer noopener" href="{{ path('profile_view', {'username': friend.userSender.username }) }}">
+                                            {{friend.userSender.username}}
+                                        </a>
+                                        <div class="flex justify-start italic text-grey4 text-xl font-bold ">
+                                            <p class="px-1">( {{friend.userSender.firstname}}</p>
+                                            <p>{{friend.userSender.lastname}} )</p>
                                         </div>
-                                        {% if relationship.state is same as(false) %}
-                                            <div class="flex justify-start ml-6">
-                                                <p>
-                                                    <span class="font-medium italic text-orange-500">Invitation envoyé</span>
-                                                </p>
-                                            </div>
-                                            <div class="flex justify-start h-1/3">
-                                            </div>
-                                            <div class="flex justify-start">
-                                                <a onclick="confirm('Supprimer cet utilisateur à vos amis ?')" class="ml-2" href="{{ path('user_delete_friend', {'idRelationShip': relationship.id}) }}">
-                                                    <i class="w-1/12 py-1 fas fa-user-minus pr-4 px-2"></i>
-                                                    <span class="w-9/12 pl-2">Retirer de vos amis</span>
-                                                </a>
-                                            </div>
-                                        {% else %}
-                                            <div class="flex justify-start ml-6">
-                                                <p>
-                                                    <span class="font-medium italic text-green-500">Est votre ami</span>
-                                                </p>
-                                            </div>
-                                            <div class="flex justify-start h-1/3">
-                                            </div>
-                                            <div class="flex justify-start">
-                                                <a onclick="confirm('Supprimer cet utilisateur à vos amis ?')" class="ml-2" href="{{ path('user_delete_friend', {'idRelationShip': relationship.id}) }}">
-                                                    <i class="w-1/12 py-1 fas fa-user-minus pr-4 px-2"></i>
-                                                    <span class="w-9/12 pl-2">Retirer de vos amis</span>
-                                                </a>
-                                            </div>
-                                        {% endif %}
                                     </div>
                                 </div>
-                            {% endif %}
-                        {% endfor %}
+                            </div>
+                        {% elseif friend.userReceive.id != app.user.id %}
+                            <div class="flex w-4/12 border border-blue1 shadow-lg px-5 py-5">
+                                <div class="w-1/3">
+                                    <img height="130" width="130" src="{{ asset('assets/media/img/user.svg') }}" class=" object-cover rounded-full shadow-lg">
+                                </div>
+                                <div class="w-2/3 pt-2">
+                                    <div class="flex justify-start text-blue1 text-xl font-bold ml-6">
+                                        <a target="_blank" rel="noreferrer noopener" href="{{ path('profile_view', {'username': friend.userReceive.username }) }}">
+                                            {{friend.userReceive.username}}
+                                        </a>
+                                        <div class="flex justify-start italic text-grey4 text-xl font-bold ">
+                                            <p class="px-1">( {{friend.userReceive.firstname}}</p>
+                                            <p>{{friend.userReceive.lastname}} )</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
                     {% endfor %}
-
                     {% for message in app.flashes('success') %}
                         <div class="alert">
                             {{ message }}
                         </div>
                     {% endfor %}
-
                 </div>
-
             </div>
-
         </div>
-
     </section>
-
 {% endblock %}
 

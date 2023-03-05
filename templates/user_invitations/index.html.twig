@@ -76,37 +76,32 @@
                     <h1 class="px-2 text-xl font-semibold">Vos demandes :</h1>
                     <div class="bg-blue1 w-full h-12 mt-2 py-2 px-6 shadow-lg">
                     </div>
-
                     <table class="w-full ">
                         <tbody class="divide-y divide-gray-700 bg-gray-300">
-                        {% for item in userEntity %}
-                            {% for relationship in item.userRelationships %}
-                                <tr class="hover:bg-gray-200 text-black">
-                                    {% if relationship.userSender.id != app.user.id and relationship.state is same as(false) %}
-                                        <td class="px-4 py-3 w-1/6"">
-                                            <a target="_blank" rel="noreferrer noopener" href="{{ path('profile_view', {'username': relationship.userSender.username }) }}">
-                                                {{relationship.userSender.username}}
-                                            </a>
-                                        </td>
-                                        <td class="px-4 py-3 w-1/6"">
-                                            <a target="_blank" rel="noreferrer noopener" href="{{ path('profile_view', {'username': relationship.userSender.username }) }}">
-                                                {{relationship.userSender.firstname}}
-                                            </a>
-                                        </td>
-                                        <td class="px-4 py-3 w-1/6">
-                                            <a target="_blank" rel="noreferrer noopener" href="{{ path('profile_view', {'username': relationship.userSender.username }) }}">
-                                                {{relationship.userSender.lastname}}
-                                            </a>
-                                        </td>
-                                        <td class="px-4 py-3 w-1/12">
-                                            <a onclick="confirm('Accepter la demande ?')" class="ml-8" href="{{ path('user_accepte_friend', {'idRelationShip': relationship.id}) }}"><i class="fas fa-user-check pr-4"></i></a>
-                                        </td>
-                                        <td class="px-4 py-3 w-1/12">
-                                            <a onclick="confirm('Supprimer la demande ?')" class="ml-8" href="{{ path('user_delete_friend', {'idRelationShip': relationship.id}) }}"><i class="fas fa-times pr-4"></i></a>
-                                        </td>
-                                    {% endif %}
-                                </tr>
-                            {% endfor %}
+                        {% for request in userRequest %}
+                            <tr class="hover:bg-gray-200 text-black">
+                                <td class="px-4 py-3 w-1/6">
+                                    <a target="_blank" rel="noreferrer noopener" href="{{ path('profile_view', {'username': request.userSender.username }) }}">
+                                        {{request.userSender.username}}
+                                    </a>
+                                </td>
+                                <td class="px-4 py-3 w-1/6">
+                                    <a target="_blank" rel="noreferrer noopener" href="{{ path('profile_view', {'username': request.userSender.username }) }}">
+                                        {{request.userSender.firstname}}
+                                    </a>
+                                </td>
+                                <td class="px-4 py-3 w-1/6">
+                                    <a target="_blank" rel="noreferrer noopener" href="{{ path('profile_view', {'username': request.userSender.username }) }}">
+                                        {{request.userSender.lastname}}
+                                    </a>
+                                </td>
+                                <td class="px-4 py-3 w-1/12">
+                                    <a onclick="confirm('Accepter la demande ?')" class="ml-8" href="{{ path('user_accepte_friend', {'idRelationShip': request.id}) }}"><i class="fas fa-user-check pr-4"></i></a>
+                                </td>
+                                <td class="px-4 py-3 w-1/12">
+                                    <a onclick="confirm('Supprimer la demande ?')" class="ml-8" href="{{ path('user_delete_friend', {'idRelationShip': request.id}) }}"><i class="fas fa-times pr-4"></i></a>
+                                </td>
+                            </tr>
                         {% endfor %}
                         {% for message in app.flashes('success') %}
                             <div class="alert">
