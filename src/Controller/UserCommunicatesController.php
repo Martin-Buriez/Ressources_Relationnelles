@@ -23,6 +23,8 @@ class UserCommunicatesController extends AbstractController
         $userProfile = $entityManager->getRepository(User::class)->findOneById($user);
         $userGroups = $entityManager->getRepository(UserBelongGroup::class)->findBy(['user' => $userProfile]);
 
+        $userConversation = [];
+
         $userFriends = $entityManager->getRepository(UserRelationship::class)
             ->createQueryBuilder('r')
             ->where('r.userSender = :userProfile AND r.state = true OR r.userReceive = :userProfile AND r.state = true')
@@ -40,25 +42,32 @@ class UserCommunicatesController extends AbstractController
             'userGroups' => $userGroups,
             'userFriends' => $userFriends,
             'messageForm' => $messageForm,
+            'userConversation' => $userConversation,
         ]);
     }
 
     #[Route('/mon-profil/messages/{id}', name: 'user_send')]
     public function userSendMessages(EntityManagerInterface $entityManager, Request $request, $id): Response
     {
-        
         $user = $this->getUser();
         $userSender = $entityManager->getRepository(User::class)->findOneById($user);
+        $userReceive = $entityManager->getRepository(User::class)->findOneById($id);
 
         $userFriends = $entityManager->getRepository(UserRelationship::class)
-        ->createQueryBuilder('r')
-        ->where('r.userSender = :userProfile AND r.state = true OR r.userReceive = :userProfile AND r.state = true')
-        ->setParameter('userProfile', $userSender)
-        ->getQuery()
-        ->getResult();
+            ->createQueryBuilder('r')
+            ->where('r.userSender = :userProfile AND r.state = true OR r.userReceive = :userProfile AND r.state = true')
+            ->setParameter('userProfile', $userSender)
+            ->getQuery()
+            ->getResult();
 
-        $userReceive = $entityManager->getRepository(User::class)->findOneById($id);
-        // $groupEntity = $entityManager->getRepository(UserBelongGroup::class)->findOneById($id);
+        $userConversation = $entityManager->getRepository(CommunicateUser::class)
+            ->createQueryBuilder('r')
+            ->where('(r.userSender = :userSender OR r.userReceive = :userSender) AND (r.userSender = :userReceive OR r.userReceive = :userReceive)')
+            ->setParameter('userSender', $userSender)
+            ->setParameter('userReceive', $userReceive)
+            ->orderBy('r.createdAt', 'ASC')
+            ->getQuery()
+            ->getResult();
 
         if ($userReceive !== null) {
             $message = new CommunicateUser();
@@ -79,7 +88,7 @@ class UserCommunicatesController extends AbstractController
                     'message_succes',
                     'Votre message a bien été ajouté !'
                 );
-                return $this->redirectToRoute('user_communicates');
+                return $this->redirect($request->getUri());
             }
         }
 
@@ -87,6 +96,7 @@ class UserCommunicatesController extends AbstractController
             'controller_name' => 'UserCommunicatesController',
             'messageForm' => $messageForm,
             'userFriends' => $userFriends,
+            'userConversation' => $userConversation,
         ]);
     }
 }

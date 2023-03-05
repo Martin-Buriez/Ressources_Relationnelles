@@ -3,23 +3,17 @@
 {% block title %}Mon espace !{% endblock %}
 
 {% block body %}
-
     <section class="bg-white w-full">
-
         <div class="flex justify-end bg-blue2 w-full h-25 pt-48 shadow-lg">
-
             <div class="w-4/5 flex justify-between pb-8">
                 <div>
                     <h1 class="text-5xl font-medium">{{ app.user.username }}</h1>
                 </div>
-
                 <div class="mx-32">
                     <a href="#" class="italic">Modifier ma bannière</a>
                 </div>
             </div>
-
         </div>
-
         <div class="absolute left-14 top-64">
             {% if app.user.ProfilePicture %}
                 <img height="300" width="300" src="{{ asset('uploads/user/avatar/' ~ app.user.ProfilePicture) }}" alt="{{ app.user.username }}" class="object-cover rounded-full shadow-lg"/>
@@ -27,7 +21,6 @@
                 <img height="300" width="300" src="{{ asset('assets/media/img/user.svg') }}" alt="Avatar de {{ app.user.username }}"  class=" object-cover rounded-full shadow-lg"/>
             {% endif %}
         </div>
-
         <div class="flex justify-end pt-2 px-2">
             <div class="w-4/5">
                 {% if app.user.description %}
@@ -37,50 +30,43 @@
                 {% endif %}
             </div>
         </div>
-
         <div class="w-full mt-20 px-24">
-
             <div class="w-full flex justify-center">
                 <div class="w-3/5 bg-blue1 h-px"></div>
             </div>
-
             <div class="flex justify-center mt-8">
                 <div class="w-2/5 py-3 px-5 border border-blue1 shadow-lg">
-
                     {% if app.user.identityCardLocation is empty %}
-                        <div>
-                            <p class="text-center font-bold text-red-600">Vous n'avez pas encore vérifié votre identité !</p>
-
+                        {{ form_start(userCardForm) }}
                             <div>
-                                <h1 class="underline text-center mt-2">Afin d'obtenir un statut validé :</h1>
-                                <p class="italic my-2 text-center">Vous pouvez déposer un justificatif permettant de vérifier votre nom prénom et adresse</br> Documents acceptés : Carte d'identité, Permis et Passeport.</p>
-                            </div>
-
-                            <div class="flex justify-center mt-5 mb-5">
-                                <div class="w-2/3 flex justify-center">
-                                    <input type="file">
+                                <p class="text-center font-bold text-red-600">Vous n'avez pas encore vérifié votre identité !</p>
+                                <div>
+                                    <h1 class="underline text-center mt-2">Afin d'obtenir un statut validé :</h1>
+                                    <p class="italic my-2 text-center">Vous pouvez déposer un justificatif permettant de vérifier votre nom prénom et adresse</br> Documents acceptés : Carte d'identité, Permis et Passeport.</p>
+                                </div>
+                                <div class="flex justify-center mt-5 mb-5">
+                                    <div class="w-2/3 flex justify-center">
+                                        {{ form_row(userCardForm.identityCardLocation) }}
+                                    </div>
+                                </div>
+                                <div class="flex justify-center">
+                                    <a class="w-2/6 btn py-1 bg-blue1 text-white rounded cursor-pointer object-cover border border-2 border-blue1">
+                                        {{ form_row(userCardForm.submit) }}
+                                    </a>
                                 </div>
                             </div>
-
-                            <div class="flex justify-center">
-                                <button class="w-2/6 btn py-1 bg-blue1 text-white rounded cursor-pointer object-cover border border-2 border-blue1">Envoyer</button>
-                            </div>
-                        </div>
+                        {{ form_end(userCardForm) }}
                     {% else %}
                         <div>
                             <p class="text-center font-bold text-green-600">Votre justificatif est en cours de traitement</p>
                         </div>
                     {% endif %}
-
                 </div>
             </div>
             <div class="w-full mt-14">
-
                 <!-- Informations Utilisateur -->
-
                 <div class="w-full border border-blue1 py-6 px-10 mx-2 shadow-lg">
                     <h2 class="text-blue1 font-bold text-xl">Vos informations utilisateur :</h2>
-
                     <div class="flex w-full">
                         <div class="w-1/2 mr-10">
                             <p class="font-semibold text-gray-700 mt-4 mb-1">Prénom :</p>

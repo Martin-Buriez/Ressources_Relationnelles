@@ -9,15 +9,15 @@
                 <thead>
                     <tr class="font-extrabold tracking-wide text-left uppercase border-b bg-blue1 text-black dark:text-white">
                         <th colspan="2" class="px-4 py-3">Discussions</th>
-                        <th>
+                        <th colspan="1">
                             <a class="px-4 py-3" href="{{path('user_manage_groups')}}"><i class="fas fa-users pr-4"></i></a>
                         </th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for friends in userFriends %}
-                        <tr>
-                            <td colspan="3">    
+                        <tr class="text-center">
+                            <td colspan="3" class="py-2">    
                                 {% if friends.userSender.id != app.user.id %}
                                     <a class="px-4 py-3" href="{{ path('user_send_message', {'id': friends.userSender.id}) }}">
                                         {{friends.userSender.username}}
@@ -33,14 +33,36 @@
                 </tbody>
             </table>
         </div>
-        <div class="w-8/12 border">
-            <div class="mb-0 w-full">
+        <div class="w-10/12 border min-h-screen max-h-64">
+            <h1 class="underline text-center">Discussion :</h1>
+            {# Chargement des messages #}
+            <div class="mx-auto overscroll-contain">
+                {% for message in userConversation %}
+                    {% if message.userSender.id == app.user.id %}
+                        <div class="border-black text-right pr-4">
+                            <p>
+                                {{message.createdAt|date('d/m/Y')}} <br>
+                                {{message.content}}
+                            </p>
+                        </div>
+                    {% else %}
+                        <div class="border-black text-left pl-4">
+                            <p>
+                                {{message.createdAt|date('d/m/Y')}} <br>
+                                {{message.content}}
+                            </p>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            {# Formulaire de création de message #}
+            <div class="border-t-2 border-black mt-4">
                 {{ form_start(messageForm) }}
                 <div class="flex">
-                    <div class="w-8/12">
+                    <div class="w-8/12 mx-auto mt-4">
                         {{ form_row(messageForm.content) }}
                     </div>
-                    <div class="w-8/12">
+                    <div class="w-2/12 mt-4">
                         {{ form_row(messageForm.submit) }}
                     </div>
                 </div>
