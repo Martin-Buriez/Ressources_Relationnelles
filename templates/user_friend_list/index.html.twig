@@ -59,6 +59,11 @@
                             {{ message }}
                         </div>
                     {% endfor %}
+                    {% for message in app.flashes('Erreur') %}
+                        <div class="alert">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>

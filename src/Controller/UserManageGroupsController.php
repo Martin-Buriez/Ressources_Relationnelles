@@ -192,4 +192,27 @@ class UserManageGroupsController extends AbstractController
         // Rediriger vers la page d'accueil des amis
         return $this->redirectToRoute('user_manage_groups');
     }
+
+    #[Route('/mon-profil/groupes/delete/{idGroup}', name: 'user_delete_group')]
+    public function deleteGroup(EntityManagerInterface $entityManager, Request $request, $idGroup): Response
+    {
+        $GroupEntity = $entityManager->getRepository(Group::class)->findOneById($idGroup);
+
+        if ($GroupEntity !== null) {
+            $entityManager->remove($GroupEntity);
+            $entityManager->flush();
+            $this->addFlash(
+                'succes',
+                'Votre groupe est supprimé !'
+                
+            );
+        }else{
+            $this->addFlash(
+                'error',
+                'Votre groupe n\'est pas supprimé !'
+            );
+        }
+        // Rediriger vers la page d'accueil des amis
+        return $this->redirectToRoute('user_manage_groups');
+    }
 }

@@ -27,7 +27,7 @@
             <table class="w-full">
                 <thead>
                     <tr class="font-extrabold tracking-wide text-left uppercase border-b bg-blue1 text-black dark:text-white">
-                        <th class="px-4 py-3">Liste de vos groupes :</th>
+                        <th class="px-4 py-3" colspan="2">Liste de vos groupes :</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-700 bg-gray-800">
@@ -36,6 +36,11 @@
                             <td class="px-4 py-3">
                                 <a href="{{ path('user_show_participant_group', {'idGroup': directedGroup.groupe.id}) }}">
                                     {{ directedGroup.groupe.name }}
+                                </a>
+                            </td>
+                            <td class="px-4 py-3">
+                                <a href="{{ path('user_delete_group', {'idGroup': directedGroup.groupe.id}) }}">
+                                    <i class="fas fa-users-slash"></i>
                                 </a>
                             </td>
                         </tr>

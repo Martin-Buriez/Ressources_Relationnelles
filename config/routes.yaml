@@ -23,6 +23,10 @@ user_show_participant_group:
     path: /mon-profil/groupes/show/{idGroup}
     controller: App\Controller\UserManageGroupsController::showParticipantGroup
 
+user_delete_group:
+    path: /mon-profil/groupes/delete/{idGroup}
+    controller: App\Controller\UserManageGroupsController::deleteGroup
+
 user_add_participant_group:
     path: /mon-profil/groupes/add/{idGroup}/addUser/{idUser}
     controller: App\Controller\UserManageGroupsController::addParticipantInGroup
