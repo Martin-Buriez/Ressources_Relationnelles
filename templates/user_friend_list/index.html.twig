@@ -34,7 +34,7 @@
                                         <p>{{friend.userReceive.lastname}} )</p>
                                     </div>
                                     <div class="flex justify-start mt-10 ml-2">
-                                        <a onclick="confirm('Supprimer cet utilisateur à vos amis ?')" class="ml-2" href="">
+                                        <a onclick="confirm('Supprimer cet utilisateur à vos amis ?')" class="ml-2" href="{{ path('user_delete_friend', {'idRelationShip': friend.id }) }}">
                                             <i class="w-1/12 py-1 fas fa-user-minus pr-4 px-2"></i>
                                             <span class="w-9/12 pl-2">Retirer de vos amis</span>
                                         </a>

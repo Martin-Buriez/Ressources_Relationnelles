@@ -12,12 +12,16 @@ user_add_friend:
     controller: App\Controller\UserFriendController::userAddFriend
 
 user_delete_friend:
-    path: /mon-profil/friends/delete/{idRelationShip}
-    controller: App\Controller\UserFriendController::userDeleteFriend
+    path: /mon-profil/mes-amis/delete/{idRelationShip}
+    controller: App\Controller\UserFriendListController::userDeleteFriend
 
-user_accepte_friend:
-    path: /mon-profil/friends/accept/{idRelationShip}
-    controller: App\Controller\UserFriendController::acceptFriendRequest
+user_delete_invitation:
+    path: /mon-profil/invitations/delete/{idRelationShip}
+    controller: App\Controller\UserFriendController::userDeleteInvitation
+
+user_accepte_invitation:
+    path: /mon-profil/invitations/accept/{idRelationShip}
+    controller: App\Controller\UserFriendController::userAddInvitation
 
 user_show_participant_group:
     path: /mon-profil/groupes/show/{idGroup}

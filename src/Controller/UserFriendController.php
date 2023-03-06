@@ -68,8 +68,8 @@ class UserFriendController extends AbstractController
         return $this->redirectToRoute('user_friend_list');
     }
 
-    #[Route('/mon-profil/invitations/delete/{idRelationShip}', name: 'user_delete_friend')]
-    public function userDeleteFriend($idRelationShip, EntityManagerInterface $entityManager)
+    #[Route('/mon-profil/invitations/delete/{idRelationShip}', name: 'user_delete_invitation')]
+    public function userDeleteInvitation($idRelationShip, EntityManagerInterface $entityManager)
     {
         // Récupérer l'entité UserRelationship correspondante
         $userRelationship = $entityManager->getRepository(UserRelationship::class)->find($idRelationShip);
@@ -86,8 +86,8 @@ class UserFriendController extends AbstractController
         return $this->redirectToRoute('user_invitations');
     }
 
-    #[Route('/mon-profil/invitations/accept/{idRelationShip}', name: 'user_accepte_friend')]
-    public function acceptFriendRequest($idRelationShip, EntityManagerInterface $entityManager)
+    #[Route('/mon-profil/invitations/accept/{idRelationShip}', name: 'user_accepte_invitation')]
+    public function userAddInvitation($idRelationShip, EntityManagerInterface $entityManager)
     {
         // Récupérer l'entité UserRelationship correspondante
         $userRelationship = $entityManager->getRepository(UserRelationship::class)->find($idRelationShip);

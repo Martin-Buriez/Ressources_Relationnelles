@@ -96,10 +96,10 @@
                                     </a>
                                 </td>
                                 <td class="px-4 py-3 w-1/12">
-                                    <a onclick="confirm('Accepter la demande ?')" class="ml-8" href="{{ path('user_accepte_friend', {'idRelationShip': request.id}) }}"><i class="fas fa-user-check pr-4"></i></a>
+                                    <a onclick="confirm('Accepter la demande ?')" class="ml-8" href="{{ path('user_accepte_invitation', {'idRelationShip': request.id}) }}"><i class="fas fa-user-check pr-4"></i></a>
                                 </td>
                                 <td class="px-4 py-3 w-1/12">
-                                    <a onclick="confirm('Supprimer la demande ?')" class="ml-8" href="{{ path('user_delete_friend', {'idRelationShip': request.id}) }}"><i class="fas fa-times pr-4"></i></a>
+                                    <a onclick="confirm('Supprimer la demande ?')" class="ml-8" href="{{ path('user_delete_invitation', {'idRelationShip': request.id}) }}"><i class="fas fa-times pr-4"></i></a>
                                 </td>
                             </tr>
                         {% endfor %}

@@ -33,4 +33,22 @@ class UserFriendListController extends AbstractController
             'userFriend'=> $userFriend,
         ]);
     }
+
+    #[Route('/mon-profil/mes-amis/delete/{idRelationShip}', name: 'user_delete_friend')]
+    public function userDeleteFriend(EntityManagerInterface $entityManager, $idRelationShip ): Response
+    {
+        // Récupérer l'entité UserRelationship correspondante
+        $userRelationship = $entityManager->getRepository(UserRelationship::class)->find($idRelationShip);
+        // Vérifier si l'entité existe
+        if (!$userRelationship) {
+            $this->addFlash('error', 'La relation d\'amitié n\'existe pas.');
+        } else {
+            // Supprimer l'entité
+            $entityManager->remove($userRelationship);
+            $entityManager->flush();
+            $this->addFlash('success', 'La relation d\'amitié a été supprimée avec succès.');
+        }
+        // Rediriger vers la page d'accueil des amis
+        return $this->redirectToRoute('user_friend_list');
+    }
 }
