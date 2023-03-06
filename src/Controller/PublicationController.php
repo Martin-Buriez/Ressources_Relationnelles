@@ -31,7 +31,7 @@ class PublicationController extends AbstractController
             ->setCriteria([]);
 
         $paginatePublications = $pagination->getData();
-        
+
         return $this->render('publication/index.html.twig', [
             'publications' => $paginatePublications,
             'pages' => $pagination->getPages(),
@@ -53,6 +53,13 @@ class PublicationController extends AbstractController
 
         $publication = $entityManager->getRepository(Publication::class)->findOneBySlug($slug);
         $publicationSelected = $entityManager->getRepository(Publication::class)->findOneById($idPublication);
+
+        $comments = $entityManager->getRepository(CommentConcernPublication::class)
+            ->createQueryBuilder('c')
+            ->where('c.publication = :publication') 
+            ->setParameter('publication', $idPublication)
+            ->getQuery()
+            ->getResult();
 
         $comment = new Comment();
         $commentForm = $this->createForm(CommentType::class, $comment);
@@ -99,6 +106,7 @@ class PublicationController extends AbstractController
             'page' => $page,
             'pagination' => $pagination,
             'commentForm' => $commentForm,
+            'comments' => $comments,
         ]);
     }
 }

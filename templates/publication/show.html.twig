@@ -62,6 +62,23 @@
         </div>
         <!-- Commentaires -->
         {% if app.user %}
+            {% for comment in comments %}
+                <div class="w-5/6 border border-blue1 shadow-lg px-40 py-10 bg-white mt-4 mx-auto">
+                    <div class="flex">
+                        <div class="w-1/2">
+                            {{ comment.comment.title }}
+                        </div>
+                        <div class="flex justify-center">
+                            <div class="mt-10 w-full">
+                                {{ comment.comment.content }}
+                            </div>
+                        </div>
+                        <div class="w-2/5 mx-5">
+                            {{ comment.comment.createdAt|date('d-m-Y') }}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
             <div class="w-5/6 border border-blue1 shadow-lg px-40 py-10 bg-white mt-4 mx-auto">
                 {{ form_start(commentForm) }}
                 <div class="flex">
