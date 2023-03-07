@@ -15,7 +15,7 @@ class UserCommunicateGroup
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'userCommunicateGroups')]
-    #[ORM\JoinColumn(nullable: false)]
+    // #[ORM\JoinColumn(nullable: false)]
     private ?Group $groupe = null;
 
     #[ORM\ManyToOne(inversedBy: 'userCommunicateGroups')]

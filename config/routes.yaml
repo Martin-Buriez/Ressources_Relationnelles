@@ -49,4 +49,8 @@ user_participe_event:
 
 user_send_message:
     path: /mon-profil/messages/{id}
-    controller: App\Controller\EventController::userSendMessages
+    controller: App\Controller\UserCommunicatesController::userSendMessages
+
+user_send_message_group:
+    path: /mon-profil/messages/group/{idGroup}
+    controller: App\Controller\UserCommunicatesController::userSendMessagesInGroup

@@ -30,6 +30,15 @@
                             </td>
                         </tr>
                     {% endfor %}
+                    {% for group in userGroups %}
+                        <tr class="text-center">
+                            <td colspan="3" class="py-2">    
+                                <a class="px-4 py-3" href="{{ path('user_send_message_group', {'idGroup': group.groupe.id}) }}">
+                                    {{group.groupe.name}}
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>
@@ -50,6 +59,23 @@
                             <p>
                                 {{message.createdAt|date('d/m/Y')}} <br>
                                 {{message.content}}
+                            </p>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+                {% for message in groupConversation %}
+                    {% if message.userSendMessage.id == app.user.id %}
+                        <div class="border-black text-right pr-4">
+                            <p>
+                                {{message.createdAt|date('d/m/Y')}} <br>
+                                {{message.userSendMessage.username}}<p> à envoyé :</p>{{message.content}}
+                            </p>
+                        </div>
+                    {% else %}
+                        <div class="border-black text-left pl-4">
+                            <p>
+                                {{message.createdAt|date('d/m/Y')}} <br>
+                                {{message.userSendMessage.username}}<p> à envoyé :</p>{{message.content}}
                             </p>
                         </div>
                     {% endif %}
