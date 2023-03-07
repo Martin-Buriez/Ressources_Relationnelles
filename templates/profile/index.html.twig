@@ -16,9 +16,13 @@
         </div>
         <div class="absolute left-14 top-64">
             {% if app.user.ProfilePicture %}
-                <img height="300" width="300" src="{{ asset('uploads/user/avatar/' ~ app.user.ProfilePicture) }}" alt="{{ app.user.username }}" class="object-cover rounded-full shadow-lg"/>
+                <div class="rounded-full" style="height: 300px; width: 300px;">
+                    <img src="{{ asset('uploads/user/avatar/' ~ app.user.ProfilePicture) }}" alt="{{ app.user.username }}" class="rounded-full shadow-lg" style="height: 300px; width: 300px;"/>
+                </div>
             {% else %}
-                <img height="300" width="300" src="{{ asset('assets/media/img/user.svg') }}" alt="Avatar de {{ app.user.username }}"  class=" object-cover rounded-full shadow-lg"/>
+                <div class="rounded-full" style="height: 300px; width: 300px;">
+                    <img src="{{ asset('assets/media/img/user.svg') }}" alt="Avatar de {{ app.user.username }}"  class="rounded-full shadow-lg" style="height: 300px; width: 300px;"/>
+                </div>
             {% endif %}
         </div>
         <div class="flex justify-end pt-2 px-2">
