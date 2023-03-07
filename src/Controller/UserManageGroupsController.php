@@ -148,6 +148,7 @@ class UserManageGroupsController extends AbstractController
             'user' => $userEntity,
             'groupe' => $groupEntity
         ]);
+
         if ($userGroupEntity !== null) {
             $this->addFlash(
                 'error',
@@ -170,7 +171,7 @@ class UserManageGroupsController extends AbstractController
         return $this->redirectToRoute('user_manage_groups');
     }
 
-    #[Route('/mon-profil/groupes/delete/{idUserBelongGroup}', name: 'user_delete_participant_group')]
+    #[Route('/mon-profil/groupes/delete/user/{idUserBelongGroup}', name: 'user_delete_participant_group')]
     public function deleteParticipantInGroup(EntityManagerInterface $entityManager, Request $request, $idUserBelongGroup): Response
     {
         $userGroupEntity = $entityManager->getRepository(UserBelongGroup::class)->findOneById($idUserBelongGroup);

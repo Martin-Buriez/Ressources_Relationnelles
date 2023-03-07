@@ -22,6 +22,7 @@
             </div>
         </div>
     </div>
+    <!-- Liste des groupes -->
     <div class="flex w-full mx-auto justify-between mt-10 text-center">
         <div class="w-5/12 border h-full"> 
             <table class="w-full">
@@ -48,6 +49,7 @@
                 </tbody>
             </table>
         </div>
+        <!-- Liste des participants -->
         <div class="w-5/12 border h-full">
             <table class="w-full">
                 <thead>
@@ -76,6 +78,7 @@
                 </tbody>
             </table>
         </div>
+        <!-- Ajouts des amis -->
         <div class="w-5/12 border h-full">
             <table class="mx-auto w-full">
                 <thead>
@@ -101,10 +104,10 @@
                                             <i class="fas fa-user-plus"></i>
                                         </a>
                                     {% elseif friends.userReceive.id != app.user.id %}
-                                        <a href="{{ path('user_add_participant_group', {'idGroup': groupSelected.id, 'idUser': friends.userSender.id}) }}">
+                                        <a href="{{ path('user_add_participant_group', {'idGroup': groupSelected.id, 'idUser': friends.userReceive.id}) }}">
                                             {{friends.userReceive.username}}
                                         </a>
-                                        <a href="{{ path('user_add_participant_group', {'idGroup': groupSelected.id, 'idUser': friends.userSender.id}) }}">
+                                        <a href="{{ path('user_add_participant_group', {'idGroup': groupSelected.id, 'idUser': friends.userReceive.id}) }}">
                                             <i class="fas fa-user-plus"></i>
                                         </a>
                                     {% endif %}

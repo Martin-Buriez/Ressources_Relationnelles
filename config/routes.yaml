@@ -40,7 +40,7 @@ user_add_participant_group:
     controller: App\Controller\UserManageGroupsController::addParticipantInGroup
 
 user_delete_participant_group:
-    path: /mon-profil/groupes/delete/{idUserBelongGroup}
+    path: /mon-profil/groupes/delete/user/{idUserBelongGroup}
     controller: App\Controller\UserManageGroupsController::deleteParticipantInGroup
 
 user_participe_event:
