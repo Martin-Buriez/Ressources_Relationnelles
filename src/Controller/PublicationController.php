@@ -62,7 +62,7 @@ class PublicationController extends AbstractController
 
         $comments = $entityManager->getRepository(CommentConcernPublication::class)
             ->createQueryBuilder('c')
-            ->where('c.publication = :publication') 
+            ->where('c.publication = :publication ') 
             ->setParameter('publication', $publication)
             ->getQuery()
             ->getResult();
@@ -115,17 +115,20 @@ class PublicationController extends AbstractController
             'comments' => $comments,
         ]);
     }
-    // #[Route('/les-publications/{slug}/{page<\d+>?1}', name: 'like_publication', requirements: ["page" => "\d+"])]
-    // public function like(EntityManagerInterface $entityManager, Request $request, $slug, PaginationServices $pagination, $page)
-    // {
-    //     $publication = $entityManager->getRepository(Publication::class)->findOneBySlug($slug);
-    //     if ($publication) {
-    //         $publication->setViewNumber($publication->getViewNumber() + 1);
-    //         $entityManager->persist($publication);
-    //         $entityManager->flush();
-    //     }
-    //     return $this->render('publication/index.html.twig', [
-    //         'publication' => $publication,
-    //     ]);
-    // }
+
+    #[Route('/les-publications/ban/{idComment}', name: 'user_can_ban_comment')]
+    public function userCanBanComment(EntityManagerInterface $entityManager, Request $request, $idComment): Response
+    {
+        $comment = $entityManager->getRepository(Comment::class)->find($idComment); 
+        if (!$comment) {
+            $this->addFlash('error', 'Le commentaire n\'existe pas.');
+        } else {
+            // Supprimer l'entité
+            $entityManager->remove($comment);
+            $entityManager->flush();
+            $this->addFlash('success', 'Le commentaire a été signalé avec succès.');
+        }
+        // Rediriger vers la page d'accueil des amis
+        return $this->redirectToRoute('profile');
+    }
 }
