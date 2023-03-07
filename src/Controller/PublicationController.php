@@ -17,6 +17,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class PublicationController extends AbstractController
 {
@@ -45,19 +46,24 @@ class PublicationController extends AbstractController
      * @return Response
      * @throws Exception
      */
-    #[Route('/les-publications/{slug}/{page<\d+>?1}/{idPublication}', name: 'publication_show', requirements: ["page" => "\d+"])]
-    public function show(EntityManagerInterface $entityManager, Request $request, $slug, PaginationServices $pagination, $page, $idPublication)
+    #[Route('/les-publications/{slug}/{page<\d+>?1}', name: 'publication_show', requirements: ["page" => "\d+"])]
+    public function show(EntityManagerInterface $entityManager, Request $request, $slug, PaginationServices $pagination, $page)
     {
         $userConnected = $this->getUser();
         $userProfile = $entityManager->getRepository(User::class)->findOneById($userConnected);
-
         $publication = $entityManager->getRepository(Publication::class)->findOneBySlug($slug);
-        $publicationSelected = $entityManager->getRepository(Publication::class)->findOneById($idPublication);
+
+        // Incrémenter le nombre de vues de la publication
+        if ($publication) {
+            $publication->setViewNumber($publication->getViewNumber() + 1);
+            $entityManager->persist($publication);
+            $entityManager->flush();
+        }
 
         $comments = $entityManager->getRepository(CommentConcernPublication::class)
             ->createQueryBuilder('c')
             ->where('c.publication = :publication') 
-            ->setParameter('publication', $idPublication)
+            ->setParameter('publication', $publication)
             ->getQuery()
             ->getResult();
 
@@ -69,7 +75,7 @@ class PublicationController extends AbstractController
             // Liaison commentaire a la publication
             $commentConcernPublication = new CommentConcernPublication();
             $commentConcernPublication->setComment($comment);
-            $commentConcernPublication->setPublication($publicationSelected);
+            $commentConcernPublication->setPublication($publication);
             $entityManager->persist($commentConcernPublication); 
 
             // Liaison commentaire au créateur
@@ -109,4 +115,17 @@ class PublicationController extends AbstractController
             'comments' => $comments,
         ]);
     }
+    // #[Route('/les-publications/{slug}/{page<\d+>?1}', name: 'like_publication', requirements: ["page" => "\d+"])]
+    // public function like(EntityManagerInterface $entityManager, Request $request, $slug, PaginationServices $pagination, $page)
+    // {
+    //     $publication = $entityManager->getRepository(Publication::class)->findOneBySlug($slug);
+    //     if ($publication) {
+    //         $publication->setViewNumber($publication->getViewNumber() + 1);
+    //         $entityManager->persist($publication);
+    //         $entityManager->flush();
+    //     }
+    //     return $this->render('publication/index.html.twig', [
+    //         'publication' => $publication,
+    //     ]);
+    // }
 }

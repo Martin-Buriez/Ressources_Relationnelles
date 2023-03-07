@@ -39,16 +39,24 @@
                         {{ publication.description|capitalize }}
                     </div>
                 </div>
+                <!-- Container j'aime et vues -->
+                <div class="w-3/12 px-10 mb-4">
+                    <a href="#" class="px-4">
+                        <i class="fas fa-eye">{{ publication.viewNumber }}</i>
+                    </a>
+                </div>
                 <!--Auteur -->
                 <div class="flex w-full items-center p-6 font-sans border border-blue1 rounded-2xl shadow-lg">
                     {% if publication.createdBy.ProfilePicture %}
                         <img
-                                src="{{ asset('uploads/user/avatar/' ~ publication.createdBy.ProfilePicture) }}" alt="{{ publication.createdBy.username }}"
-                                class="w-10 h-10 rounded-full overflow-hidden"/>
+                            src="{{ asset('uploads/user/avatar/' ~ publication.createdBy.ProfilePicture) }}" alt="{{ publication.createdBy.username }}"
+                            class="w-10 h-10 rounded-full overflow-hidden"
+                        />
                     {% else %}
                         <img
-                                src="{{ asset('assets/media/img/user.svg') }}" alt="Avatar de {{ publication.createdBy.username }}"
-                                class="w-10 h-10 rounded-full overflow-hidden"/>
+                            src="{{ asset('assets/media/img/user.svg') }}" alt="Avatar de {{ publication.createdBy.username }}"
+                            class="w-10 h-10 rounded-full overflow-hidden"
+                        />
                     {% endif %}
                     <div class="px-3 flex-1">
                         <p class="text-base font-bold text-base md:text-xl leading-none">{{ publication.createdBy.username }}</p>
@@ -61,24 +69,24 @@
             </div>
         </div>
         <!-- Commentaires -->
-        {% if app.user %}
-            {% for comment in comments %}
-                <div class="w-5/6 border border-blue1 shadow-lg px-40 py-10 bg-white mt-4 mx-auto">
-                    <div class="flex">
-                        <div class="w-1/2">
-                            {{ comment.comment.title }}
-                        </div>
-                        <div class="flex justify-center">
-                            <div class="mt-10 w-full">
-                                {{ comment.comment.content }}
-                            </div>
-                        </div>
-                        <div class="w-2/5 mx-5">
-                            {{ comment.comment.createdAt|date('d-m-Y') }}
+        {% for comment in comments %}
+            <div class="w-5/6 border border-blue1 shadow-lg px-40 py-10 bg-white mt-4 mx-auto">
+                <div class="flex">
+                    <div class="w-1/2">
+                        {{ comment.comment.title }}
+                    </div>
+                    <div class="flex justify-center">
+                        <div class="mt-10 w-full">
+                            {{ comment.comment.content }}
                         </div>
                     </div>
+                    <div class="w-2/5 mx-5">
+                        {{ comment.comment.createdAt|date('d-m-Y') }}
+                    </div>
                 </div>
-            {% endfor %}
+            </div>
+        {% endfor %}
+        {% if app.user %}
             <div class="w-5/6 border border-blue1 shadow-lg px-40 py-10 bg-white mt-4 mx-auto">
                 {{ form_start(commentForm) }}
                 <div class="flex">

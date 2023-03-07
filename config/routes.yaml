@@ -7,6 +7,10 @@ controllers:
         namespace: App\Controller
     type: attribute
 
+# like_publication:
+#     path: /les-publications/addLike/{id}
+#     controller: App\Controller\PublicationController::like
+
 user_add_friend:
     path: /mon-profil/friends/add/{idUserReceive}/{idUserSender}
     controller: App\Controller\UserFriendController::userAddFriend
