@@ -2,12 +2,17 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
 use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
+#[UniqueEntity('title', 'Une autre ressource porte déjà ce titre')]
+#[ApiResource]
 class Category
 {
     #[ORM\Id]
@@ -15,8 +20,13 @@ class Category
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 50)]
+    #[Assert\NotBlank(message: "Le titre de la catégorie est obligatoire")]
+    #[Assert\Length(min: 10,minMessage: "Le titre de la catégorie doit être compris entre 10 et 50 caractères")]
+    #[Assert\Length(max: 500,maxMessage: "Le titre de la catégorie doit être compris entre 10 et 50 caractères")]
     private ?string $title = null;
+
+    // Relations
 
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: FilterConcernCategory::class, orphanRemoval: true)]
     private Collection $filterConcernCategories;
