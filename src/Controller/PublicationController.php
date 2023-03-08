@@ -123,12 +123,13 @@ class PublicationController extends AbstractController
         if (!$comment) {
             $this->addFlash('error', 'Le commentaire n\'existe pas.');
         } else {
-            // Supprimer l'entité
-            $entityManager->remove($comment);
+            //
+            $comment->setReportedStatus(true);
+            $entityManager->persist($comment);
             $entityManager->flush();
             $this->addFlash('success', 'Le commentaire a été signalé avec succès.');
         }
-        // Rediriger vers la page d'accueil des amis
+        //
         return $this->redirectToRoute('profile');
     }
 }
