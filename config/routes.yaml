@@ -82,3 +82,15 @@ admin_delete_publication:
 state_validated_publication:
     path: /admin/publication/state/{idPublication}
     controller: App\Controller\Admin\AdminPublicationController::stateValidatedPublication
+
+admin_user_delete:
+    path: /admin/user/delete/{idUser}
+    controller: App\Controller\Admin\AdminUserReportedController::adminDeleteUser
+
+adminValidatedUser:
+    path: /admin/user/validated/{idUser}
+    controller: App\Controller\Admin\AdminUserValidatedController::adminValidatedUser
+
+adminCancelUser:
+    path: /admin/user/delete/identityCard/{idUser}
+    controller: App\Controller\Admin\AdminUserValidatedController::adminCancelUser

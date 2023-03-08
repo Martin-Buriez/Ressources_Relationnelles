@@ -28,9 +28,9 @@
         <div class="flex justify-end pt-2 px-2">
             <div class="w-4/5">
                 {% if app.user.description %}
-                <p class="text-xl text-gray-800">{{ app.user.description }} <a href="#" class="italic text-base">Modifier ma description</a></p>
+                    <p class="text-xl text-gray-800">{{ app.user.description }} <a href="#" class="italic text-base">Modifier ma description</a></p>
                 {% else %}
-                <p class="text-xl text-gray-800">Ceci est la description de votre nouveau profil utilisateur ! <a href="#" class="italic text-base">Modifier ma description</a></p>
+                    <p class="text-xl text-gray-800">Ceci est la description de votre nouveau profil utilisateur ! <a href="#" class="italic text-base">Modifier ma description</a></p>
                 {% endif %}
             </div>
         </div>
@@ -60,6 +60,10 @@
                                 </div>
                             </div>
                         {{ form_end(userCardForm) }}
+                    {% elseif app.user.identityCardLocation is not empty and app.user.identityCardValidated == true %}
+                        <div>
+                            <p class="text-center font-bold text-green-600">Votre compte est verifié</p>
+                        </div>
                     {% else %}
                         <div>
                             <p class="text-center font-bold text-green-600">Votre justificatif est en cours de traitement</p>
