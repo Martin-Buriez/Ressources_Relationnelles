@@ -17,28 +17,25 @@ class CommentType extends AbstractType
     {
         $builder
             ->add('title', TypeTextType::class, [
-                'label' => 'Titre du commentaire :',
+                'label' => false,
                 'required' => true,
                 'attr' => [
-                    'placeholder' => 'Titre de votre évenement',
+                    'placeholder' => 'Objet du commentaire',
                     'class' => 'form-input block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40'
                 ]
             ])
             ->add('content', TextareaType::class, [
-                'label' => 'Contenu du commentaire :',
-                'label_attr'=> [
-                    'class' => 'font-semibold'
-                ],
+                'label' => false,
                 'attr' => [
-                    'rows' => '15',
-                    'placeholder' => 'Saisir la description de l\'évenement ',
+                    'rows' => '3',
+                    'placeholder' => 'Contenu du commentaire',
                     'class' => 'form-input block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40'
                 ]
             ])
             ->add('submit', SubmitType::class, [
-                'label' => 'Enregistrer',
+                'label' => 'Publier',
                 'attr' => [
-                    'class' => 'w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-blue1 rounded-md hover:text-main-blue hover:bg-main-light-blue focus:outline-none focus:bg-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-50'
+                    'class' => 'px-10 mx-4 py-1 tracking-wide text-white transition-colors duration-200 bg-blue1 rounded-md'
                 ]
             ])
         ;
