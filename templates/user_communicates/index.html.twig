@@ -3,27 +3,111 @@
 {% block title %}Messenger !{% endblock %}
 
 {% block body %}
-    <div class="flex w-full mt-10 mx-auto">
-        <div class="w-2/12 border ">
-            <table class="mx-auto w-full">
-                <thead>
-                    <tr class="font-extrabold tracking-wide text-left uppercase border-b bg-blue1 text-black dark:text-white">
-                        <th colspan="2" class="px-4 py-3">Discussions</th>
-                        <th colspan="1">
-                            <a class="px-4 py-3" href="{{path('user_manage_groups')}}"><i class="fas fa-users pr-4"></i></a>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
+
+    <section class="w-full">
+        <div class="w-full h-1/5 bg-blue1 shadow-lg py-16">
+            <h1 class="text-center font-bold text-5xl text-white">Vos discussions</h1>
+            <div class="mx-auto h-px w-40 bg-white mt-8"></div>
+        </div>
+
+        <div class="flex">
+
+            <div class="w-3/12 min-h-screen bg-blue2 border-blue1 border-r">
+                <div class="w-full">
+                    {% include "partials/siderbar.html.twig" %}
+                </div>
+            </div>
+
+            <div class="w-9/12 mt-14 border-b border-r border-t border-blue1">
+
+                <div class="bg-blue1 px-2 shadow-lg mb-5">
+                    <h1 class="text-white text-xl font-bold py-2 text-center">Votre conversation</h1>
+                </div>
+
+                {# Chargement des messages #}
+                <div class="mx-auto overscroll-contain">
+                    {% for message in userConversation %}
+                        {% if message.userSender.id == app.user.id %}
+                            <div class="w-1/2 ml-3 border border-grey-800 rounded-2xl text-left pr-4 px-5 mb-2">
+                                <p>
+                                    {{message.content}}<br>
+                                    <span class="italic text-gray-800 text-xs">{{message.createdAt|date('d/m/Y')}}</span>
+                                </p>
+                            </div>
+                        {% else %}
+                            <div class="flex justify-end">
+                                <div class="w-1/2 mr-3 border border-grey-800 rounded-2xl text-right pl-4 px-5 mb-2">
+                                    <p>
+                                        {{message.content}} <br>
+                                        <span class="italic text-gray-800 text-xs">{{message.createdAt|date('d/m/Y')}}</span>
+                                    </p>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                    {% for message in groupConversation %}
+                        {% if message.userSendMessage.id == app.user.id %}
+
+                            <p class="ml-5 font-semibold mb-1">{{message.userSendMessage.username}}</p>
+                            <div class="w-1/2 ml-3 border border-grey-800 rounded-2xl text-left pr-4 px-5 mb-2">
+                                <p>
+                                    {{message.content}}<br>
+                                    <span class="italic text-gray-800 text-xs">{{message.createdAt|date('d/m/Y')}}</span>
+                                </p>
+                            </div>
+                        {% else %}
+
+                            <p class="ml-5 font-semibold mb-1">{{message.userSendMessage.username}}</p>
+                            <div class="w-1/2 ml-3 border border-grey-800 rounded-2xl text-left pr-4 px-5 mb-2">
+                                <p>
+                                    {{message.content}}<br>
+                                    <span class="italic text-gray-800 text-xs">{{message.createdAt|date('d/m/Y')}}</span>
+                                </p>
+                            </div>
+
+                        {% endif %}
+                    {% endfor %}
+                </div>
+
+                {# Formulaire de création de message #}
+                <div class="mx-auto h-px w-2/3 bg-blue1 mt-8"></div>
+
+                <div class="mt-10 ml-3">
+                    {{ form_start(messageForm) }}
+                    <div>
+                        <div class="mx-auto mt-4 mr-3">
+                            {{ form_row(messageForm.content) }}
+                        </div>
+                        <div class="w-full flex justify-end">
+                            <div class="w-2/12 mt-2 mr-3">
+                                {{ form_row(messageForm.submit) }}
+                            </div>
+                        </div>
+                    </div>
+                    {{ form_end(messageForm) }}
+                </div>
+
+            </div>
+
+            <div class="w-3/12">
+                <table class="mt-14">
+                    <thead class="bg-blue1 border border-blue1">
+                            <th class="px-20 py-2">
+                                <h1 class="text-white text-xl font-bold py-2">Vos amis / groupes :</h1>
+                                <a class="text-white font-normal text-grey-800 italic" href="{{path('user_manage_groups')}}">Créer un groupe<i class="fas fa-users ml-2 pr-4"></i></a>
+                            </th>
+                    </thead>
+
+                    <tbody class="bg-blue2 border border-blue1 shadow-lg">
                     {% for friends in userFriends %}
-                        <tr class="text-center">
-                            <td colspan="3" class="py-2">    
+                        <tr class="text-center font-semibold border-b border-blue1">
+                            <td colspan="3" class="py-1">
                                 {% if friends.userSender.id != app.user.id %}
-                                    <a class="px-4 py-3" href="{{ path('user_send_message', {'id': friends.userSender.id}) }}">
+                                    <a class="py-3" href="{{ path('user_send_message', {'id': friends.userSender.id}) }}">
                                         {{friends.userSender.username}}
                                     </a>
                                 {% elseif friends.userReceive.id != app.user.id %}
-                                    <a class="px-4 py-3" href="{{ path('user_send_message', {'id': friends.userReceive.id}) }}">
+                                    <a class="py-3" href="{{ path('user_send_message', {'id': friends.userReceive.id}) }}">
                                         {{friends.userReceive.username}}
                                     </a>
                                 {% endif %}
@@ -31,69 +115,19 @@
                         </tr>
                     {% endfor %}
                     {% for group in userGroups %}
-                        <tr class="text-center">
-                            <td colspan="3" class="py-2">    
-                                <a class="px-4 py-3" href="{{ path('user_send_message_group', {'idGroup': group.groupe.id}) }}">
+                        <tr class="text-center font-semibold border-b border-blue1">
+                            <td colspan="3" class="py-1">
+                                <a class="py-3" href="{{ path('user_send_message_group', {'idGroup': group.groupe.id}) }}">
                                     {{group.groupe.name}}
                                 </a>
                             </td>
                         </tr>
                     {% endfor %}
-                </tbody>
-            </table>
-        </div>
-        <div class="w-10/12 border min-h-screen max-h-64">
-            <h1 class="underline text-center">Discussion :</h1>
-            {# Chargement des messages #}
-            <div class="mx-auto overscroll-contain">
-                {% for message in userConversation %}
-                    {% if message.userSender.id == app.user.id %}
-                        <div class="border-black text-right pr-4">
-                            <p>
-                                {{message.createdAt|date('d/m/Y')}} <br>
-                                {{message.content}}
-                            </p>
-                        </div>
-                    {% else %}
-                        <div class="border-black text-left pl-4">
-                            <p>
-                                {{message.createdAt|date('d/m/Y')}} <br>
-                                {{message.content}}
-                            </p>
-                        </div>
-                    {% endif %}
-                {% endfor %}
-                {% for message in groupConversation %}
-                    {% if message.userSendMessage.id == app.user.id %}
-                        <div class="border-black text-right pr-4">
-                            <p>
-                                {{message.createdAt|date('d/m/Y')}} <br>
-                                {{message.userSendMessage.username}}<p> à envoyé :</p>{{message.content}}
-                            </p>
-                        </div>
-                    {% else %}
-                        <div class="border-black text-left pl-4">
-                            <p>
-                                {{message.createdAt|date('d/m/Y')}} <br>
-                                {{message.userSendMessage.username}}<p> à envoyé :</p>{{message.content}}
-                            </p>
-                        </div>
-                    {% endif %}
-                {% endfor %}
-            </div>
-            {# Formulaire de création de message #}
-            <div class="border-t-2 border-black mt-4">
-                {{ form_start(messageForm) }}
-                <div class="flex">
-                    <div class="w-8/12 mx-auto mt-4">
-                        {{ form_row(messageForm.content) }}
-                    </div>
-                    <div class="w-2/12 mt-4">
-                        {{ form_row(messageForm.submit) }}
-                    </div>
-                </div>
-                {{ form_end(messageForm) }}
+                    </tbody>
+                </table>
             </div>
         </div>
-    </div>
+
+    </section>
+
 {% endblock %}
