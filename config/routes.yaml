@@ -62,3 +62,13 @@ user_send_message:
 user_send_message_group:
     path: /mon-profil/messages/group/{idGroup}
     controller: App\Controller\UserCommunicatesController::userSendMessagesInGroup
+# Routes Admin
+
+delete_comments:
+    path: /admin/comments/delete/{idComment}
+    controller: App\Controller\Admin\AdminCommentsController::deleteComment
+
+cancel_reported_comments:
+    path: /admin/comments/cancelReported/{idComment}
+    controller: App\Controller\Admin\AdminCommentsController::cancelReportedComment
+
