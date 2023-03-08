@@ -1,0 +1,60 @@
+{% extends 'Admin/admin_base.html.twig' %}
+
+
+{% block title %}Hello AdminUserReportedController!{% endblock %}
+
+{% block body %}
+    <div class="mt-12 lg:mt-20 xl:mt-24 mx-4">
+        <div class="bg-main-white pt-3 mb-4">
+            <div class="rounded-tl-3xl bg-gradient-to-r from-blue1 to-gray-600 p-4 shadow text-2xl text-white">
+                <h1 class="font-bold pl-2">Utilisateurs signalés</h1>
+            </div>
+        </div>
+        <div class="w-full overflow-hidden rounded-lg shadow-xs">
+            <div class="w-full overflow-x-auto">
+                <table class="w-full ">
+                    <thead>
+                        <tr class="font-extrabold tracking-wide text-left uppercase border-b bg-blue1 text-black dark:text-white">
+                            <th class="px-4 py-3">Pseudo :</th>
+                            <th class="px-4 py-3">Nom :</th>
+                            <th class="px-4 py-3">Prénom :</th>
+                            <th class="px-4 py-3">Débloquer :</th>
+                            <th class="px-4 py-3">Supprimer :</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-700 bg-gray-800">
+                    {% for userReported in usersReported %}
+                        <tr class="hover:bg-white bg-blue2 text-black">
+                            <td class="px-4 py-3">
+                                <a href="{{ path('profile_view', {'username': userReported.username }) }}" class="bg-transparent border border-main-blue dark:border-white text-xs text-main-blue hover:bg-main-blue hover:text-main-white font-bold py-2 px-4 rounded-full">
+                                    {{ userReported.username }}
+                                </a>
+                            </td>
+                            <td class="px-4 py-3">
+                                {{ userReported.lastName }}
+                            </td>
+                            <td class="px-4 py-3">
+                                {{ userReported.firstName }}
+                            </td>
+                            <td class="px-4 py-3">
+                                <a class="ml-8" href="{{ path('admin_user_changeReported', {'idUser': userReported.id }) }}">
+                                    <i class="text-green-400 fas fa-unlock">
+                                        Débloquer l'utilisateur
+                                    </i>
+                                </a>
+                            </td>
+                            <td class="py-3 text-black">
+                                <a class="" href="{{ path('admin_user_delete', {'idUser': userReported.id }) }}">
+                                    <i class="text-red-400 fas fa-trash mr-1">
+                                        Supprimée l'utilisateur
+                                    </i>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends 'Admin/admin_base.html.twig' %}
+
+{% block title %}Hello AdminUserValidatedController!{% endblock %}
+
+{% block body %}
+    <div class="bg-main-white pt-3 mb-4">
+        <div class="rounded-tl-3xl bg-gradient-to-r from-blue1 to-gray-600 p-4 shadow text-2xl text-white">
+            <h1 class="font-bold pl-2">Les utilisateurs à vérifier </h1>
+        </div>
+    </div>
+    <div class="w-full overflow-hidden rounded-lg shadow-xs">
+        <div class="w-full overflow-x-auto">
+            <table class="w-full ">
+                <thead>
+                    <tr class="font-extrabold tracking-wide text-left uppercase border-b bg-blue1 text-black dark:text-white">
+                        <th class="px-4 py-3">Pseudo :</th>
+                        <th class="px-4 py-3">Preuve d'identité :</th>
+                        <th class="px-4 py-3">Certifié :</th>
+                        <th class="px-4 py-3">Refusé :</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-700 bg-gray-800">
+                {% for user in usersNoValidated %}
+                    <tr class="hover:bg-white bg-blue2 text-black">
+                        <td class="px-4 py-3 text-center">
+                            {{ user.username }}
+                        </td>
+                        <td class="px-4 py-3">
+                            {% if user.identityCardLocation %}
+                                <div style="height: 300px; width: 300px;">
+                                    <img src="{{ asset('uploads/user/identityCard/' ~ user.identityCardLocation) }}" alt="{{ user.username }}" class="shadow-lg" style="height: 300px; width: 300px;"/>
+                                </div>
+                            {% endif %}
+                        </td>
+                        <td class="px-2 py-2 text-black">
+                            <a class="ml-8"  href="{{ path('adminValidatedUser', {'idUser': user.id }) }}">
+                                <i class="text-green-400 fas fa-check mr-1">Valider</i>
+                            </a>
+                        </td>
+                        <td class="px-2 py-2 text-black">
+                            <a class="ml-8"  href="{{ path('adminCancelUser', {'idUser': user.id }) }}">
+                                <i class="text-red-400 fas fa-trash mr-1">Refusé</i>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
