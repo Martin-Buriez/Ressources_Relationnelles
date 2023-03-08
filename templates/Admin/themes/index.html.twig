@@ -1,0 +1,51 @@
+{% extends 'Admin/admin_base.html.twig' %}
+
+{% block title %}Hello AdminThemesController!{% endblock %}
+
+{% block body %}
+    <div class="w-5/12 overflow-x-auto text-black">
+        {{ form_start(themeForm) }}
+        <div class="mb-4 mt-5">
+            <div class="mb-4 md:mb-0 ">
+                <label class="block mb-2 font-bold text-main-grey" for="blog">
+                    {{ form_row(themeForm.name) }}
+                </label>
+            </div>
+        </div>
+        <div class="w-full">
+            <div class="mb-6 text-center ">
+                {{ form_row(themeForm.submit) }}
+            </div>
+        </div>
+        {{ form_end(themeForm) }}
+    </div>
+    <div class="mt-12 lg:mt-20 xl:mt-24 mx-4">
+        <div class="w-full overflow-hidden rounded-lg shadow-xs">
+            <div class="w-full overflow-x-auto">
+                <table class="w-full ">
+                    <thead>
+                        <tr class="font-extrabold tracking-wide text-left uppercase border-b bg-blue1 text-black dark:text-white">
+                            <th class="px-4 py-3">Titre</th>
+                            <th class="px-4 py-3">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-700 bg-gray-800">
+                    {% for theme in themes %}
+                        <tr class="hover:bg-white bg-blue2 text-black">
+                            <td class="px-4 py-3">
+                                {{ theme.name }}
+                            </td>
+                            <td class="px-4 py-3 text-black">
+                                <a onclick="confirm('Supprimer le thème et tout ses articles ?')" class="ml-8" href="{{ path('delete_themes', {'idTheme': theme.id }) }}">
+                                    <i class="text-orange-300 fas fa-trash mr-1">
+                                    </i>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

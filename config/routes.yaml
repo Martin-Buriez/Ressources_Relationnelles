@@ -63,7 +63,6 @@ user_send_message_group:
     path: /mon-profil/messages/group/{idGroup}
     controller: App\Controller\UserCommunicatesController::userSendMessagesInGroup
 # Routes Admin
-
 delete_comments:
     path: /admin/comments/delete/{idComment}
     controller: App\Controller\Admin\AdminCommentsController::deleteComment
@@ -71,4 +70,8 @@ delete_comments:
 cancel_reported_comments:
     path: /admin/comments/cancelReported/{idComment}
     controller: App\Controller\Admin\AdminCommentsController::cancelReportedComment
+
+delete_themes:
+    path: /admin/themes/delete/{idTheme}
+    controller: App\Controller\Admin\AdminThemesController::deleteThemes
 
