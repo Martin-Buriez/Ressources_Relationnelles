@@ -75,3 +75,10 @@ delete_themes:
     path: /admin/themes/delete/{idTheme}
     controller: App\Controller\Admin\AdminThemesController::deleteThemes
 
+admin_delete_publication:
+    path: /admin/publication/delete/{idPublication}
+    controller: App\Controller\Admin\AdminPublicationController::deletePublication
+
+state_validated_publication:
+    path: /admin/publication/state/{idPublication}
+    controller: App\Controller\Admin\AdminPublicationController::stateValidatedPublication
