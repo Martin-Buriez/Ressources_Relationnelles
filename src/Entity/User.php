@@ -2,22 +2,31 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
+#[UniqueEntity('email', 'Un autre utilisateur utilise déjà cette adresse email')]
+#[ApiResource]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Assert\NotBlank(message: "L'ID de l'utilisateur est obligatoire")]
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
+    #[Assert\NotBlank(message: "L'adresse email de l'utilisateur est obligatoire")]
+    #[Assert\Length(min: 10,minMessage: "L'adresse email de l'utilisateur doit être compris entre 10 et 180 caractères")]
+    #[Assert\Length(max: 180,maxMessage: "L'adresse email de l'utilisateur être compris entre 10 et 180 caractères")]
     private ?string $email = null;
 
     #[ORM\Column]
@@ -27,51 +36,81 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
+    #[Assert\NotBlank(message: "Le mot de passe de l'utilisateur est obligatoire")]
     private ?string $password = null;
 
     #[ORM\Column(length: 255, unique: true)]
+    #[Assert\NotBlank(message: "Le pseudo de l'utilisateur est obligatoire")]
+    #[Assert\Length(min: 10,minMessage: "Le pseudo de l'utilisateur doit être compris entre 10 et 255 caractères")]
+    #[Assert\Length(max: 255,maxMessage: "Le pseudo de l'utilisateur être compris entre 10 et 255 caractères")]
     private ?string $username = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Le prénom de l'utilisateur est obligatoire")]
+    #[Assert\Length(min: 10,minMessage: "Le prénom de l'utilisateur doit être compris entre 10 et 255 caractères")]
+    #[Assert\Length(max: 255,maxMessage: "Le prénom de l'utilisateur être compris entre 10 et 255 caractères")]
     private ?string $first_name = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Le nom de l'utilisateur est obligatoire")]
+    #[Assert\Length(min: 10,minMessage: "Le nom de l'utilisateur doit être compris entre 10 et 255 caractères")]
+    #[Assert\Length(max: 255,maxMessage: "Le nom de l'utilisateur être compris entre 10 et 255 caractères")]
     private ?string $last_name = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\Length(min: 10,minMessage: "La description de l'utilisateur doit être compris entre 10 et 255 caractères")]
+    #[Assert\Length(max: 255,maxMessage: "La description de l'utilisateur être compris entre 10 et 255 caractères")]
     private ?string $description = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "L'adresse de l'utilisateur est obligatoire")]
+    #[Assert\Length(min: 10,minMessage: "L'adresse de l'utilisateur doit être compris entre 10 et 255 caractères")]
+    #[Assert\Length(max: 255,maxMessage: "L'adresse de l'utilisateur être compris entre 10 et 255 caractères")]
     private ?string $address = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: "Le code postal de l'utilisateur est obligatoire")]
     private ?string $postal_code = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 60)]
+    #[Assert\NotBlank(message: "La ville de l'utilisateur est obligatoire")]
+    #[Assert\Length(min: 10,minMessage: "La ville de l'utilisateur doit être compris entre 10 et 60 caractères")]
+    #[Assert\Length(max: 60,maxMessage: "La ville de l'utilisateur être compris entre 10 et 60 caractères")]
     private ?string $city = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: "Le numéro de téléphone de l'utilisateur est obligatoire")]
     private ?string $phone_number = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: "La date d'anniversaire de l'utilisateur est obligatoire")]
     private ?\DateTime $birthday = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: "La date de création de l'utilisateur est obligatoire")]
     private ?\DateTime $created_at = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: "L'état de validation de l'utilisateur est obligatoire")]
     private ?bool $state_validated = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: "L'état de suspend de l'utilisateur est obligatoire")]
     private ?bool $state_suspended = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\NotBlank(message: "L'emplacement de la carte d'identité de l'utilisateur est obligatoire")]
+    #[Assert\Length(min: 10,minMessage: "L'emplacement de la carte d'identité de l'utilisateur doit être compris entre 10 et 255 caractères")]
+    #[Assert\Length(max: 255,maxMessage: "L'emplacement de la carte d'identité de l'utilisateur être compris entre 10 et 255 caractères")]
     private ?string $identity_card_location = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: "L'état de la validation d'identité de l'utilisateur est obligatoire")]
     private ?bool $identity_card_validated = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\Length(min: 10,minMessage: "La photo de profil de l'utilisateur doit être compris entre 10 et 255 caractères")]
+    #[Assert\Length(max: 255,maxMessage: "La photo de profil de l'utilisateur être compris entre 10 et 255 caractères")]
     private ?string $profile_picture = null;
 
     // Relations
