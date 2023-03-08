@@ -29,7 +29,9 @@ class PublicationController extends AbstractController
             ->setPage($page)
             ->setLimit(3)
             ->setEntityClass(Publication::class)
-            ->setCriteria([]);
+            ->setCriteria([
+                'state_validated' => true 
+            ]);
 
         $paginatePublications = $pagination->getData();
 
@@ -130,6 +132,23 @@ class PublicationController extends AbstractController
             $this->addFlash('success', 'Le commentaire a été signalé avec succès.');
         }
         //
-        return $this->redirectToRoute('profile');
+        return $this->redirectToRoute('homepage');
+    }
+
+    #[Route('/les-publications/ban/user/{idUser}', name: 'user_can_ban_user')]
+    public function userCanBanUser(EntityManagerInterface $entityManager, Request $request, $idUser): Response
+    {
+        $user = $entityManager->getRepository(User::class)->find($idUser); 
+        if (!$user) {
+            $this->addFlash('error', 'L\'utilisateur n\'existe pas.');
+        } else {
+            //
+            $user->setStateSuspended(true);
+            $entityManager->persist($user);
+            $entityManager->flush();
+            $this->addFlash('success', 'L\'utilisateur a été signalé avec succès.');
+        }
+        //
+        return $this->redirectToRoute('homepage');
     }
 }

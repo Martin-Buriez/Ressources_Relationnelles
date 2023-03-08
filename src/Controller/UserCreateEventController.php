@@ -57,6 +57,7 @@ class UserCreateEventController extends AbstractController
         return $this->render('user_create_event/index.html.twig', [
             'controller_name' => 'UserCreateEventController',
             'eventForm' => $eventForm,
+            'userProfile'=> $userProfile,
         ]);
     }
 }

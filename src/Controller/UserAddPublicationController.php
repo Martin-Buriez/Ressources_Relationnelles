@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Image;
 use App\Entity\Publication;
 use App\Entity\PublicationIncludeImage;
+use App\Entity\User;
 use App\Form\PublicationType;
 use DateTimeZone;
 use Doctrine\ORM\EntityManagerInterface;
@@ -19,6 +20,9 @@ class UserAddPublicationController extends AbstractController
     #[Route('/ajouter-publication', name: 'add_publication')]
     public function index(EntityManagerInterface $entityManager, Request $request, string $publicationImageDir): Response
     {
+        $user = $this->getUser();
+        $userConnected = $entityManager->getRepository(User::class)->findOneById($user);
+
         $publication = new Publication();
         $publicationForm = $this->createForm(PublicationType::class, $publication);
         $publicationForm->handleRequest($request);
@@ -78,6 +82,7 @@ class UserAddPublicationController extends AbstractController
         return $this->render('user_add_publication/index.html.twig', [
             'controller_name' => 'UserAddPublicationController',
             'publicationForm' => $publicationForm,
+            'userConnected' => $userConnected,
         ]);
     }
 }

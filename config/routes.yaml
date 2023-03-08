@@ -11,10 +11,13 @@ controllers:
 #     path: /les-publications/addLike/{id}
 #     controller: App\Controller\PublicationController::like
 
-
 user_can_ban_comment:
     path: /les-publications/ban/{idComment}
     controller: App\Controller\PublicationController::userCanBanComment
+
+user_can_ban_user:
+    path: /les-publications/ban/user/{idUser}
+    controller: App\Controller\PublicationController::userCanBanUser
 
 user_add_friend:
     path: /mon-profil/friends/add/{idUserReceive}/{idUserSender}

@@ -3,102 +3,80 @@
 {% block title %}Ajouter une publication !{% endblock %}
 
 {% block body %}
-
-    <section class="bg-blue2 w-full">
-
-        <div class="w-full h-1/5 bg-blue1 shadow-lg py-16">
-            <h1 class="text-center font-bold text-5xl text-white">Votre publication</h1>
-            <div class="mx-auto h-px w-40 bg-white mt-8"></div>
-        </div>
-
-        <div class="w-full px-36 mt-10">
-
-            <div class="flex justify-center">
-                <div class="w-5/6 border border-blue1 mt-5 px-5 py-5 bg-white">
-                    <h2 class="text-xl font-bold text-red-600 mb-4">Quelques règles pour les publications :</h2>
-                    <p class="mb-2">• <span class="underline">Soyez respectueux</span> : Évitez les insultes, les propos haineux ou discriminatoires envers les autres utilisateurs, les groupes sociaux ou les communautés. Faites preuve de respect envers les autres, même si vous ne partagez pas leurs opinions.</p>
-                    <p class="mb-2">• <span class="underline">Utilisez un langage approprié</span> : Évitez d'utiliser un langage vulgaire ou inapproprié. Soyez conscient que vos propos peuvent être vus par tous, y compris des personnes qui ne partagent pas vos valeurs ou vos croyances.</p>
-                    <p class="mb-2">• <span class="underline">Restez courtois</span> : En cas de désaccord ou de débat, restez courtois et évitez de vous engager dans des discussions houleuses ou des échanges agressifs. Respectez les opinions des autres et ne les attaquez pas personnellement.</p>
-                    <p class="mb-2">• <span class="underline">Vérifiez vos sources</span> : Avant de partager un contenu, assurez-vous que celui-ci est fiable et vérifié. Évitez de partager des fausses informations qui pourraient causer du tort à des individus ou des groupes.</p>
-                    <p class="mb-2">• <span class="underline">Respectez la vie privée des autres</span> : Évitez de publier des informations ou des photos qui pourraient nuire à la vie privée ou à la sécurité des autres utilisateurs.</p>
+    {% if userConnected.stateSuspended != true %}
+        <section class="bg-blue2 w-full">
+            <div class="w-full h-1/5 bg-blue1 shadow-lg py-16">
+                <h1 class="text-center font-bold text-5xl text-white">Votre publication</h1>
+                <div class="mx-auto h-px w-40 bg-white mt-8"></div>
+            </div>
+            <div class="w-full px-36 mt-10">
+                <div class="flex justify-center">
+                    <div class="w-5/6 border border-blue1 mt-5 px-5 py-5 bg-white">
+                        <h2 class="text-xl font-bold text-red-600 mb-4">Quelques règles pour les publications :</h2>
+                        <p class="mb-2">• <span class="underline">Soyez respectueux</span> : Évitez les insultes, les propos haineux ou discriminatoires envers les autres utilisateurs, les groupes sociaux ou les communautés. Faites preuve de respect envers les autres, même si vous ne partagez pas leurs opinions.</p>
+                        <p class="mb-2">• <span class="underline">Utilisez un langage approprié</span> : Évitez d'utiliser un langage vulgaire ou inapproprié. Soyez conscient que vos propos peuvent être vus par tous, y compris des personnes qui ne partagent pas vos valeurs ou vos croyances.</p>
+                        <p class="mb-2">• <span class="underline">Restez courtois</span> : En cas de désaccord ou de débat, restez courtois et évitez de vous engager dans des discussions houleuses ou des échanges agressifs. Respectez les opinions des autres et ne les attaquez pas personnellement.</p>
+                        <p class="mb-2">• <span class="underline">Vérifiez vos sources</span> : Avant de partager un contenu, assurez-vous que celui-ci est fiable et vérifié. Évitez de partager des fausses informations qui pourraient causer du tort à des individus ou des groupes.</p>
+                        <p class="mb-2">• <span class="underline">Respectez la vie privée des autres</span> : Évitez de publier des informations ou des photos qui pourraient nuire à la vie privée ou à la sécurité des autres utilisateurs.</p>
+                    </div>
+                </div>
+                <div class="flex justify-center mt-10">
+                    <div class="w-5/6 border border-blue1 shadow-lg px-10 py-10 bg-white mb-8">
+                        {{ form_start(publicationForm) }}
+                        <!-- Thème et catégorie de la publication  -->
+                        <div class="flex">
+                            <div class="w-1/2">
+                                {{ form_row(publicationForm.theme) }}
+                            </div>
+                            <div class="w-1/2 flex justify-end">
+                                {{ form_row(publicationForm.category) }}
+                            </div>
+                        </div>
+                        <!-- Images de la publication -->
+                        <div class="flex justify-center w-full mt-8">
+                            <div class="flex justify-center w-full border border-grey100">
+                                <label class="block w-full" for="publication">
+                                    {{ form_row(publicationForm.images) }}
+                                </label>
+                            </div>
+                        </div>
+                        <!-- Titre de la publication -->
+                        <div class="flex justify-center">
+                            <div class="mt-8 w-2/3">
+                                {{ form_row(publicationForm.title) }}
+                            </div>
+                        </div>
+                        <!-- Titre de la publication -->
+                        <div class="flex justify-center">
+                            <div class="mt-10 w-full">
+                                {{ form_row(publicationForm.description) }}
+                            </div>
+                        </div>
+                        <!-- Ressource Privée ? -->
+                        <div class="mt-8">
+                            {{ form_row(publicationForm.state_private) }}
+                        </div>
+                        <!-- Bouton Submit & Retour -->
+                        <div class="flex justify-center w-full mt-10">
+                            <div class="w-2/5 mx-5">
+                                {{ form_row(publicationForm.submit) }}
+                            </div>
+                            <div class="w-2/5 mx-5">
+                                <button class= 'w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-blue1 rounded-md hover:text-main-blue hover:bg-main-light-blue focus:outline-none focus:bg-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-50'>Annuler</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-            <div class="flex justify-center mt-10">
-                <div class="w-5/6 border border-blue1 shadow-lg px-10 py-10 bg-white mb-8">
-                    {{ form_start(publicationForm) }}
-
-                    <!-- Thème et catégorie de la publication  -->
-
-                    <div class="flex">
-                        <div class="w-1/2">
-                            {{ form_row(publicationForm.theme) }}
-                        </div>
-                        <div class="w-1/2 flex justify-end">
-                            {{ form_row(publicationForm.category) }}
-                        </div>
-                    </div>
-
-                    <!-- Images de la publication -->
-
-                    <div class="flex justify-center w-full mt-8">
-                        <div class="flex justify-center w-full border border-grey100">
-                            <label class="block w-full" for="publication">
-                                {{ form_row(publicationForm.images) }}
-                            </label>
-                        </div>
-                    </div>
-
-                    <!-- Titre de la publication -->
-
-                    <div class="flex justify-center">
-                        <div class="mt-8 w-2/3">
-                            {{ form_row(publicationForm.title) }}
-                        </div>
-                    </div>
-
-                    <!-- Titre de la publication -->
-
-                    <div class="flex justify-center">
-                        <div class="mt-10 w-full">
-                            {{ form_row(publicationForm.description) }}
-                        </div>
-                    </div>
-
-                    <!-- Ressource Privée ? -->
-
-                    <div class="mt-8">
-                        {{ form_row(publicationForm.state_private) }}
-                    </div>
-
-                    <!-- Bouton Submit & Retour -->
-
-                    <div class="flex justify-center w-full mt-10">
-                        <div class="w-2/5 mx-5">
-                            {{ form_row(publicationForm.submit) }}
-                        </div>
-                        <div class="w-2/5 mx-5">
-                            <button class= 'w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-blue1 rounded-md hover:text-main-blue hover:bg-main-light-blue focus:outline-none focus:bg-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-50'>Annuler</button>
-                        </div>
-                    </div>
-
-                </div>
+        </section>
+        <div class="flex bg-white justify-center space-x-4">
+            <div class="w-5/12">
+                {{ form_end(publicationForm) }}
             </div>
-
         </div>
-
-    </section>
-
-
-
-            <div class="flex bg-white justify-center space-x-4">
-                <div class="w-5/12">
-
-                </div>
-
-            </div>
-            {{ form_end(publicationForm) }}
+    {% else %}
+        <div class="w-5/6 border border-blue1 mt-5 px-5 py-5 bg-white mx-auto">
+            <p class="text-xl font-bold text-red-600 mb-4 text-center">Votre compte a été signalé en raison d'une activité suspecte. Nous examinerons votre compte dans les plus brefs délais.</p>
         </div>
-    </div>
-</div>
+    {% endif %}
 {% endblock %}
