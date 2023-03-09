@@ -8,55 +8,69 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: PublicationRepository::class)]
 #[UniqueEntity('title', 'Une autre ressource porte déjà ce titre')]
-#[ApiResource]
+#[ApiResource(
+    normalizationContext: ['groups' => ['publication:get']],
+)]
 class Publication
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups('publication:get')]
     private ?int $id = null;
 
+    #[Groups('publication:get')]
     #[ORM\Column(length: 50)]
     #[Assert\NotBlank(message: "Le titre de la publication est obligatoire")]
     #[Assert\Length(min: 10,minMessage: "Le titre de la publication doit être compris entre 10 et 50 caractères")]
     #[Assert\Length(max: 500,maxMessage: "Le titre de la publication doit être compris entre 10 et 50 caractères")]
     private ?string $title = null;
 
+    #[Groups('publication:get')]
     #[ORM\Column(length: 5000)]
     #[Assert\NotBlank(message: "Le titre de la publication est obligatoire")]
     #[Assert\Length(min: 50,minMessage: "Le titre de la publication doit être compris entre 50 et 5000 caractères")]
     #[Assert\Length(max: 5000,maxMessage: "Le titre de la publication doit être compris entre 50 et 5000 caractères")]
     private ?string $description = null;
 
+    #[Groups('publication:get')]
     #[ORM\Column]
     private ?bool $state_validated = null;
 
+    #[Groups('publication:get')]
     #[ORM\Column]
     private ?bool $state_private = null;
 
+    #[Groups('publication:get')]
     #[ORM\Column]
     private ?int $like_number = null;
 
+    #[Groups('publication:get')]
     #[ORM\Column]
     private ?int $sharing_number = null;
 
+    #[Groups('publication:get')]
     #[ORM\Column]
     private ?int $view_number = null;
 
+    #[Groups('publication:get')]
     #[ORM\Column]
     private ?\DateTime $created_at = null;
 
     // Relations
 
+    #[Groups('publication:get')]
     #[ORM\ManyToOne(inversedBy: 'publications')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $created_by = null;
 
+    #[Groups('publication:get')]
     #[ORM\ManyToOne(inversedBy: 'publications')]
     #[ORM\JoinColumn(nullable: false)]
     #[Assert\NotBlank(message: "La publication doit obligatoirement être liée à un thème")]
@@ -65,9 +79,11 @@ class Publication
     #[ORM\OneToMany(mappedBy: 'publication', targetEntity: CommentConcernPublication::class, orphanRemoval: true)]
     private Collection $commentConcernPublications;
 
+    #[Groups('publication:get')]
     #[ORM\OneToMany(mappedBy: 'publication', targetEntity: PublicationIncludeImage::class, orphanRemoval: true)]
     private Collection $publicationIncludeImages;
 
+    #[Groups('publication:get')]
     #[ORM\ManyToOne(inversedBy: 'publications')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Category $category = null;
