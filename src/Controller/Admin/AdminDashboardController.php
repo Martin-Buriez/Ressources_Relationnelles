@@ -57,6 +57,13 @@ class AdminDashboardController extends AbstractController
             WHERE DATE_DIFF(CURRENT_DATE(), u.created_at) <= 10'
         );
         $NbrNewUser10days = $query4->getSingleScalarResult();
+        //PUBLICATIONS À VALIDER
+        $query5 = $entityManager->createQuery(
+            'SELECT COUNT(e.id) 
+            FROM App\Entity\event e
+            WHERE e.stateValidated = false'
+        );
+        $NbrEventStateFalse = $query5->getSingleScalarResult();
 
         return $this->render('Admin/dashboard/index.html.twig', [
             'current_menu' => 'blog',
@@ -66,6 +73,7 @@ class AdminDashboardController extends AbstractController
             'NbrPublicationStateFalse' => $NbrPublicationStateFalse,
             'NbrCommentReported' => $NbrCommentReported,
             'NbrNewUser10days' => $NbrNewUser10days,
+            'NbrEventStateFalse' => $NbrEventStateFalse,
         ]);
     }
 }

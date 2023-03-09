@@ -1,7 +1,94 @@
 {% extends 'Admin/admin_base.html.twig' %}
 
-{% block title %}Hello AdminUsersController!{% endblock %}
+{% block title %}Les utilisateurs !{% endblock %}
 
 {% block body %}
-
+    <div class="bg-main-white pt-3 mb-4">
+        <div class="rounded-tl-3xl bg-gradient-to-r from-blue1 to-gray-600 p-4 shadow text-2xl text-white">
+            <h1 class="font-bold pl-2">Les utilisateurs de la plateforme </h1>
+        </div>
+    </div>
+    <div class="w-full overflow-hidden rounded-lg shadow-xs">
+        <div class="w-full overflow-x-auto">
+            <div class="bg-blue1 w-full h-12 py-2 px-6 shadow-lg">
+                <form action="{{ path('admin_users') }}" method="get" class="w-full">
+                    <div class="flex justify-end">
+                        <input type="text" class="text-black form-control w-2/6 border border-black py-1" name="search" placeholder="Rechercher...">
+                        <div class="input-group-append bg-white w-10 border border-black text-black">
+                            <button class="btn btn-secondary" type="submit"><i class="fa fa-search ml-2 py-2"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div>
+            {% if search is defined %}
+                <p>Résultats pour "{{ search }}" :</p>
+            {% endif %}
+            {% if userFilter is not empty %}
+                <table class="w-full shadow-lg">
+                    <thead>
+                        <tr class="font-extrabold tracking-wide text-left uppercase border-b bg-blue1 text-black dark:text-white">
+                            <th class="px-4 py-3">Nom :</th>
+                            <th class="px-4 py-3">Prénom :</th>
+                            <th class="px-4 py-3">Rôle(s) :</th>
+                            <th class="px-4 py-3">Validé(e) ?</th>
+                            <th class="px-4 py-3">Suspendu ?</th>
+                            <th class="px-4 py-3">Promouvoir ?</th>
+                            <th class="px-4 py-3">Destituer ?</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-700 bg-gray-300">
+                    {% for item in userFilter|slice(0,10) %}
+                        <tr class="hover:bg-gray-200 text-black">
+                            <td class="px-4 py-3">
+                                <a target="_blank" rel="noreferrer noopener" href="{{ path('profile_view', {'username': item.username }) }}">
+                                    {{ item.firstname }}
+                                </a>
+                            </td>
+                            <td class="px-4 py-3">
+                                {{ item.lastname }}
+                            </td>
+                            <td class="px-4 py-3">
+                                {{ item.roles|join(', ') }}
+                            </td>
+                            <td class="px-4 py-3">
+                                {% if item.stateValidated %}
+                                    <i class="fas fa-check"></i>
+                                {% else %}
+                                    <i class="fas fa-times"></i>
+                                {% endif %}
+                            </td>
+                            <td class="px-4 py-3">
+                                {% if item.stateSuspended %}
+                                    <i class="fas fa-check"></i>
+                                {% else %}
+                                    <i class="fas fa-times"></i>
+                                {% endif %}
+                            </td>
+                            <td class="px-4 py-3">
+                                <a href="{{ path('admin_promote_users', {'idUser': item.id }) }}">
+                                    <i class="fas fa-user-graduate"></i>
+                                </a>
+                            </td>
+                            <td class="px-4 py-3">
+                                <a href="{{ path('admin_removing_users', {'idUser': item.id }) }}">
+                                    <i class="fas fa-user-times"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            {% else %}
+                <div class="mt-2 px-5">
+                    <p class="text-grey4 font-semibold">Aucun utilisateur trouvé.</p>
+                </div>
+            {% endif %}
+            {% for message in app.flashes('Erreur') %}
+                <div class="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+        </div>
 {% endblock %}

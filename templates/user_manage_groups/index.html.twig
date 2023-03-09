@@ -62,21 +62,15 @@
                             </div>
                         {% endfor %}
                     </div>
-
+                    {# Amis à ajouter #}
                     <div class="w-4/12 mt-10 border-b border-r border-t border-blue1">
-
                         <div class="bg-blue1 shadow-lg">
                             <h1 class="text-white text-xl font-bold py-2 text-center">Ajouter au groupe</h1>
                         </div>
-
-                        {# Amis à ajouter #}
-
                         <div class="flex justify-center font-bold text-grey2 italic border-b border-blue1 py-2">
                             <p class="">Depuis votre liste d'amis : </p>
                         </div>
-
                         {% for friends in userFriends %}
-
                             <div class="flex justify-center border-b border-grey py-1">
                                 {% if groupSelected %}
                                     {% if friends.userSender.id != app.user.id %}
@@ -98,7 +92,7 @@
                             </div>
                         {% endfor %}
                     </div>
-
+                    {# Vos Groupes #}
                     <div class="w-3/12 ml-2">
                         <table class="mt-10">
                             <thead class="bg-blue1 border border-blue1">

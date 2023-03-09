@@ -94,3 +94,19 @@ adminValidatedUser:
 adminCancelUser:
     path: /admin/user/delete/identityCard/{idUser}
     controller: App\Controller\Admin\AdminUserValidatedController::adminCancelUser
+
+admin_promote_users:
+    path: /admin/users/promote/{idUser}
+    controller: App\Controller\Admin\AdminUsersController::adminPromoteUser
+
+admin_removing_users:
+    path: /admin/users/removing/{idUser}
+    controller: App\Controller\Admin\AdminUsersController::adminRemovingUser
+#
+admin_delete_event:
+    path: /admin/event/delete/{idEvent}
+    controller: App\Controller\Admin\AdminEventController::adminDeleteEvent
+
+admin_validate_event:
+    path: /admin/event/validate/{idEvent}
+    controller: App\Controller\Admin\AdminEventController::adminValidateEvent
