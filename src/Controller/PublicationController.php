@@ -95,6 +95,11 @@ class PublicationController extends AbstractController
             
             $entityManager->persist($comment);
             $entityManager->flush();
+
+            // Clear the form by creating a new instance of the Comment object
+            $comment = new Comment();
+            $commentForm = $this->createForm(CommentType::class, $comment);
+
             $this->addFlash(
                 'comment_create_succes',
                 'Votre commentaire a bien été ajouté !'
@@ -113,13 +118,13 @@ class PublicationController extends AbstractController
             'pages' => $pagination->getPages(),
             'page' => $page,
             'pagination' => $pagination,
-            'commentForm' => $commentForm,
+            'commentForm' => $commentForm->createView(),
             'comments' => $comments,
         ]);
     }
 
     #[Route('/les-publications/ban/{idComment}', name: 'user_can_ban_comment')]
-    public function userCanBanComment(EntityManagerInterface $entityManager, Request $request, $idComment): Response
+    public function userCanBanComment(EntityManagerInterface $entityManager, $idComment): Response
     {
         $comment = $entityManager->getRepository(Comment::class)->find($idComment); 
         if (!$comment) {
@@ -136,7 +141,7 @@ class PublicationController extends AbstractController
     }
 
     #[Route('/les-publications/ban/user/{idUser}', name: 'user_can_ban_user')]
-    public function userCanBanUser(EntityManagerInterface $entityManager, Request $request, $idUser): Response
+    public function userCanBanUser(EntityManagerInterface $entityManager, $idUser): Response
     {
         $user = $entityManager->getRepository(User::class)->find($idUser); 
         if (!$user) {
