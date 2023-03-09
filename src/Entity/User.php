@@ -10,90 +10,112 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity('email', 'Un autre utilisateur utilise déjà cette adresse email')]
-#[ApiResource]
+#[ApiResource(
+    normalizationContext: ['groups' => ['user:get']],
+)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
+    #[Groups('user:get')]
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Groups('user:get')]
     #[ORM\Column(length: 180, unique: true)]
     #[Assert\NotBlank(message: "L'adresse email de l'utilisateur est obligatoire")]
     #[Assert\Length(min: 10,minMessage: "L'adresse email de l'utilisateur doit être compris entre 10 et 180 caractères")]
     #[Assert\Length(max: 180,maxMessage: "L'adresse email de l'utilisateur être compris entre 10 et 180 caractères")]
     private ?string $email = null;
 
+    #[Groups('user:get')]
     #[ORM\Column]
     private array $roles = [];
 
     /**
      * @var string The hashed password
      */
+    #[Groups('user:get')]
     #[ORM\Column]
     #[Assert\NotBlank(message: "Le mot de passe de l'utilisateur est obligatoire")]
     private ?string $password = null;
 
+    #[Groups('user:get')]
     #[ORM\Column(length: 255, unique: true)]
     #[Assert\NotBlank(message: "Le pseudo de l'utilisateur est obligatoire")]
     #[Assert\Length(min: 10,minMessage: "Le pseudo de l'utilisateur doit être compris entre 10 et 255 caractères")]
     #[Assert\Length(max: 255,maxMessage: "Le pseudo de l'utilisateur être compris entre 10 et 255 caractères")]
     private ?string $username = null;
 
+    #[Groups('user:get')]
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: "Le prénom de l'utilisateur est obligatoire")]
     private ?string $first_name = null;
 
+    #[Groups('user:get')]
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: "Le nom de l'utilisateur est obligatoire")]
     private ?string $last_name = null;
 
+    #[Groups('user:get')]
     #[ORM\Column(length: 255, nullable: true)]
     #[Assert\Length(min: 10,minMessage: "La description de l'utilisateur doit être compris entre 10 et 255 caractères")]
     #[Assert\Length(max: 255,maxMessage: "La description de l'utilisateur être compris entre 10 et 255 caractères")]
     private ?string $description = null;
 
+    #[Groups('user:get')]
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: "L'adresse de l'utilisateur est obligatoire")]
     #[Assert\Length(min: 10,minMessage: "L'adresse de l'utilisateur doit être compris entre 10 et 255 caractères")]
     #[Assert\Length(max: 255,maxMessage: "L'adresse de l'utilisateur être compris entre 10 et 255 caractères")]
     private ?string $address = null;
 
+    #[Groups('user:get')]
     #[ORM\Column]
     #[Assert\NotBlank(message: "Le code postal de l'utilisateur est obligatoire")]
     private ?string $postal_code = null;
 
+    #[Groups('user:get')]
     #[ORM\Column(length: 60)]
     #[Assert\NotBlank(message: "La ville de l'utilisateur est obligatoire")]
     private ?string $city = null;
 
+    #[Groups('user:get')]
     #[ORM\Column]
     #[Assert\NotBlank(message: "Le numéro de téléphone de l'utilisateur est obligatoire")]
     private ?string $phone_number = null;
 
+    #[Groups('user:get')]
     #[ORM\Column]
     #[Assert\NotBlank(message: "La date d'anniversaire de l'utilisateur est obligatoire")]
     private ?\DateTime $birthday = null;
 
+    #[Groups('user:get')]
     #[ORM\Column]
     private ?\DateTime $created_at = null;
 
+    #[Groups('user:get')]
     #[ORM\Column]
     private ?bool $state_validated = null;
 
+    #[Groups('user:get')]
     #[ORM\Column]
     private ?bool $state_suspended = null;
 
+    #[Groups('user:get')]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $identity_card_location = null;
 
+    #[Groups('user:get')]
     #[ORM\Column]
     private ?bool $identity_card_validated = null;
 
+    #[Groups('user:get')]
     #[ORM\Column(length: 255, nullable: true)]
     #[Assert\Length(min: 10,minMessage: "La photo de profil de l'utilisateur doit être compris entre 10 et 255 caractères")]
     #[Assert\Length(max: 255,maxMessage: "La photo de profil de l'utilisateur être compris entre 10 et 255 caractères")]
@@ -101,6 +123,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     // Relations
 
+    #[Groups('user:get')]
     #[ORM\OneToMany(mappedBy: 'created_by', targetEntity: Publication::class, orphanRemoval: true)]
     private Collection $publications;
 
