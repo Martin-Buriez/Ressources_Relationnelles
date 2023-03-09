@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\User;
+use App\Entity\UserRelationship;
 use App\Form\IdentityCardType;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,6 +20,14 @@ class ProfileController extends AbstractController
     {
         $user = $this->getUser();
         $userProfile = $entityManager->getRepository(User::class)->findOneById($user);
+        //
+        $userFriend = $entityManager->getRepository(UserRelationship::class)
+            ->createQueryBuilder('r')
+            ->where('r.state = true AND (r.userSender = :userProfile OR r.userReceive = :userProfile)') 
+            ->setParameter('userProfile', $userProfile)
+            ->getQuery()
+            ->getResult();
+
         // Retourne le nombre de ressources créé par l'utilisateur
         $query = $entityManager->createQuery(
             'SELECT COUNT(p.id) 
@@ -54,6 +63,7 @@ class ProfileController extends AbstractController
             'user'=> $userProfile,
             'userCardForm' => $userCardForm,
             'NbrRessource' => $NbrRessource,
+            'userFriend' => $userFriend,
         ]);
     }
 }
