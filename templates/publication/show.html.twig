@@ -76,14 +76,11 @@
         </div>
 
         <!-- Commentaires -->
-
         {% if app.user %}
             <div class="w-5/6 border-l border-b border-r border-blue1 shadow-lg px-40 py-10 bg-white mx-auto">
-
                 <div class="mb-4">
                     <h1 class="text-xl text-blue1">Espace commentaire :</h1>
                 </div>
-
                 {{ form_start(commentForm) }}
                 <div class="flex justify-start">
                     <div class="w-1/2 mb-1">
@@ -95,7 +92,6 @@
                         {{ form_row(commentForm.content) }}
                     </div>
                 </div>
-
                 <div class="flex w-full">
                     <div class="w-2/3">
                     </div>
@@ -105,42 +101,51 @@
                     </div>
                 </div>
                 {{ form_end(commentForm) }}
-
                 <div class="mx-auto h-px w-2/3 bg-blue1 mt-8 mb-8"></div>
-
                 {% for comment in comments %}
-                {% if comment.comment.reportedStatus == false %}
-
-                    <div class="w-1/2">
-                        <div class="bg-white border border-gray-200 rounded-md px-4 py-2 mt-2 text-blue1 font-bold">
-                            {{ comment.comment.title }}
+                    {% if comment.comment.reportedStatus == false %}
+                        <div class="w-1/2">
+                            <div class="bg-white border border-gray-200 rounded-md px-4 py-2 mt-2 text-blue1 font-bold flex">
+                                {% if comment.comment.userEditComments[0].user.ProfilePicture %}
+                                    <div class="rounded-full mr-4" style="height: 20px; width: 20px;">
+                                        <img src="{{ asset('uploads/user/avatar/' ~ comment.comment.userEditComments[0].user.ProfilePicture) }}" alt="Avatar de {{ comment.comment.userEditComments[0].user.username }}" class="rounded-full shadow-lg mr-4" style="height: 20px; width: 20px;"/>
+                                    </div>
+                                {% else %}
+                                    <div class="rounded-full mr-4" style="height: 20px; width: 20px;">
+                                        <img src="{{ asset('assets/media/img/user.svg') }}" alt="Avatar de {{ comment.comment.userEditComments[0].user.username }}"  class="rounded-full shadow-lg mr-4" style="height: 20px; width: 20px;"/>
+                                    </div>
+                                {% endif %}
+                                <a href="{{ path('profile_view', {'username': comment.comment.userEditComments[0].user.username }) }}" >
+                                    {{comment.comment.userEditComments[0].user.username}} 
+                                </a>
+                                <p class="ml-2">
+                                    à rédigé(e)
+                                </p> 
+                                <p class="ml-2">
+                                    {{ comment.comment.title }}
+                                </p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="w-full">
-                        <div class="bg-white border border-gray-200 rounded-md px-4 py-2 mt-2">
-                            {{ comment.comment.content }}
-
-                            <div class="w-2/5 mt-2 flex">
-                                <p class="text-grey-800 italic mr-2">Publié le {{ comment.comment.createdAt|date('d-m-Y') }}</p>
-
-                                <div class="w-2/5 mx-5 text-red-600">
-                                    <a href="{{ path('user_can_ban_comment', {'idComment': comment.comment.id }) }}">
-                                        <i class="fas fa-ban"></i>
-                                    </a>
+                        <div class="w-full">
+                            <div class="bg-white border border-gray-200 rounded-md px-4 py-2 mt-2">
+                                {{ comment.comment.content }}
+                                <div class="w-2/5 mt-2 flex">
+                                    <p class="text-grey-800 italic mr-2">Publié le {{ comment.comment.createdAt|date('d-m-Y') }}</p>
+                                    <div class="w-2/5 mx-5 text-red-600">
+                                        <a href="{{ path('user_can_ban_comment', {'idComment': comment.comment.id }) }}">
+                                            <i class="fas fa-ban"></i>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                {% endif %}
+                    {% endif %}
+                    <hr class="mt-4 text-black mb-4">
                 {% endfor %}
             </div>
         {% endif %}
-
         <div class="h-10 bg-blue2">
-
         </div>
-
     </section>
 {% endblock %}
 
