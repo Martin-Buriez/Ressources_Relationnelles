@@ -3,44 +3,42 @@
 {% block title %}Les Commentaires signalés{% endblock %}
 
 {% block body %}
-    <div class="mt-12 lg:mt-20 xl:mt-24 mx-4">
-        <div class="bg-main-white pt-3 mb-4">
-            <div class="rounded-tl-3xl bg-gradient-to-r from-blue1 to-gray-600 p-4 shadow text-2xl text-white">
-                <h1 class="font-bold pl-2">Les commentaires signalés </h1>
-            </div>
+    <div class="bg-main-white pt-3 mb-4">
+        <div class="rounded-tl-3xl bg-gradient-to-r from-blue1 to-gray-600 p-4 shadow text-2xl text-white">
+            <h1 class="font-bold pl-2">Les utilisateurs à vérifier </h1>
         </div>
-        <div class="w-full overflow-hidden rounded-lg shadow-xs">
-            <div class="w-full overflow-x-auto">
-                <table class="w-full ">
-                    <thead>
-                        <tr class="font-extrabold tracking-wide text-left uppercase border-b bg-blue1 text-black dark:text-white">
-                            <th class="px-4 py-3">Titre</th>
-                            <th class="px-4 py-3">Contenu</th>
-                            <th class="px-4 py-3">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-gray-700 bg-gray-800">
-                    {% for comment in comments %}
-                        <tr class="hover:bg-white bg-blue2 text-black">
-                            <td class="px-4 py-3">
-                                {{ comment.title }}
-                            </td>
-                            <td class="px-4 py-3">
-                                {{ comment.content }}
-                            </td>
-                            <td class="px-2 py-2 text-black">
-                                <a onclick="confirm('Supprimer le commentaire ?')" class="ml-8" href="{{ path('delete_comments', {'idComment': comment.id }) }}">
-                                    <i class="text-red-400 fas fa-trash mr-1">Supprimer</i>
-                                </a>
-                                <a class="ml-8"  href="{{ path('cancel_reported_comments', {'idComment': comment.id }) }}">
-                                    <i class="text-green-400 fas fa-check mr-1">Valider</i>
-                                </a>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-            </div>
+    </div>
+    <div class="w-full overflow-hidden rounded-lg shadow-xs">
+        <div class="w-full overflow-x-auto">
+            <table class="w-full ">
+                <thead>
+                    <tr class="font-extrabold tracking-wide text-left uppercase border-b bg-blue1 text-black dark:text-white">
+                        <th class="px-4 py-3">Titre</th>
+                        <th class="px-4 py-3">Contenu</th>
+                        <th class="px-4 py-3">Action</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-700 bg-gray-800">
+                {% for comment in comments %}
+                    <tr class="hover:bg-white bg-blue2 text-black">
+                        <td class="px-4 py-3">
+                            {{ comment.title }}
+                        </td>
+                        <td class="px-4 py-3">
+                            {{ comment.content }}
+                        </td>
+                        <td class="px-2 py-2 text-black">
+                            <a onclick="confirm('Supprimer le commentaire ?')" class="ml-8" href="{{ path('delete_comments', {'idComment': comment.id }) }}">
+                                <i class="text-red-400 fas fa-trash mr-1">Supprimer</i>
+                            </a>
+                            <a class="ml-8"  href="{{ path('cancel_reported_comments', {'idComment': comment.id }) }}">
+                                <i class="text-green-400 fas fa-check mr-1">Valider</i>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
 {% endblock %}
