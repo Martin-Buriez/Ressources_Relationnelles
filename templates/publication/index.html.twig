@@ -29,7 +29,9 @@
                                         </div>
                                     </div>
                                 </div>
-                                <img class="lg:h-48 md:h-36 w-full object-cover object-center" src="{{ asset('uploads/ressource/images/'~publication.publicationIncludeImages[0].image.name) }}" alt="blog cover"/>
+                                {% if publication.publicationIncludeImages %}
+                                    <img class="lg:h-48 md:h-36 w-full object-cover object-center" src="{{ asset('uploads/ressource/images/'~publication.publicationIncludeImages[0].image.name) }}" alt="blog cover"/>
+                                {% endif %}
                                 <div class="p-4">
                                     <h1 class="tracking-widest text-xs title-font font-bold text-main-blue dark:text-main-white mb-1 uppercase ">{{ publication.title }}</h1>
                                     <h2 class="title-font text-lg font-medium text-gray-900 mb-3">{{ publication.description|u.truncate(150, '...') }}</h2>

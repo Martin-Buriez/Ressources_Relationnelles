@@ -17,7 +17,7 @@
             </div>
             <div class="w-full px-10">
                 <div class="flex flex-wrap mt-10">
-                    {% for friend in userFriend|slice(0, 3) %}
+                    {% for friend in userFriend %}
                         {% if friend.userReceive.username != app.user.username %}
                             <div class="flex w-4/12">
                                 <div class="flex w-11/12 border border-blue1 shadow-lg px-5 py-5 mt-5">
@@ -43,7 +43,7 @@
                                             <p>{{friend.userReceive.lastname}} )</p>
                                         </div>
                                         <div class="flex justify-start mt-10 ml-2">
-                                            <a onclick="confirm('Supprimer cet utilisateur à vos amis ?')" class="ml-2" href="{{ path('user_delete_friend', {'idRelationShip': friend.id }) }}">
+                                            <a  class="ml-2" href="{{ path('user_delete_friend', {'idRelationShip': friend.id }) }}">
                                                 <i class="w-1/12 py-1 fas fa-user-minus pr-4 px-2"></i>
                                                 <span class="w-9/12 pl-2">Retirer de vos amis</span>
                                             </a>
@@ -76,7 +76,7 @@
                                             <p>{{friend.userSender.lastname}} )</p>
                                         </div>
                                         <div class="flex justify-start mt-10 ml-2">
-                                            <a onclick="confirm('Supprimer cet utilisateur à vos amis ?')" class="ml-2" href="{{ path('user_delete_friend', {'idRelationShip': friend.id }) }}">
+                                            <a class="ml-2" href="{{ path('user_delete_friend', {'idRelationShip': friend.id }) }}">
                                                 <i class="w-1/12 py-1 fas fa-user-minus pr-4 px-2"></i>
                                                 <span class="w-9/12 pl-2">Retirer de vos amis</span>
                                             </a>
