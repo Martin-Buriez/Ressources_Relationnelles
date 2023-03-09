@@ -9,17 +9,22 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ThemeRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    normalizationContext: ['groups' => ['theme:get']],
+)]
 class Theme
 {
+    #[Groups('theme:get')]
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Groups('theme:get')]
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: "Le titre du thème est obligatoire")]
     #[Assert\Length(min: 3,minMessage: "Le titre du thème doit être compris entre 3 et 50 caractères")]
