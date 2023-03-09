@@ -19,10 +19,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 )]
 class Publication
 {
+    #[Groups('publication:get')]
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups('publication:get')]
     private ?int $id = null;
 
     #[Groups('publication:get')]

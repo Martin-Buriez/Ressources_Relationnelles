@@ -8,18 +8,23 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
 #[UniqueEntity('title', 'Une autre ressource porte déjà ce titre')]
-#[ApiResource]
+#[ApiResource(
+    normalizationContext: ['groups' => ['category:get']],
+)]
 class Category
 {
+    #[Groups('category:get')]
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Groups('category:get')]
     #[ORM\Column(length: 50)]
     #[Assert\NotBlank(message: "Le titre de la catégorie est obligatoire")]
     #[Assert\Length(min: 10,minMessage: "Le titre de la catégorie doit être compris entre 10 et 50 caractères")]
