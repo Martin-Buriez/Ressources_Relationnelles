@@ -25,6 +25,15 @@ class ProfileController extends AbstractController
             ->createQueryBuilder('r')
             ->where('r.state = true AND (r.userSender = :userProfile OR r.userReceive = :userProfile)') 
             ->setParameter('userProfile', $userProfile)
+            ->orderBy('r.createdAt', 'DESC')
+            ->getQuery()
+            ->getResult();
+        //
+        $userPublication = $entityManager->getRepository(Publication::class)
+            ->createQueryBuilder('p')
+            ->where('p.created_by = :userProfile') 
+            ->setParameter('userProfile', $userProfile)
+            ->orderBy('p.created_at', 'DESC')
             ->getQuery()
             ->getResult();
 
@@ -64,6 +73,7 @@ class ProfileController extends AbstractController
             'userCardForm' => $userCardForm,
             'NbrRessource' => $NbrRessource,
             'userFriend' => $userFriend,
+            'userPublication' => $userPublication,
         ]);
     }
 }

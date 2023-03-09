@@ -126,7 +126,33 @@
                 <!-- Ressources Récentes & Accès au panel -->
 
                 <div class="w-full border border-blue1 bg-blue1 py-2 px-10 mx-2 mt-8 shadow-lg">
-                    <h2 class="text-white font-bold text-xl">Vos ressources récentes :</h2>
+                    <h2 class="text-white font-bold text-xl underline">Vos ressources récentes :</h2>
+                    <div class="flex">
+                        <table class="w-full">
+                            <thead>
+                                <tr class="font-extrabold tracking-wide text-left uppercase border-b bg-blue1 text-black dark:text-white">
+                                    <th class="px-4 py-3 text-white underline">Titre :</th>
+                                    <th class="px-4 py-3 text-white underline">Nombre de vues :</th>
+                                    <th class="px-4 py-3 text-white underline">Créé le :</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-700 bg-gray-800">
+                            {% for publication in userPublication|slice(0, 3) %}
+                                <tr class="bg-blue2 text-black">
+                                    <td class="px-4 py-3">
+                                        <a href="{{ path('publication_show', {'slug': publication.slug}) }}" class="text-black  md:mb-2 lg:mb-0">{{ publication.title }}</a>
+                                    </td>
+                                    <td class="px-4 py-3 text-black">
+                                        {{ publication.viewNumber }}
+                                    </td>
+                                    <td class="px-4 py-3 text-black">
+                                        {{ publication.createdAt|date('d/m/Y') }}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
 
                 <!-- Dernières ressources à ajouter -->
