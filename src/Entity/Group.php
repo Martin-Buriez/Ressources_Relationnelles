@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\GroupRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: GroupRepository::class)]
@@ -17,6 +18,9 @@ class Group
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Le nom du groupe de l'utilisateur est obligatoire")]
+    #[Assert\Length(min: 10,minMessage: "Le nom du groupe doit être compris entre 5 et 20 caractères")]
+    #[Assert\Length(max: 180,maxMessage: "Le nom du groupe être compris entre 5 et 20 caractères")]
     private ?string $name = null;
 
     #[ORM\Column]

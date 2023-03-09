@@ -15,10 +15,10 @@ class GroupType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
-                'label' => 'Le nom de votre groupe',
+                'label' => 'Créer un groupe :',
                 'required' => true,
                 'attr' => [
-                    'placeholder' => 'Merci de saisir le nom de votre groupe',
+                    'placeholder' => 'Nom du groupe',
                     'class' => 'form-input block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40'
                 ]
             ])

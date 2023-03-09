@@ -3,99 +3,82 @@
 {% block title %}Gestion des groupes !{% endblock %}
 
 {% block body %}
-    <div class="flex w-10/12 mx-auto  justify-between mt-10">
-        <div class="w-5/12 "> 
-            <h1 class="text-center font-bold text-3xl text-black underline">Création des groupes</h1>
-            <div class="flex justify-center mt-10">
-                <div class="w-5/6 border border-blue1 shadow-lg px-10 py-10 bg-white mb-8">
-                    {{ form_start(groupForm) }}
-                    <div class="flex">
-                        <div class="w-2/3">
-                            {{ form_row(groupForm.name) }}
-                        </div>
-                        <div class="w-1/3 flex justify-end">
-                            {{ form_row(groupForm.submit) }}
-                        </div>
-                    </div>
-                    {{ form_end(groupForm) }}
+
+    <section class="w-full">
+
+        <div class="w-full h-1/5 bg-blue1 shadow-lg py-16">
+            <h1 class="text-center font-bold text-5xl text-white">Vos groupes</h1>
+            <div class="mx-auto h-px w-40 bg-white mt-8"></div>
+        </div>
+
+        <div class="flex">
+
+            <div class="w-3/12 min-h-screen bg-blue2 border-blue1 border-r">
+                <div class="w-full">
+                    {% include "partials/siderbar.html.twig" %}
                 </div>
             </div>
-        </div>
-    </div>
-    <!-- Liste des groupes -->
-    <div class="flex w-full mx-auto justify-between mt-10 text-center">
-        <div class="w-5/12 border h-full"> 
-            <table class="w-full">
-                <thead>
-                    <tr class="font-extrabold tracking-wide text-left uppercase border-b bg-blue1 text-black dark:text-white">
-                        <th class="px-4 py-3" colspan="2">Liste de vos groupes :</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-700 bg-gray-800">
-                    {% for directedGroup in userSupervisorGroups %}
-                        <tr class="bg-blue2 text-black">
-                            <td class="px-4 py-3">
-                                <a href="{{ path('user_show_participant_group', {'idGroup': directedGroup.groupe.id}) }}">
-                                    {{ directedGroup.groupe.name }}
-                                </a>
-                            </td>
-                            <td class="px-4 py-3">
-                                <a href="{{ path('user_delete_group', {'idGroup': directedGroup.groupe.id}) }}">
-                                    <i class="fas fa-users-slash"></i>
-                                </a>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-        <!-- Liste des participants -->
-        <div class="w-5/12 border h-full">
-            <table class="w-full">
-                <thead>
-                    <tr class="font-extrabold tracking-wide text-left uppercase border-b bg-blue1 text-black dark:text-white">
-                        <th class="px-4 py-3" colspan="3">
-                            Liste des participants du groupe :
-                            {% if groupSelected %}
-                                {{groupSelected.name}}
-                            {% endif %}
-                        </th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-700 bg-gray-800">
-                    {% for userNoSupervisor in userInGroupe %}
-                        <tr class="bg-blue2 text-black">
-                            <td class="px-4 py-3" colspan="3" >
-                                <a href="{{ path('user_delete_participant_group', {'idUserBelongGroup': userNoSupervisor.id}) }}">
+
+            <div class="w-full">
+
+                <div class="flex justify-center mt-10 ml-2">
+                    <div class="w-2/6 border border-blue1 shadow-lg px-5 py-4 bg-white">
+                        {{ form_start(groupForm) }}
+                        <div class="flex">
+                            <div class="w-2/3">
+                                {{ form_row(groupForm.name) }}
+                            </div>
+                            <div class="w-1/3 flex justify-end">
+                                {{ form_row(groupForm.submit) }}
+                            </div>
+                        </div>
+                        {{ form_end(groupForm) }}
+                    </div>
+                </div>
+
+                <div class="w-full flex">
+                    <div class="w-4/12 mt-10 border border-blue1 ml-2">
+
+                        <div class="bg-blue1 px-2 shadow-lg">
+                            <h1 class="text-white text-xl font-bold py-2 text-center">Participants</h1>
+                        </div>
+
+                        {# Participants du groupe #}
+
+                        {% if groupSelected %}
+                            <div class="flex justify-center font-bold text-grey2 italic border-b border-blue1 py-2">
+                                <p class="">Groupe : {{groupSelected.name}} </p>
+                            </div>
+                        {% endif %}
+
+                        {% for userNoSupervisor in userInGroupe %}
+                            <div class="flex justify-center border-b border-grey py-1">
+                                <a class="mr-5" href="{{ path('user_delete_participant_group', {'idUserBelongGroup': userNoSupervisor.id}) }}">
                                     {{userNoSupervisor.user.username}}
                                 </a>
-                                <a href="{{ path('user_delete_participant_group', {'idUserBelongGroup': userNoSupervisor.id}) }}">
+                                <a  href="{{ path('user_delete_participant_group', {'idUserBelongGroup': userNoSupervisor.id}) }}">
                                     <i class="fas fa-user-minus"></i>
                                 </a>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-        <!-- Ajouts des amis -->
-        <div class="w-5/12 border h-full">
-            <table class="mx-auto w-full">
-                <thead>
-                    <tr class="font-extrabold tracking-wide text-left uppercase border-b bg-blue1 text-black dark:text-white">
-                        <th class="px-4 py-3" colspan="3">
-                            Ajouter l'un de vos amis au groupe :
-                            {% if groupSelected %}
-                                {{groupSelected.name}}
-                            {% endif %}
-                        </th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-700 bg-gray-800">
-                    {% for friends in userFriends %}
-                        <tr class="bg-blue2 text-black">
-                            <td class="px-4 py-3" colspan="3">
-                                {% if groupSelected %}   
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="w-4/12 mt-10 border-b border-r border-t border-blue1">
+
+                        <div class="bg-blue1 shadow-lg">
+                            <h1 class="text-white text-xl font-bold py-2 text-center">Ajouter au groupe</h1>
+                        </div>
+
+                        {# Amis à ajouter #}
+
+                        <div class="flex justify-center font-bold text-grey2 italic border-b border-blue1 py-2">
+                            <p class="">Depuis votre liste d'amis : </p>
+                        </div>
+
+                        {% for friends in userFriends %}
+
+                            <div class="flex justify-center border-b border-grey py-1">
+                                {% if groupSelected %}
                                     {% if friends.userSender.id != app.user.id %}
                                         <a href="{{ path('user_add_participant_group', {'idGroup': groupSelected.id, 'idUser': friends.userSender.id}) }}">
                                             {{friends.userSender.username}}
@@ -112,13 +95,43 @@
                                         </a>
                                     {% endif %}
                                 {% endif %}
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="w-3/12 ml-2">
+                        <table class="mt-10">
+                            <thead class="bg-blue1 border border-blue1">
+                                <th colspan="2" class="px-14">
+                                    <h1 class="text-white text-xl font-bold py-1">Vos Groupes</h1>
+                                </th>
+                            </thead>
+                            <tbody class="divide-y divide-gray-700 bg-gray-800">
+                                {% for directedGroup in userSupervisorGroups %}
+                                    <tr class="bg-blue2 text-black">
+                                        <td class="px-4 py-3">
+                                            <a href="{{ path('user_show_participant_group', {'idGroup': directedGroup.groupe.id}) }}">
+                                                {{ directedGroup.groupe.name }}
+                                            </a>
+                                        </td>
+                                        <td class="px-4 py-3">
+                                            <a href="{{ path('user_delete_group', {'idGroup': directedGroup.groupe.id}) }}">
+                                                <i class="fas fa-users-slash"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+
+
         </div>
-    </div>
+    </section>
+
     {% for message in app.flashes('success') %}
         <div class="alert z-10 bg-green-300 absolute mx-auto">
             {{ message }}
