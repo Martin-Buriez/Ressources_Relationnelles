@@ -6,7 +6,6 @@
     <section class="bg-white w-full">
         <div class="flex justify-end bg-blue2 w-full h-25 pt-48 shadow-lg">
             <div class="w-3/12">
-
             </div>
             <div class="w-9/12 flex pb-8">
                 <div class="w-1/3">
@@ -115,8 +114,13 @@
                         </div>
                     </div>
 
-                    <div class="w-full flex justify-center mt-10">
-                        <button class="w-1/3 btn py-1 bg-blue1 text-white rounded cursor-pointer object-cover border border-2 border-blue1">Modifier les informations</button>
+                    <div class="w-full flex justify-center mt-10 ">
+                        <button class="w-1/3 btn py-1 bg-blue1 text-white rounded cursor-pointer object-cover border border-2 border-blue1 mr-4">Modifier les informations</button>
+                        {% if app.user.roles[0] == 'ROLE_ADMIN'%}
+                            <a href="{{ path('admin_dashboard') }}" class="text-center w-1/3 btn py-1 bg-blue1 text-white rounded cursor-pointer object-cover border border-2 border-blue1 ml-4">
+                                Accès à l'administration
+                            </a>
+                        {% endif %}
                     </div>
                 </div>
 

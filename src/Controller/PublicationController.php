@@ -127,16 +127,10 @@ class PublicationController extends AbstractController
     public function userCanBanComment(EntityManagerInterface $entityManager, $idComment): Response
     {
         $comment = $entityManager->getRepository(Comment::class)->find($idComment); 
-        if (!$comment) {
-            $this->addFlash('error', 'Le commentaire n\'existe pas.');
-        } else {
-            //
-            $comment->setReportedStatus(true);
-            $entityManager->persist($comment);
-            $entityManager->flush();
-            $this->addFlash('success', 'Le commentaire a été signalé avec succès.');
-        }
-        //
+        $comment->setReportedStatus(true);
+        $entityManager->persist($comment);
+        $entityManager->flush();
+        $this->addFlash('success', 'Le commentaire a été signalé avec succès.');
         return $this->redirectToRoute('homepage');
     }
 
