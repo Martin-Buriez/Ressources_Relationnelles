@@ -127,32 +127,33 @@
 
                 <div class="w-full border border-blue1 bg-blue1 py-2 px-10 mx-2 mt-8 shadow-lg">
                     <h2 class="text-white font-bold text-xl underline">Vos ressources récentes :</h2>
-                    <div class="flex">
-                        <table class="w-full">
+                </div>
+
+                <div class="flex w-full mt-10 px-10">
+                    {% for publication in userPublication|slice(0, 3) %}
+                        <table class="w-full border border-blue1 shadow-lg">
                             <thead>
-                                <tr class="font-extrabold tracking-wide text-left uppercase border-b bg-blue1 text-black dark:text-white">
-                                    <th class="px-4 py-3 text-white underline">Titre :</th>
-                                    <th class="px-4 py-3 text-white underline">Nombre de vues :</th>
-                                    <th class="px-4 py-3 text-white underline">Créé le :</th>
-                                </tr>
+                            <tr class="font-bold text-white text-center border-b bg-blue1">
+                                <th class="py-2">Titre</th>
+                                <th class="py-2">Nombre de vues</th>
+                                <th class="py-2">Date de création</th>
+                            </tr>
                             </thead>
-                            <tbody class="divide-y divide-gray-700 bg-gray-800">
-                            {% for publication in userPublication|slice(0, 3) %}
-                                <tr class="bg-blue2 text-black">
-                                    <td class="px-4 py-3">
-                                        <a href="{{ path('publication_show', {'slug': publication.slug}) }}" class="text-black  md:mb-2 lg:mb-0">{{ publication.title }}</a>
-                                    </td>
-                                    <td class="px-4 py-3 text-black">
-                                        {{ publication.viewNumber }}
-                                    </td>
-                                    <td class="px-4 py-3 text-black">
-                                        {{ publication.createdAt|date('d/m/Y') }}
-                                    </td>
-                                </tr>
-                            {% endfor %}
+                            <tbody class="divide-gray-700 bg-gray-800 text-center">
+                            <tr class="bg-blue2 text-black">
+                                <td class="px-4 py-2">
+                                    <a href="{{ path('publication_show', {'slug': publication.slug}) }}">{{ publication.title }}</a>
+                                </td>
+                                <td class="px-4 py-2 text-black">
+                                    {{ publication.viewNumber }}
+                                </td>
+                                <td class="px-4 py-2 text-black">
+                                    {{ publication.createdAt|date('d/m/Y') }}
+                                </td>
+                            </tr>
                             </tbody>
                         </table>
-                    </div>
+                    {% endfor %}
                 </div>
 
                 <!-- Dernières ressources à ajouter -->
@@ -168,77 +169,85 @@
                 <div class="w-full border border-blue1 py-6 px-10 mx-2 mt-8 shadow-lg mb-10">
                     <h2 class="text-blue1 font-bold text-xl">Votre liste d'amis :</h2>
                     <!-- Derniers amis ajoutés -->
-                    <div class="flex justify-end">
-                        {% for friend in userFriend|slice(0, 3) %}
-                            {% if friend.userReceive.username != app.user.username %}
-                                <div class="flex w-4/12">
-                                    <div class="flex w-11/12 border border-blue1 shadow-lg px-5 py-5 mt-5">
-                                        <div class="w-1/3">
-                                            {% if friend.userReceive.ProfilePicture %}
-                                                <div class="rounded-full" style="height: 150px; width: 150px;">
-                                                    <img src="{{ asset('uploads/user/avatar/' ~ friend.userReceive.ProfilePicture) }}" alt="Avatar de {{ friend.userReceive.username }}" class="rounded-full shadow-lg" style="height: 150px; width: 150px;"/>
-                                                </div>
-                                            {% else %}
-                                                <div class="rounded-full" style="height: 150px; width: 150px;">
-                                                    <img src="{{ asset('assets/media/img/user.svg') }}" alt="Avatar de {{ friend.userReceive.username }}"  class="rounded-full shadow-lg" style="height: 150px; width: 150px;"/>
-                                                </div>
-                                            {% endif %}
-                                        </div>
-                                        <div class="w-2/3 pt-2">
-                                            <div class="flex justify-start text-blue1 text-xl font-bold ml-6">
+
+                    <div class="flex">
+                        <div class="flex w-full mt-5">
+                            {% for friend in userFriend|slice(0, 3) %}
+                                {% if friend.userReceive.username != app.user.username %}
+                                    <div class="w-1/3">
+                                        <div class="flex w-11/12 border border-blue1 shadow-lg px-2 py-2">
+
+                                            <div class="w-5/12">
+                                                {% if friend.userReceive.ProfilePicture %}
+                                                    <div class="rounded-full" style="height: 150px; width: 150px;">
+                                                        <img src="{{ asset('uploads/user/avatar/' ~ friend.userReceive.ProfilePicture) }}" alt="Avatar de {{ friend.userReceive.username }}" class="rounded-full shadow-lg" style="height: 150px; width: 150px;"/>
+                                                    </div>
+                                                {% else %}
+                                                    <div class="rounded-full" style="height: 150px; width: 150px;">
+                                                        <img src="{{ asset('assets/media/img/user.svg') }}" alt="Avatar de {{ friend.userReceive.username }}"  class="rounded-full shadow-lg" style="height: 150px; width: 150px;"/>
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+
+                                            <div class="w-6/12 pt-2">
+                                                <div class="flex justify-start text-blue1 text-xl font-bold ml-2">
                                                     <a target="_blank" rel="noreferrer noopener" href="{{ path('profile_view', {'username': friend.userReceive.username }) }}">
                                                         {{friend.userReceive.username}}
                                                     </a>
-                                            </div>
-                                            <div class="flex justify-start italic text-grey4 text-xl font-bold ml-5">
-                                                <p class="px-1">( {{friend.userReceive.firstname}}</p>
-                                                <p>{{friend.userReceive.lastname}} )</p>
-                                            </div>
-                                            <div class="flex justify-start mt-10 ml-2">
-                                                <a onclick="confirm('Supprimer cet utilisateur à vos amis ?')" class="ml-2" href="{{ path('user_delete_friend', {'idRelationShip': friend.id }) }}">
-                                                    <i class="w-1/12 py-1 fas fa-user-minus pr-4 px-2"></i>
-                                                    <span class="w-9/12 pl-2">Retirer de vos amis</span>
-                                                </a>
+                                                </div>
+                                                <div class="flex justify-start italic text-grey4 font-bold ml-1">
+                                                    <p class="px-1">( {{friend.userReceive.firstname}}</p>
+                                                    <p>{{friend.userReceive.lastname}} )</p>
+                                                </div>
+                                                <div class="flex justify-start mt-10 ml-1">
+                                                    <a onclick="confirm('Supprimer cet utilisateur à vos amis ?')" class="ml-2" href="{{ path('user_delete_friend', {'idRelationShip': friend.id }) }}">
+                                                        <i class="w-1/12 py-1 fas fa-user-minus pr-4 px-2"></i>
+                                                        <span class="w-9/12 pl-2">Retirer de vos amis</span>
+                                                    </a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            {% elseif friend.userSender.username != app.user.username %}
-                                <div class="flex w-4/12">
-                                    <div class="flex w-11/12 border border-blue1 shadow-lg px-5 py-5 mt-5">
-                                        <div class="w-1/3">
-                                            {% if friend.userSender.ProfilePicture %}
-                                                <div class="rounded-full" style="height: 150px; width: 150px;">
-                                                    <img src="{{ asset('uploads/user/avatar/' ~ friend.userSender.ProfilePicture) }}" alt="{{ friend.userSender.username }}" class="rounded-full shadow-lg" style="height: 150px; width: 150px;"/>
-                                                </div>
-                                            {% else %}
-                                                <div class="rounded-full" style="height: 150px; width: 150px;">
-                                                    <img src="{{ asset('assets/media/img/user.svg') }}" alt="Avatar de {{friend.userSender.username }}"  class="rounded-full shadow-lg" style="height: 150px; width: 150px;"/>
-                                                </div>
-                                            {% endif %}
-                                        </div>
-                                        <div class="w-2/3 pt-2">
-                                            <div class="flex justify-start text-blue1 text-xl font-bold ml-6">
+                                {% elseif friend.userSender.username != app.user.username %}
+                                    <div class="w-1/3">
+                                        <div class="flex w-11/12 border border-blue1 shadow-lg px-2 py-2">
+
+                                            <div class="w-5/12">
+                                                {% if friend.userSender.ProfilePicture %}
+                                                    <div class="rounded-full" style="height: 150px; width: 150px;">
+                                                        <img src="{{ asset('uploads/user/avatar/' ~ friend.userSender.ProfilePicture) }}" alt="{{ friend.userSender.username }}" class="rounded-full shadow-lg" style="height: 150px; width: 150px;"/>
+                                                    </div>
+                                                {% else %}
+                                                    <div class="rounded-full" style="height: 150px; width: 150px;">
+                                                        <img src="{{ asset('assets/media/img/user.svg') }}" alt="Avatar de {{friend.userSender.username }}"  class="rounded-full shadow-lg" style="height: 150px; width: 150px;"/>
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+
+                                            <div class="w-6/12 pt-2">
+                                                <div class="flex justify-start text-blue1 text-xl font-bold ml-2">
                                                     <a target="_blank" rel="noreferrer noopener" href="{{ path('profile_view', {'username': friend.userSender.username }) }}">
                                                         {{friend.userSender.username}}
                                                     </a>
-                                            </div>
-                                            <div class="flex justify-start italic text-grey4 text-xl font-bold ml-5">
-                                                <p class="px-1">( {{friend.userSender.firstname}}</p>
-                                                <p>{{friend.userSender.lastname}} )</p>
-                                            </div>
-                                            <div class="flex justify-start mt-10 ml-2">
-                                                <a onclick="confirm('Supprimer cet utilisateur à vos amis ?')" class="ml-2" href="{{ path('user_delete_friend', {'idRelationShip': friend.id }) }}">
-                                                    <i class="w-1/12 py-1 fas fa-user-minus pr-4 px-2"></i>
-                                                    <span class="w-9/12 pl-2">Retirer de vos amis</span>
-                                                </a>
+                                                </div>
+                                                <div class="flex justify-start italic text-grey4 font-bold ml-1">
+                                                    <p class="px-1">( {{friend.userSender.firstname}}</p>
+                                                    <p>{{friend.userSender.lastname}} )</p>
+                                                </div>
+                                                <div class="flex justify-start mt-10 ml-1">
+                                                    <a onclick="confirm('Supprimer cet utilisateur à vos amis ?')" class="ml-2" href="{{ path('user_delete_friend', {'idRelationShip': friend.id }) }}">
+                                                        <i class="w-1/12 py-1 fas fa-user-minus pr-4 px-2"></i>
+                                                        <span class="w-9/12 pl-2">Retirer de vos amis</span>
+                                                    </a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            {% endif %}
-                        {% endfor %}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
                     </div>
+
                     <div class="flex justify-end">
                         <a href="{{path('user_friend_list')}}" class="italic text-gray-800 text-base">Voir plus...</a>
                     </div>
