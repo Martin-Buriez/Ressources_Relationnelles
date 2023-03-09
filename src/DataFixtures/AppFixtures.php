@@ -19,6 +19,29 @@ class AppFixtures extends Fixture
     {
         $faker = Factory::create('fr_FR');
 
+        // Creation of 1 Admin
+
+        $rolearray = array("ROLE_ADMIN");
+        $adminuser = new User();
+        $adminuser->setEmail('admin@gmail.com')
+            ->setPassword("$2y$13\$zQkf.2xr6abCinSbMk0lIuuJfLs/svhMukwGIYIPjYr2RxFEp/EoK")
+            ->setUsername($faker->sentence(1))
+            ->setFirstName($faker->firstName())
+            ->setLastName($faker->lastName())
+            ->setAddress($faker->address())
+            ->setPostalCode($faker->postcode())
+            ->setCity($faker->city())
+            ->setPhoneNumber($faker->phoneNumber())
+            ->setBirthday(($faker->dateTime()))
+            ->setCreatedAt(($faker->dateTime()))
+            ->setStateValidated($faker->boolean(50))
+            ->setStateSuspended($faker->boolean(50))
+            ->setIdentityCardLocation($faker->sentence(1))
+            ->setRoles($rolearray)
+            ->setIdentityCardValidated($faker->boolean(50));
+
+        $manager->persist($adminuser);
+
         for($c = 0; $c < 5; $c++) {
 
             // Creation of 5 Themes
@@ -27,6 +50,7 @@ class AppFixtures extends Fixture
             $theme->setName($faker->sentence(1, false));
 
             $manager->persist($theme);
+
 
             // Creation of 5 Categories
 
